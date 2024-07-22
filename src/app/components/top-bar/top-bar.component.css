@@ -1,6 +1,6 @@
 .navbar-brand {
   font-weight: bold;
-  color:rgb(236, 120, 11) !important;
+  color:rgb(194, 108, 27) !important;
 }
 
 .nav-link {
@@ -9,7 +9,7 @@
 }
 
 .nav-link:hover {
-  color:rgb(236, 120, 11) !important;
+  color:rgb(194, 108, 27) !important;
 }
 
 .navbar-toggler-icon {
@@ -26,4 +26,16 @@
 
 .me-auto {
   margin-right: auto !important;
+}
+
+ /* CUSTOM */
+
+.custom-color {
+  background-color: rgb(189, 126, 67) !important;
+  border-color:  rgb(189, 126, 67);
+}
+
+.custom-border {
+  border-color:rgb(194, 108, 27);
+  color: rgb(194, 108, 27);
 }

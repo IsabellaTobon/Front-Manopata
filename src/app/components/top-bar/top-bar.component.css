@@ -36,8 +36,16 @@
   border-color:  rgb(189, 126, 67);
 }
 
+.custom-color:hover {
+  background-color: rgb(218, 159, 103) !important;
+}
+
 .custom-border {
   border-color:rgb(194, 108, 27);
   color: rgb(194, 108, 27);
+}
 
+.custom-border:hover {
+  color: rgb(134, 74, 17);
+  border-color: rgb(134, 74, 17) !important;
 }

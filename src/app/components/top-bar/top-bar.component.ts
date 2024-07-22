@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginSignUpComponent } from '../login-sign-up/login-sign-up.component';
 
 @Component({
@@ -10,5 +10,9 @@ import { LoginSignUpComponent } from '../login-sign-up/login-sign-up.component';
   styleUrl: './top-bar.component.css'
 })
 export class TopBarComponent {
+  constructor(private router: Router) {}
+  navigateTo(route:string) {
+    this.router.navigate([route]);
+  }
 
 }

@@ -1,0 +1,40 @@
+
+.form-control {
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.408);
+}
+
+.card {
+  border-width: 1px;
+  border-color: black;
+}
+
+.carousel-item .card {
+  margin: 0 auto;
+  width: 90%; /* Ajusta según sea necesario */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgb(189, 126, 67);
+  border-radius: 25%;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 4%; /* Ajusta el ancho del control del carrusel */
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: black; /* Color de los indicadores */
+}
+
+
+.custom-color {
+  background-color: rgb(189, 126, 67) !important;
+  border-color:  rgb(189, 126, 67);
+}
+
+.custom-color:hover {
+  background-color: rgb(218, 159, 103) !important;
+}

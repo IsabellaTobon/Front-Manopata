@@ -7,11 +7,21 @@
 .card {
   border-width: 1px;
   border-color: black;
+  border-radius: 15px;
+}
+
+.card-body {
+  padding: 1rem;
 }
 
 .carousel-item .card {
   margin: 0 auto;
-  width: 90%; /* Ajusta según sea necesario */
+  width: 90%;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .carousel-control-prev-icon,
@@ -22,17 +32,34 @@
 
 .carousel-control-prev,
 .carousel-control-next {
-  width: 4%; /* Ajusta el ancho del control del carrusel */
+  width: 4%;
 }
 
 .carousel-indicators [data-bs-target] {
-  background-color: black; /* Color de los indicadores */
+  background-color: black;
 }
 
+.accordion-item {
+ margin-top: 2%;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #000;
+  background-color: #e9ecef;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+}
+
+.accordion-button {
+  color: #000;
+  font-weight: bold;
+  background-color: rgb(230, 211, 165);
+  border: 1px solid rgb(230, 211, 165);
+}
 
 .custom-color {
   background-color: rgb(189, 126, 67) !important;
   border-color:  rgb(189, 126, 67);
+  padding: 2% 5%;
 }
 
 .custom-color:hover {

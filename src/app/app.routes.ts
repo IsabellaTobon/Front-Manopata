@@ -5,11 +5,13 @@ import { ProtectorsComponent } from './components/protectors/protectors.componen
 import { ContactComponent } from './components/contact/contact.component';
 import { LoginSignUpComponent } from './components/login-sign-up/login-sign-up.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+// import { OpinionsComponent } from './components/opinions/opinions.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'adoptions', component: AdoptionsComponent },
   { path: 'protectors', component: ProtectorsComponent },
+  // { path: 'opinions',  component: OpinionsComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'login-sign-up', component: LoginSignUpComponent },
   { path: "**", component: NotFoundComponent }

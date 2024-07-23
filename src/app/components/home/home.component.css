@@ -1,9 +1,0 @@
-.carousel {
-  max-width: 800px; /* Ajusta el ancho máximo del carrusel */
-  margin: 0 auto; /* Centra el carrusel horizontalmente */
-}
-
-.carousel-item img {
-  max-height: 500px; /* Ajusta la altura de las imágenes según sea necesario */
-  object-fit: cover; /* Asegura que la imagen cubra completamente el contenedor */
-}

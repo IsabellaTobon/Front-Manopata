@@ -13,6 +13,10 @@ export class TopBarComponent {
   constructor(private router: Router) {}
   navigateTo(route:string) {
     this.router.navigate([route]);
+
+    
   }
+
+
 
 }

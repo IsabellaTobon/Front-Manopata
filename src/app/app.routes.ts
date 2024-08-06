@@ -6,10 +6,12 @@ import { ContactComponent } from './components/contact/contact.component';
 import { LoginSignUpComponent } from './components/login-sign-up/login-sign-up.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { OpinionsComponent } from './components/opinions/opinions.component';
+import { SpecificPostComponent } from './components/specific-post/specific-post.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'adoptions', component: AdoptionsComponent },
+  { path: 'specific-post', component: SpecificPostComponent },
   { path: 'protectors', component: ProtectorsComponent },
   { path: 'opinions',  component: OpinionsComponent },
   { path: 'contact', component: ContactComponent },

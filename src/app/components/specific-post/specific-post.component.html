@@ -1,1 +1,58 @@
-<p>specific-post works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Imagen destacada -->
+    <div class="col-lg-8 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img [src]="post.photo" class="card-img-top" alt="Pet Image">
+      </div>
+    </div>
+    <!-- Detalles del post -->
+    <div class="col-lg-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ post.name }}</h5>
+          <p class="card-text"><strong>Fecha de Registro:</strong> {{ post.registerDate | date }}</p>
+          <p class="card-text"><strong>Edad:</strong> {{ post.age }} años</p>
+          <p class="card-text"><strong>Tipo de Animal:</strong> {{ post.animalType }}</p>
+          <p class="card-text"><strong>Vacunado:</strong> {{ post.vaccinated ? 'Sí' : 'No' }}</p>
+          <p class="card-text"><strong>Raza:</strong> {{ post.breed }}</p>
+          <p class="card-text"><strong>PPP:</strong> {{ post.ppp ? 'Sí' : 'No' }}</p>
+          <p class="card-text"><strong>Ciudad:</strong> {{ post.city }}</p>
+          <p class="card-text"><strong>Provincia:</strong> {{ post.province }}</p>
+          <p class="card-text"><strong>Disponible:</strong> {{ post.available ? 'Sí' : 'No' }}</p>
+          <p class="card-text"><strong>Likes:</strong> {{ post.likes }}</p>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Contactar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de contacto -->
+<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactModalLabel">Enviar Mensaje</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="sendMessage()">
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="message.name" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="message.email" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Mensaje</label>
+            <textarea class="form-control" id="message" rows="3" [(ngModel)]="message.text" name="text" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,65 @@
-<p>protectors works!</p>
+<div class="container mt-5">
+  <!-- Filtros -->
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label for="locationFilter" class="form-label">Filtrar por Ubicación:</label>
+      <select id="locationFilter" class="form-select" (change)="filterByLocation($event)">
+        <option value="">Todas las Ubicaciones</option>
+        <option value="Madrid">Madrid</option>
+        <option value="Barcelona">Barcelona</option>
+        <option value="Valencia">Valencia</option>
+        <!-- Agrega más ubicaciones según sea necesario -->
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="serviceFilter" class="form-label">Filtrar por Servicios:</label>
+      <select id="serviceFilter" class="form-select" (change)="filterByService($event)">
+        <option value="">Todos los Servicios</option>
+        <option value="Adopción">Adopción</option>
+        <option value="Refugio">Refugio</option>
+        <option value="Veterinario">Veterinario</option>
+        <!-- Agrega más servicios según sea necesario -->
+      </select>
+    </div>
+  </div>
+
+  <!-- Carrusel Horizontal -->
+  <div id="protectorasCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item" *ngFor="let protectora of filteredProtectors; let i = index" [class.active]="i === 0">
+        <img [src]="protectora.image" class="d-block w-100" alt="Protectora Image" (click)="selectProtector(protectora)">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#protectorasCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#protectorasCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+
+  <!-- Vista Previa Expandible -->
+  <div *ngIf="selectedProtector" class="mt-5">
+    <h3>{{ selectedProtector.name }}</h3>
+    <p><strong>Ubicación:</strong> {{ selectedProtector.location }}</p>
+    <p><strong>Servicios:</strong> {{ selectedProtector.services.join(', ') }}</p>
+    <p><strong>Descripción:</strong> {{ selectedProtector.description }}</p>
+    <!-- Agrega más detalles según sea necesario -->
+  </div>
+
+  <!-- Grid de Tarjetas de Protectoras -->
+  <div class="row mt-5" *ngIf="!selectedProtector">
+    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let protectora of filteredProtectors">
+      <div class="card h-100 shadow-sm">
+        <img [src]="protectora.image" class="card-img-top" alt="Protectora Image">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ protectora.name }}</h5>
+          <p class="card-text">{{ protectora.location }}</p>
+          <button class="btn btn-primary" (click)="selectProtector(protectora)">Ver detalles</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

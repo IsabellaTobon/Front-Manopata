@@ -1,0 +1,23 @@
+/* Carrusel */
+.carousel-item img {
+  height: 300px;
+  object-fit: cover;
+}
+
+/* Grid de Tarjetas */
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Vista Previa Expandible */
+.selected-protectora-details {
+  transition: max-height 0.3s ease-in-out;
+  overflow: hidden;
+}

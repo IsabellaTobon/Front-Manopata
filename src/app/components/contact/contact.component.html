@@ -1,8 +1,7 @@
-
 <div class="container mt-5">
-  <div class="row">
+  <div class="row g-4">
     <!-- Carousel Section -->
-    <div class="col-lg-6 mb-4">
+    <div class="col-lg-7 order-lg-1">
       <div id="CarouselPetsAuto" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#CarouselPetsAuto" data-bs-slide-to="0" class="active"></button>
@@ -42,7 +41,7 @@
     </div>
 
     <!-- Contact Form Section -->
-    <div class="col-lg-6 d-flex align-items-center">
+    <div class="col-lg-5 order-lg-2">
       <div class="card w-100 shadow-sm">
         <div class="card-body">
           <h2 class="card-title">Contacto</h2>
@@ -61,6 +60,66 @@
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="row g-4 mt-4">
+    <div class="col-lg-5 order-lg-4">
+      <h2 class="text-center mb-4">Preguntas Frecuentes</h2>
+      <div class="accordion" id="faqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="faq1">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+              ¿Cómo puedo adoptar un animal?
+            </button>
+          </h2>
+          <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="faq1" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Puedes adoptar un animal visitando nuestra sección de adopciones, donde encontrarás fotos e información detallada de cada uno.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="faq2">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+              ¿Qué necesito para adoptar?
+            </button>
+          </h2>
+          <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Debes cumplir con algunos requisitos básicos como ser mayor de edad, tener un hogar apto para la mascota y compromiso de su bienestar.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="faq3">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+              ¿Puedo colaborar de otra manera?
+            </button>
+          </h2>
+          <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              ¡Por supuesto! Puedes colaborar siendo voluntario, haciendo donaciones o promoviendo nuestras actividades en redes sociales.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Contact Information Section -->
+    <div class="col-lg-7 order-lg-3">
+      <div class="card w-100 shadow-sm">
+        <div class="card-body text-center">
+          <h4>Información de Contacto</h4>
+          <p><i class="bi bi-telephone"></i> +34 654 321 987</p>
+          <p><i class="bi bi-geo-alt"></i> Calle Esperanza, 7, Zaragoza</p>
+          <p><i class="bi bi-facebook"></i> Facebook: <a href="#" class="text-decoration-none">&#64; ManoPata</a></p>
+          <p><i class="bi bi-instagram"></i> Instagram: <a href="#" class="text-decoration-none">&#64; ManoPata</a></p>
         </div>
       </div>
     </div>

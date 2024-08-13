@@ -1,3 +1,4 @@
+/* General modal content */
 .modal-content {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   border-radius: 20px;
@@ -5,6 +6,7 @@
   overflow: hidden;
 }
 
+/* Modal header */
 .modal-header {
   background-color: #343a40;
   color: #f8f9fa;
@@ -17,17 +19,52 @@
   font-size: 1.75rem;
 }
 
+/* Modal body */
 .modal-body {
   padding: 2rem;
   background: #ffffff;
 }
 
+/* Modal footer */
 .modal-footer {
   border-top: none;
   padding: 1rem 2rem;
   background: #f8f9fa;
 }
 
+/* Floating labels */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  opacity: 1;
+  transform: translateY(-1.5rem) scale(0.85);
+}
+
+.form-floating > label {
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  color: #6c757d;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: left;
+  opacity: 0.6;
+  pointer-events: none;
+  transform: translateY(0) scale(1);
+}
+
+/* Input styles */
+input.form-control {
+  border-radius: 10px;
+  padding: 1rem 1rem 0.25rem;
+  border: 2px solid #ced4da;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #6c757d;
+  box-shadow: 0 0 10px rgba(108, 117, 125, 0.5);
+}
+
+/* Buttons */
 .btn-custom {
   background-color: #6c757d;
   border: none;
@@ -66,20 +103,4 @@
 .btn-link:hover {
   color: #495057;
   text-decoration: underline;
-}
-
-input.form-control {
-  border-radius: 10px;
-  padding: 0.75rem;
-  border: 2px solid #ced4da;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input.form-control:focus {
-  border-color: #6c757d;
-  box-shadow: 0 0 10px rgba(108, 117, 125, 0.5);
-}
-
-.shadow-lg {
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
 }

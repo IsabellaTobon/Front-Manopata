@@ -1,59 +1,61 @@
-<div *ngIf="showLoginForm || showRegisterForm" class="modal show d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.5);">
-  <div class="modal-dialog">
-    <div class="modal-content">
+<div *ngIf="showLoginForm || showRegisterForm" class="modal show d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.7);">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0">
       <div class="modal-header">
         <h5 class="modal-title">{{ showLoginForm ? 'Iniciar sesión' : 'Registrarse' }}</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="closeForms()"></button>
       </div>
       <div class="modal-body">
-        <!-- Login Form -->
+        <!-- Formulario de Login -->
         <div *ngIf="showLoginForm">
           <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
-            <div class="mb-3">
-              <label for="nickname" class="form-label">Nickname</label>
+            <div class="form-floating mb-4">
               <input formControlName="nickname" type="text" class="form-control" id="nickname" placeholder="Nickname" />
+              <label for="nickname">Nickname</label>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Contraseña</label>
+            <div class="form-floating mb-4">
               <input formControlName="password" type="password" class="form-control" id="password" placeholder="Contraseña" />
+              <label for="password">Contraseña</label>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+            <button type="submit" class="btn btn-custom btn-lg w-100">Iniciar sesión</button>
           </form>
         </div>
 
-        <!-- Register Form -->
+        <!-- Formulario de Registro -->
         <div *ngIf="showRegisterForm">
           <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
-            <div class="mb-3">
-              <label for="name" class="form-label">Nombre</label>
+            <div class="form-floating mb-4">
               <input formControlName="name" type="text" class="form-control" id="name" placeholder="Nombre" />
+              <label for="name">Nombre</label>
             </div>
-            <div class="mb-3">
-              <label for="lastName" class="form-label">Apellido</label>
+            <div class="form-floating mb-4">
               <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="Apellido" />
+              <label for="lastName">Apellido</label>
             </div>
-            <div class="mb-3">
-              <label for="nickname" class="form-label">Nickname</label>
+            <div class="form-floating mb-4">
               <input formControlName="nickname" type="text" class="form-control" id="nickname" placeholder="Nickname" />
+              <label for="nickname">Nickname</label>
             </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
+            <div class="form-floating mb-4">
               <input formControlName="email" type="email" class="form-control" id="email" placeholder="Email" />
+              <label for="email">Email</label>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Contraseña</label>
+            <div class="form-floating mb-4">
               <input formControlName="password" type="password" class="form-control" id="password" placeholder="Contraseña" />
+              <label for="password">Contraseña</label>
             </div>
-            <div class="mb-3">
-              <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+            <div class="form-floating mb-4">
               <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="Confirmar Contraseña" />
+              <label for="confirmPassword">Confirmar Contraseña</label>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+            <button type="submit" class="btn btn-custom btn-lg w-100">Registrarse</button>
           </form>
         </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer d-flex justify-content-between">
         <button type="button" class="btn btn-secondary" (click)="closeForms()">Cerrar</button>
+        <button *ngIf="showLoginForm" type="button" class="btn btn-link" (click)="openRegisterForm()">¿No tienes cuenta? Regístrate</button>
+        <button *ngIf="showRegisterForm" type="button" class="btn btn-link" (click)="openLoginForm()">¿Ya tienes cuenta? Inicia sesión</button>
       </div>
     </div>
   </div>

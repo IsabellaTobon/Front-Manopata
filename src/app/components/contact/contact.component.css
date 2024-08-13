@@ -1,14 +1,63 @@
-.carousel-item img {
-  max-height: 400px;
-  object-fit: cover;
+.container {
+  max-width: 1200px;
 }
 
-.form-control {
-  border-width: 2px;
-  border-color: rgba(0, 0, 0, 0.362);
+.faq-section {
+  margin-top: 50px;
 }
 
-.card {
-  border-width: 2px;
-  border-color: black;
+/* ACCORDION */
+
+.accordion-button {
+  font-weight: bold;
+  background-color: rgb(230, 211, 165);
+  color: #252525;
+}
+
+.accordion-button:hover {
+  background-color: rgb(223, 184, 95);
+}
+
+.accordion-item {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.accordion-body {
+  background-color: #f8f9fa;
+  border-top: 2px solid #dee2e6;
+}
+
+.accordion-button::after {
+  transition: transform 0.2s ease;
+}
+
+.accordion-button:not(.collapsed)::after {
+  transform: rotate(-90deg);
+}
+
+/* CARD */
+.card-body a {
+  color: #495057;
+}
+
+.card-body a:hover {
+  text-decoration: underline;
+}
+
+.card-body i {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.card-body p {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
 }

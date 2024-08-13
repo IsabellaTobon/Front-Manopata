@@ -1,11 +1,19 @@
 /* Carrusel */
 .carousel-item img {
+  width: 100%;
   height: 300px;
   object-fit: cover;
 }
 
+/*Ajustar el contenedor del carrusel */
+.carousel-inner {
+  position: relative;
+  overflow: hidden;
+}
+
 /* Grid de Tarjetas */
 .card-img-top {
+  width: 100%;
   height: 200px;
   object-fit: cover;
 }
@@ -14,6 +22,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 0rem;
 }
 
 /* Vista Previa Expandible */

@@ -1,0 +1,18 @@
+.star-rating {
+  display: inline-block;
+}
+
+.star-rating span {
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star-rating span.selected {
+  color: gold;
+}
+
+.star-rating span.readonly {
+  cursor: default;
+  color: gold;
+}

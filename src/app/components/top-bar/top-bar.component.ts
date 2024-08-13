@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { LoginSignUpComponent } from '../login-sign-up/login-sign-up.component';
-
+import { Component, EventEmitter, Output } from '@angular/core';
 @Component({
   selector: 'top-bar',
   standalone: true,
-  imports: [RouterLink, LoginSignUpComponent],
+  imports: [],
   templateUrl: './top-bar.component.html',
-  styleUrl: './top-bar.component.css'
+  styleUrl: './top-bar.component.css',
 })
 export class TopBarComponent {
-  constructor(private router: Router) {}
-  navigateTo(route:string) {
-    this.router.navigate([route]);
 
-    
+  @Output() loginFormOpened = new EventEmitter<void>();
+  @Output() registerFormOpened = new EventEmitter<void>();
+
+  openLoginForm(): void {
+    console.log("login from button clicked");
+    this.loginFormOpened.emit();
   }
 
-
-
+  openRegisterForm(): void {
+    console.log("register from button clicked");
+    this.registerFormOpened.emit();
+  }
 }

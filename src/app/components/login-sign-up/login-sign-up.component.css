@@ -1,0 +1,85 @@
+.modal-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.modal-header {
+  background-color: #343a40;
+  color: #f8f9fa;
+  border-bottom: none;
+  padding: 1.5rem;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 1.75rem;
+}
+
+.modal-body {
+  padding: 2rem;
+  background: #ffffff;
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 1rem 2rem;
+  background: #f8f9fa;
+}
+
+.btn-custom {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #495057;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+  background-color: #adb5bd;
+  border: none;
+  color: #343a40;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #868e96;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-link {
+  color: #6c757d;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.btn-link:hover {
+  color: #495057;
+  text-decoration: underline;
+}
+
+input.form-control {
+  border-radius: 10px;
+  padding: 0.75rem;
+  border: 2px solid #ced4da;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #6c757d;
+  box-shadow: 0 0 10px rgba(108, 117, 125, 0.5);
+}
+
+.shadow-lg {
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+}

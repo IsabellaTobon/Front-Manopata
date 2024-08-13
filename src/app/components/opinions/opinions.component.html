@@ -1,181 +1,87 @@
-<div class="container mt-3">
-  <div class="row">
-    <!-- Primer Carrusel -->
-    <div class="col-md-6 mb-3">
-      <div id="testimonialCarousel1" class="carousel slide carousel-fade" data-bs-ride="carousel">
+<div class="container-fluid mt-3 pl-6">
+
+  <!-- Primera Fila: Carrusel de Imágenes y Opinión General -->
+  <div class="row g-5 mb-4 mt-1">
+    <div class="col-lg-8">
+      <!-- Carrusel de Imágenes -->
+      <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">Juan Pérez</h5>
-                <p class="card-text">¡Excelente servicio! Adopté un gatito y el proceso fue muy fácil y rápido.</p>
-                <p class="text-muted">Publicado el 20/07/2023</p>
-              </div>
-            </div>
+            <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="Imagen 1">
           </div>
           <div class="carousel-item">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">Ana Martínez</h5>
-                <p class="card-text">Adopté un perro y estoy muy contenta. ¡Gracias por todo!</p>
-                <p class="text-muted">Publicado el 15/06/2023</p>
-              </div>
-            </div>
+            <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="Imagen 2">
           </div>
           <div class="carousel-item">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">Carlos López</h5>
-                <p class="card-text">Gran experiencia. El personal es muy amable y servicial.</p>
-                <p class="text-muted">Publicado el 05/05/2023</p>
-              </div>
-            </div>
+            <img src="https://via.placeholder.com/1200x400" class="d-block w-100" alt="Imagen 3">
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel1" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel1" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
       </div>
     </div>
-
-    <!-- Segundo Carrusel -->
-    <div class="col-md-6 mb-3">
-      <div id="testimonialCarousel2" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">Laura García</h5>
-                <p class="card-text">¡Increíble! El proceso de adopción fue muy rápido y fácil.</p>
-                <p class="text-muted">Publicado el 12/08/2023</p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">Miguel Fernández</h5>
-                <p class="card-text">Muy contento con mi nueva mascota. ¡Gracias por la ayuda!</p>
-                <p class="text-muted">Publicado el 02/07/2023</p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">Sara González</h5>
-                <p class="card-text">El personal fue muy amable y me ayudó en todo momento.</p>
-                <p class="text-muted">Publicado el 21/06/2023</p>
-              </div>
-            </div>
-          </div>
+    <div class="col-lg-2 pt-5">
+      <!-- Opinión General -->
+      <div class="card shadow-sm mb-5 p-4 d-flex align-items-center general-opinion-card">
+        <h3 class="card-title">Opinión General</h3>
+        <div class="d-flex align-items-center mb-3">
+          <h1 class="display-3">{{ averageRating.toFixed(1) }}</h1>
+          <app-star-rating [rating]="averageRating" [readonly]="true"></app-star-rating>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel2" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel2" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+        <h5>Promedio basado en {{ comments.length }} opiniones.</h5>
+        <canvas id="ratingChart"></canvas>
       </div>
     </div>
   </div>
 
-  <div class="row mt-3">
-
-    <!-- Preguntas Frecuentes -->
-    <div class="col-md-6 mb-3">
-      <div class="accordion" id="faqAccordion">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              ¿Cómo puedo adoptar una mascota?
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              Para adoptar una mascota, puedes visitar nuestro sitio web y llenar el formulario de adopción.
+  <!-- Segunda Fila: Comentarios y Formulario -->
+  <div class="row">
+    <!-- Columna Izquierda: Comentarios -->
+    <div class="col-lg-6 mb-3">
+      <div class="card shadow-sm  comments-container">
+        <div *ngFor="let comment of comments" class="comment-card">
+          <div class="d-flex align-items-center mb-2">
+            <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Comentario">
+            <div>
+              <h5 class="card-title mb-0">{{ comment.name }}</h5>
+              <app-star-rating [rating]="comment.rating" [readonly]="true"></app-star-rating>
             </div>
           </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              ¿Qué documentos necesito?
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              Necesitas presentar una identificación válida y comprobante de domicilio.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              ¿Cuánto cuesta adoptar?
-            </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              La adopción es gratuita, pero se aceptan donaciones para ayudar a más animales.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingFour">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-              ¿Puedo visitar a los animales antes de adoptar?
-            </button>
-          </h2>
-          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              Sí, puedes visitar a los animales en nuestro refugio durante las horas de visita.
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingFive">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-              ¿Cómo puedo hacer una donación?
-            </button>
-          </h2>
-          <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
-            <div class="accordion-body">
-              Puedes hacer una donación en nuestro sitio web o directamente en el refugio.
-            </div>
-          </div>
+          <p class="card-text">{{ comment.text }}</p>
+          <p class="text-muted">Publicado el {{ comment.date | date:'dd/MM/yyyy' }}</p>
         </div>
       </div>
     </div>
 
-    <!-- Formulario de Opinión -->
-    <div class="col-md-6 mb-3">
-      <div class="card w-75 shadow-sm ms-auto">
-        <div class="card-body">
-          <h2 class="card-title">Escribe tu opinión</h2>
-          <form>
-            <div class="mb-3">
-              <label for="name" class="form-label">Nombre / Usuario</label>
-              <input type="text" class="form-control" id="name" placeholder="Nombre / Usuario a mostrar">
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Correo Electrónico</label>
-              <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com">
-            </div>
-            <div class="mb-3">
-              <label for="message" class="form-label">Opinión</label>
-              <textarea class="form-control" id="message" rows="3" placeholder="Escribe tu opinión aquí"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary custom-color">Enviar</button>
-          </form>
-        </div>
+    <!-- Columna Derecha: Formulario de Opinión -->
+    <div class="col-lg-4 mb-3">
+      <div class="card shadow-sm p-3">
+        <h4 class="card-title">Escribe tu Opinión</h4>
+        <form>
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre / Usuario</label>
+            <input type="text" class="form-control" id="name" placeholder="Nombre / Usuario a mostrar">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com">
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Opinión</label>
+            <textarea class="form-control" id="message" rows="3" placeholder="Escribe tu opinión aquí"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="rating" class="form-label">Calificación</label>
+            <app-star-rating [(rating)]="userRating"></app-star-rating>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
       </div>
     </div>
   </div>

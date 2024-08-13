@@ -1,1 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
+/* Estilos básicos para toda la aplicación */
+body {
+  font-family: Arial, Helvetica, sans-serif !important; /* Base font */
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  padding-top: 80px;
+}
+
+
+/* CUSTUM STYLES */
+
+/* Cards */
+.card {
+  border-width: 1px;
+  border-color: black;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  margin-bottom: 1rem; /* Low space */
+}
+
+/* Bottons */
+
+.btn-primary {
+  background-color: rgb(189, 126, 67) !important;
+  border-color: rgb(189, 126, 67) !important;
+  padding: 2% 5%;
+}
+
+.btn-primary:hover {
+  background-color: rgb(218, 159, 103) !important;
+}
+
+/* Carrusel */
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgb(189, 126, 67);
+  border-radius: 25%;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%;
+}
+
+/* Forms */
+.form-control {
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.408);
+}
+

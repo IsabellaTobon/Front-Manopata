@@ -26,8 +26,35 @@
       </li>
     </ul>
     <div class="d-flex">
-      <button class="btn btn-primary custom-color me-2" data-bs-toggle="modal" data-bs-target="#iniciarSesionModal">Iniciar sesión</button>
-      <a href="#" class="btn btn-outline custom-border me-4">Registrarse</a>
+      <button class="btn btn-primary me-2" (click)="openLoginForm()">Iniciar sesión</button>
+      <button class="btn btn-outline custom-border me-4" (click)="openRegisterForm()">Registrarse</button>
     </div>
   </div>
 </nav>
+
+  <!-- <div *ngIf="showLoginForm || showRegisterForm">
+    <div *ngIf="showLoginForm">
+      <h2>Iniciar sesión</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+        <input formControlName="nickname" type="text" placeholder="Nickname" />
+        <input formControlName="password" type="password" placeholder="Contraseña" />
+        <button type="submit">Iniciar sesión</button>
+        <p *ngIf="errorMessage">{{ errorMessage }}</p>
+      </form>
+      <button (click)="openRegisterForm()">¿No tienes cuenta? Regístrate</button>
+    </div>
+
+    <div *ngIf="showRegisterForm">
+      <h2>Registrarse</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
+        <input formControlName="nickname" type="text" placeholder="Nickname" />
+        <input formControlName="password" type="password" placeholder="Contraseña" />
+        <input formControlName="confirmPassword" type="password" placeholder="Confirmar Contraseña" />
+        <button type="submit">Registrarse</button>
+        <p *ngIf="errorMessage">{{ errorMessage }}</p>
+      </form>
+      <button (click)="openLoginForm()">¿Ya tienes cuenta? Inicia sesión</button>
+    </div>
+    <button (click)="closeForms()">Cerrar</button>
+  </div>
+</nav> -->

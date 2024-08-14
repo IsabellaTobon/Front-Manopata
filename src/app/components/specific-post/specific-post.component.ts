@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PostService } from '../../services/post.service';
+import { PostService } from '../../services/posts.service';
 import { ActivatedRoute } from '@angular/router'; // Add this line
 import { CommonModule, DatePipe } from '@angular/common';
 

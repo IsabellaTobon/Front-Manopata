@@ -1,0 +1,194 @@
+/* Header */
+header {
+  padding: 2rem 0;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #333; /* Color de texto oscuro para contraste */
+  font-weight: 700; /* Negrita para el título */
+  animation: fadeIn 1s ease-in-out;
+}
+
+header h3 {
+  color: #555; /* Gris medio para el subtítulo */
+  margin-bottom: 1rem;
+}
+
+header p {
+  color: #666; /* Gris claro para el texto */
+  max-width: 800px; /* Limitar el ancho del texto para mejor legibilidad */
+  margin: 0 auto; /* Centrar el párrafo */
+  font-size: 1.1rem; /* Tamaño de texto ligeramente mayor */
+}
+
+/* Hero image */
+.hero-image {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-image .overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-image .display-4 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-image .lead {
+  font-size: 1.25rem;
+  color: #ddd;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/*Featured Animals*/
+.adoptables {
+  padding: 4rem 0;
+  background-color: #f8f9fa; /* Fondo claro para contraste */
+}
+
+.adoptables h2 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #333; /* Color de texto oscuro */
+  font-weight: 700;
+  text-align: center;
+  animation: fadeInDown 1s ease-in-out;
+}
+
+
+/* Cards */
+.card {
+  border-width: 1px;
+  border-color: black;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-img-top {
+  border-radius: 15px 15px 0 0;
+  height: 200px; /* Tamaño fijo para imágenes */
+  object-fit: cover; /* Ajustar imagen sin distorsionar */
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: rgb(189, 126, 67); /* Color principal */
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555; /* Gris medio */
+}
+
+.card-footer {
+  background-color: white;
+  border-top: none;
+  text-align: center;
+}
+
+.card-footer a.btn {
+  background-color: rgb(189, 126, 67);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 25px; /* Bordes más redondeados */
+  transition: background-color 0.3s ease;
+}
+
+.card-footer a.btn:hover {
+  background-color: rgb(218, 159, 103); /* Color hover */
+}
+
+/* Testimonials */
+.testimonios {
+  padding: 4rem 0;
+}
+
+.testimonios h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.blockquote {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeInLeft 1s ease-in-out;
+}
+
+.blockquote p {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.blockquote-footer {
+  font-size: 1rem;
+  color: #888;
+}
+
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

@@ -1,81 +1,184 @@
-<div class="container mt-5">
+<div class="container-fluid mt-5">
   <div class="row">
-    <!-- Card 1 -->
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100 shadow-sm">
-        <img src="https://images.pexels.com/photos/4587993/pexels-photo-4587993.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 1">
-        <div class="card-body text-center">
-          <h5 class="card-title">Milo</h5>
-          <p class="card-text">Madrid</p>
-        </div>
-        <div class="card-footer text-center">
-          <a href="specific-post" class="btn btn-primary">Más detalles</a>
-        </div>
+    <!-- Filtros Laterales -->
+    <div class="col-lg-2 mb-4">
+      <div class="card shadow-sm p-3">
+        <h5 class="card-title">Filtrar Mascotas</h5>
+        <form>
+          <div class="mb-3">
+            <label for="provincia" class="form-label">Provincia</label>
+            <select class="form-select" id="provincia">
+              <option selected>Todas</option>
+              <option>Madrid</option>
+              <option>Barcelona</option>
+              <option>Valencia</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="ciudad" class="form-label">Ciudad</label>
+            <select class="form-select" id="ciudad">
+              <option selected>Todas</option>
+              <option>Madrid</option>
+              <option>Barcelona</option>
+              <option>Valencia</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="raza" class="form-label">Raza</label>
+            <select class="form-select" id="raza">
+              <option selected>Todas</option>
+              <option>Labrador</option>
+              <option>Pastor Alemán</option>
+              <option>Siamés</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="tipo-animal" class="form-label">Tipo de Animal</label>
+            <select class="form-select" id="tipo-animal">
+              <option selected>Todos</option>
+              <option>Perro</option>
+              <option>Gato</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="ordenar" class="form-label">Ordenar por</label>
+            <select class="form-select" id="ordenar">
+              <option selected>Última publicación</option>
+              <option>Primera publicación</option>
+            </select>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="disponible">
+            <label class="form-check-label" for="disponible">Disponible</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="ppp">
+            <label class="form-check-label" for="ppp">PPP (Perros Potencialmente Peligrosos)</label>
+          </div>
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="vacunado">
+            <label class="form-check-label" for="vacunado">Vacunado</label>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
+        </form>
       </div>
     </div>
-    <!-- Card 2 -->
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100 shadow-sm">
-        <img src="https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 2">
-        <div class="card-body text-center">
-          <h5 class="card-title">Bella</h5>
-          <p class="card-text">Barcelona</p>
+
+    <!-- Tarjetas de Mascotas -->
+    <div class="col-lg-10">
+      <div class="row">
+        <!-- Card 1 -->
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://images.pexels.com/photos/4587993/pexels-photo-4587993.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 1">
+            <div class="card-body text-center">
+              <h5 class="card-title">Milo</h5>
+              <p class="card-text">Madrid</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="specific-post" class="btn btn-primary">Más detalles</a>
+            </div>
+          </div>
         </div>
-        <div class="card-footer text-center">
-          <a href="specific-post" class="btn btn-primary">Más detalles</a>
+        <!-- Card 2 -->
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 2">
+            <div class="card-body text-center">
+              <h5 class="card-title">Bella</h5>
+              <p class="card-text">Barcelona</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="specific-post" class="btn btn-primary">Más detalles</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- Card 3 -->
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100 shadow-sm">
-        <img src="https://images.pexels.com/photos/2642068/pexels-photo-2642068.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 3">
-        <div class="card-body text-center">
-          <h5 class="card-title">Rocky</h5>
-          <p class="card-text">Valencia</p>
+        <!-- Card 3 -->
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://images.pexels.com/photos/2642068/pexels-photo-2642068.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 3">
+            <div class="card-body text-center">
+              <h5 class="card-title">Rocky</h5>
+              <p class="card-text">Valencia</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="specific-post" class="btn btn-primary">Más detalles</a>
+            </div>
+          </div>
         </div>
-        <div class="card-footer text-center">
-          <a href="specific-post" class="btn btn-primary">Más detalles</a>
+        <!-- Card 4 -->
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://images.pexels.com/photos/4588006/pexels-photo-4588006.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 4">
+            <div class="card-body text-center">
+              <h5 class="card-title">Luna</h5>
+              <p class="card-text">Sevilla</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="specific-post" class="btn btn-primary">Más detalles</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- Card 4 -->
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100 shadow-sm">
-        <img src="https://images.pexels.com/photos/4588006/pexels-photo-4588006.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 4">
-        <div class="card-body text-center">
-          <h5 class="card-title">Luna</h5>
-          <p class="card-text">Sevilla</p>
+
+        <!-- Hilera 2 -->
+        <!-- Card 5 -->
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://images.pexels.com/photos/1661179/pexels-photo-1661179.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 5">
+            <div class="card-body text-center">
+              <h5 class="card-title">Simba</h5>
+              <p class="card-text">Bilbao</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="specific-post" class="btn btn-primary">Más detalles</a>
+            </div>
+          </div>
         </div>
-        <div class="card-footer text-center">
-          <a href="specific-post" class="btn btn-primary">Más detalles</a>
+        <!-- Card 6 -->
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://images.pexels.com/photos/59523/pexels-photo-59523.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 6">
+            <div class="card-body text-center">
+              <h5 class="card-title">Daisy</h5>
+              <p class="card-text">Málaga</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="specific-post" class="btn btn-primary">Más detalles</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- Card 5 -->
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100 shadow-sm">
-        <img src="https://images.pexels.com/photos/1661179/pexels-photo-1661179.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 5">
-        <div class="card-body text-center">
-          <h5 class="card-title">Simba</h5>
-          <p class="card-text">Bilbao</p>
+        <!-- Card 7 -->
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://images.pexels.com/photos/450327/pexels-photo-450327.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 7">
+            <div class="card-body text-center">
+              <h5 class="card-title">Leo</h5>
+              <p class="card-text">Zaragoza</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="specific-post" class="btn btn-primary">Más detalles</a>
+            </div>
+          </div>
         </div>
-        <div class="card-footer text-center">
-          <a href="specific-post" class="btn btn-primary">Más detalles</a>
+        <!-- Card 8 -->
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 8">
+            <div class="card-body text-center">
+              <h5 class="card-title">Max</h5>
+              <p class="card-text">Granada</p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="specific-post" class="btn btn-primary">Más detalles</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- Card 6 -->
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100 shadow-sm">
-        <img src="https://images.pexels.com/photos/59523/pexels-photo-59523.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 6">
-        <div class="card-body text-center">
-          <h5 class="card-title">Daisy</h5>
-          <p class="card-text">Málaga</p>
-        </div>
-        <div class="card-footer text-center">
-          <a href="specific-post" class="btn btn-primary">Más detalles</a>
-        </div>
+        
+        <!-- Más tarjetas... -->
       </div>
     </div>
   </div>

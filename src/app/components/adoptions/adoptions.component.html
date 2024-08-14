@@ -4,73 +4,80 @@
     <div class="col-lg-2 mb-4">
       <div class="card shadow-sm p-3">
         <h5 class="card-title">Filtrar Mascotas</h5>
-        <form>
+        <form #filterForm="ngForm" (ngSubmit)="applyFilters(filterForm.value)">
           <div class="mb-3">
-            <label for="provincia" class="form-label">Provincia</label>
-            <select class="form-select" id="provincia">
-              <option selected>Todas</option>
-              <option>Madrid</option>
-              <option>Barcelona</option>
-              <option>Valencia</option>
-              <option>...</option>
+            <label for="region" class="form-label">Comunidad Autónoma</label>
+            <select class="form-select" id="region" name="region" ngModel (change)="onRegionChange(filterForm.value.region)">
+              <option value="">Todas</option>
+              <option *ngFor="let region of regionsAndCities | keyvalue" [value]="region.key">{{ region.key }}</option>
             </select>
           </div>
           <div class="mb-3">
-            <label for="ciudad" class="form-label">Ciudad</label>
-            <select class="form-select" id="ciudad">
-              <option selected>Todas</option>
-              <option>Madrid</option>
-              <option>Barcelona</option>
-              <option>Valencia</option>
-              <option>...</option>
+            <label for="city" class="form-label">Ciudad</label>
+            <select class="form-select" id="city" name="city" ngModel>
+              <option value="">Todas</option>
+              <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
             </select>
           </div>
           <div class="mb-3">
-            <label for="raza" class="form-label">Raza</label>
-            <select class="form-select" id="raza">
-              <option selected>Todas</option>
-              <option>Labrador</option>
-              <option>Pastor Alemán</option>
-              <option>Siamés</option>
-              <option>...</option>
+            <label for="animalType" class="form-label">Tipo de Animal</label>
+            <select class="form-select" id="animalType" name="animalType" ngModel (change)="onAnimalTypeChange(filterForm.value.animalType)">
+              <option value="">Todos</option>
+              <option *ngFor="let type of animalTypesAndBreeds | keyvalue" [value]="type.key">{{ type.key }}</option>
             </select>
           </div>
           <div class="mb-3">
-            <label for="tipo-animal" class="form-label">Tipo de Animal</label>
-            <select class="form-select" id="tipo-animal">
-              <option selected>Todos</option>
-              <option>Perro</option>
-              <option>Gato</option>
-              <option>Otro</option>
+            <label for="breed" class="form-label">Raza</label>
+            <select class="form-select" id="breed" name="breed" ngModel>
+              <option value="">Todas</option>
+              <option *ngFor="let breed of breeds" [value]="breed">{{ breed }}</option>
             </select>
           </div>
           <div class="mb-3">
-            <label for="ordenar" class="form-label">Ordenar por</label>
-            <select class="form-select" id="ordenar">
-              <option selected>Última publicación</option>
-              <option>Primera publicación</option>
+            <label for="orderByDate" class="form-label">Ordenar por Fecha</label>
+            <select class="form-select" id="orderByDate" name="orderByDate" ngModel>
+              <option value="">Sin Orden</option>
+              <option value="latest">Más recientes primero</option>
+              <option value="oldest">Más antiguas primero</option>
             </select>
           </div>
           <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="disponible">
-            <label class="form-check-label" for="disponible">Disponible</label>
+            <input class="form-check-input" type="checkbox" id="available" name="available" ngModel>
+            <label class="form-check-label" for="available">Disponible</label>
           </div>
           <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="ppp">
+            <input class="form-check-input" type="checkbox" id="ppp" name="isPPP" ngModel>
             <label class="form-check-label" for="ppp">PPP (Perros Potencialmente Peligrosos)</label>
           </div>
           <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="vacunado">
-            <label class="form-check-label" for="vacunado">Vacunado</label>
+            <input class="form-check-input" type="checkbox" id="vaccinated" name="vaccinated" ngModel>
+            <label class="form-check-label" for="vaccinated">Vacunado</label>
           </div>
           <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
         </form>
       </div>
     </div>
 
+
+
     <!-- Tarjetas de Mascotas -->
     <div class="col-lg-10">
       <div class="row">
+        <!-- Esto cuando coja las imagenes de la base de datos -->
+        <!-- <div *ngIf="posts.length === 0" class="col-12 text-center">
+          <h2>No se han encontrado mascotas</h2>
+        <div *ngFor="let pet of posts" class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img [src]="pet.imageUrl" class="card-img-top card-img-custom" [alt]="pet.name">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ pet.name }}</h5>
+              <p class="card-text">{{ pet.city }}</p>
+              <p class="card-text"><small class="text-muted">Publicado el {{ pet.fechaPublicacion | date:'shortDate' }}</small></p>
+            </div>
+            <div class="card-footer text-center">
+              <a href="specific-post/{{ pet.id }}" class="btn btn-primary">Más detalles</a>
+            </div>
+          </div> -->
         <!-- Card 1 -->
         <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
           <div class="card h-100 shadow-sm">
@@ -177,7 +184,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Más tarjetas... -->
       </div>
     </div>

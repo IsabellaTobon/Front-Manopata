@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg" style="background-color: rgb(230, 211, 165);">
   <a class="navbar-brand ms-5">
     <img src="https://imgs.search.brave.com/cXYFBBFcXWwYYrFTgKFn_EnfkwVa3hCdeQQwPT9hso8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzMyMzc3OC9p/c29sYXRlZC9wcmV2/aWV3LzZhNDQzMTY1/YjI0MWUwYmM3ZDQ4/ZTA4M2U3OGQ5Yzcx/LWxsYW1hdGl2YXMt/bWFuY2hhcy1hbmlt/YWwtcHJpbnQtZW4t/bWFyY28tY29uLWZv/cm1hLWRlLXphcnBh/LnBuZw" alt="logo" width="50" height="50" class="d-inline-block align-text-center">
@@ -10,7 +9,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav me-auto mb-4 mb-lg-0 h5">
       <li class="nav-item">
-        <a class="nav-link " href="">Inicio</a>
+        <a class="nav-link " href="" id="first-link">Inicio</a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="/adoptions">Adopciones</a>
@@ -25,36 +24,9 @@
         <a class="nav-link" href="/contact">Contáctanos</a>
       </li>
     </ul>
-    <div class="d-flex">
-      <button class="btn btn-primary me-2" (click)="openLoginForm()">Iniciar sesión</button>
-      <button class="btn btn-outline custom-border me-4" (click)="openRegisterForm()">Registrarse</button>
+    <div class="d-flex flex-wrap">
+      <button class="btn btn-primary me-2 mb-2" (click)="openLoginForm()">Iniciar sesión</button>
+      <button class="btn btn-outline custom-border me-4 mb-2" (click)="openRegisterForm()">Registrarse</button>
     </div>
   </div>
 </nav>
-
-  <!-- <div *ngIf="showLoginForm || showRegisterForm">
-    <div *ngIf="showLoginForm">
-      <h2>Iniciar sesión</h2>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
-        <input formControlName="nickname" type="text" placeholder="Nickname" />
-        <input formControlName="password" type="password" placeholder="Contraseña" />
-        <button type="submit">Iniciar sesión</button>
-        <p *ngIf="errorMessage">{{ errorMessage }}</p>
-      </form>
-      <button (click)="openRegisterForm()">¿No tienes cuenta? Regístrate</button>
-    </div>
-
-    <div *ngIf="showRegisterForm">
-      <h2>Registrarse</h2>
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
-        <input formControlName="nickname" type="text" placeholder="Nickname" />
-        <input formControlName="password" type="password" placeholder="Contraseña" />
-        <input formControlName="confirmPassword" type="password" placeholder="Confirmar Contraseña" />
-        <button type="submit">Registrarse</button>
-        <p *ngIf="errorMessage">{{ errorMessage }}</p>
-      </form>
-      <button (click)="openLoginForm()">¿Ya tienes cuenta? Inicia sesión</button>
-    </div>
-    <button (click)="closeForms()">Cerrar</button>
-  </div>
-</nav> -->

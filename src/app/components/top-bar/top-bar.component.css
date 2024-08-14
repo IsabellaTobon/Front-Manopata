@@ -1,23 +1,48 @@
 .navbar {
-  position:fixed;
+  position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
 }
+
 .navbar-brand {
   font-weight: bold;
-  color:rgb(194, 108, 27) !important;
-  margin-right: 40px;
+  color: rgb(194, 108, 27) !important;
   font-size: x-large;
+}
+
+#first-link {
+  margin-left: 60px;
 }
 
 .nav-link {
   color: rgb(0, 0, 0) !important;
-  margin-right: 25px;
+  font-size: large;
 }
 
 .nav-link:hover {
-  color:rgb(194, 108, 27) !important;
+  color: rgb(194, 108, 27) !important;
+  font-size: larger;
+  text-decoration: underline;
+}
+
+/* Ajuste para distribuir mejor los items en la navbar */
+.navbar-nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  gap: 60px; /* Ajusta el espaciado entre enlaces */
+}
+
+.d-flex {
+  padding-left: 30px; /* Ajuste del padding para pantallas medianas */
+  padding-right: 30px;
+  display: flex;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0;
 }
 
 .navbar-toggler-icon {
@@ -28,18 +53,14 @@
   margin-left: 1rem;
 }
 
-.ms-auto {
-  margin-left: auto !important;
-}
-
 .me-auto {
   margin-right: auto !important;
 }
 
- /* CUSTOM */
+/* CUSTOM */
 
 .custom-border {
-  border-color:rgb(194, 108, 27);
+  border-color: rgb(194, 108, 27);
   color: rgb(194, 108, 27);
   border-width: 3px;
   align-items: center;
@@ -55,4 +76,50 @@
 
 #open-close-menu {
   z-index: 10;
+}
+
+/* Ajustes adicionales para pantallas medianas */
+@media (max-width: 992px) { /* Colapsar el menú en pantallas medianas */
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .d-flex {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .navbar-nav .nav-link {
+    margin: 5px 0;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
+
+/* Ajustes adicionales para pantallas pequeñas */
+@media (max-width: 768px) {
+  .navbar-brand {
+    margin-right: 10px;
+    font-size: large;
+  }
+
+  .nav-link {
+    margin-right: 10px;
+    font-size: medium;
+  }
+
+  .d-flex {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-left: 0;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 5px;
+  }
 }

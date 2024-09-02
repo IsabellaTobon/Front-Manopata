@@ -48,4 +48,9 @@ export class PostService {
     return this.http.get<any[]>(this.apiUrl, { params });
   }
 
+  // Método para crear un nuevo post
+  createPost(postData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}`, postData);
+  }
+
 }

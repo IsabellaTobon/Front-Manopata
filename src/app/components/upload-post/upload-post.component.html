@@ -1,0 +1,71 @@
+<div class="container mt-5">
+  <div class="card shadow-sm p-4">
+    <h5 class="card-title">Subir Nueva Mascota</h5>
+    <form (ngSubmit)="submitPost()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre de la Mascota</label>
+        <input type="text" id="name" [(ngModel)]="newPost.name" name="name" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="animalType" class="form-label">Tipo de Animal</label>
+        <select id="animalType" [(ngModel)]="newPost.animalType" name="animalType" class="form-select" (change)="onAnimalTypeChange(newPost.animalType)" required>
+          <option value="">Seleccione una opción</option>
+          <option *ngFor="let type of animalTypesAndBreeds | keyvalue" [value]="type.key">{{ type.key }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="breed" class="form-label">Raza</label>
+        <select id="breed" [(ngModel)]="newPost.breed" name="breed" class="form-select">
+          <option value="">Seleccione una opción</option>
+          <option *ngFor="let breed of breeds" [value]="breed">{{ breed }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="age" class="form-label">Edad</label>
+        <input type="number" id="age" [(ngModel)]="newPost.age" name="age" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="province" class="form-label">Provincia</label>
+        <select id="province" [(ngModel)]="newPost.province" name="province" class="form-select" (change)="onProvinceChange(newPost.province)" required>
+          <option value="">Seleccione una opción</option>
+          <option *ngFor="let province of provincesAndCities | keyvalue" [value]="province.key">{{ province.key }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="city" class="form-label">Ciudad</label>
+        <select id="city" [(ngModel)]="newPost.city" name="city" class="form-select" required>
+          <option value="">Seleccione una opción</option>
+          <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Descripción</label>
+        <textarea id="description" [(ngModel)]="newPost.description" name="description" class="form-control" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-check-label">
+          <input type="checkbox" [(ngModel)]="newPost.ppp" name="ppp" class="form-check-input">
+          PPP (Perro Potencialmente Peligroso)
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-check-label">
+          <input type="checkbox" [(ngModel)]="newPost.vaccinated" name="vaccinated" class="form-check-input">
+          Vacunado
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-check-label">
+          <input type="checkbox" [(ngModel)]="newPost.available" name="available" class="form-check-input" checked>
+          Disponible
+        </label>
+      </div>
+      <div class="mb-3">
+        <label for="image" class="form-label">Subir Imagen</label>
+        <input type="file" id="image" (change)="onFileSelected($event)" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Subir Post</button>
+      <button type="button" class="btn btn-secondary w-100 mt-2" (click)="cancel()">Cancelar</button>
+    </form>
+  </div>
+</div>

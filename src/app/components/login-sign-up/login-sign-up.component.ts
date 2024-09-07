@@ -33,7 +33,7 @@ export class LoginSignUpComponent implements OnInit{
 
   registerForm: FormGroup = new FormGroup({
     name: new FormControl(""),
-    lastName: new FormControl(""),
+    lastname: new FormControl(""),
     nickname: new FormControl(""),
     email: new FormControl(""),
     password: new FormControl(""),
@@ -61,7 +61,7 @@ export class LoginSignUpComponent implements OnInit{
         Validators.minLength(3),
         Validators.maxLength(30)
       ]],
-      lastName: ['', [
+      lastname: ['', [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(30)
@@ -104,6 +104,7 @@ export class LoginSignUpComponent implements OnInit{
     );
   }
 
+  // Valida si las contraseñas coinciden
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
@@ -133,28 +134,57 @@ export class LoginSignUpComponent implements OnInit{
     const { nickname, password } = this.loginForm.value;
     this.authService.login(nickname, password).subscribe(
       () => this.router.navigate(['/']),
-      () => this.errorMessage = 'Usuario o contraseña incorrectos'
-    );
+      (error) => {
+         if (error.status === 401) {
+            this.errorMessage = 'Usuario o contraseña incorrectos';
+         } else {
+            this.errorMessage = 'Error de autenticación, por favor intente nuevamente';
+         }
+      }
+   );
   }
 
   onSubmitRegister(): void {
     if (this.registerForm.invalid) {
-      return;
+        return;
     }
 
-    const { name, lastName, nickname, email, password, confirmPassword } = this.registerForm.value;
+    const { name, lastname, nickname, email, password, confirmPassword } = this.registerForm.value;
+
+    // Imprimir los valores que se están enviando para verificar
+    console.log('Datos del formulario:', this.registerForm.value);
 
     // Validar que las contraseñas coinciden antes de enviar
     if (password !== confirmPassword) {
-      this.errorMessage = 'Las contraseñas no coinciden';
-      return;
+        this.errorMessage = 'Las contraseñas no coinciden';
+        return;
     }
 
-    this.authService.register(name, lastName, nickname, email, password).subscribe(
-      () => {
-        this.openLoginForm();
-        this.errorMessage = 'Usuario registrado correctamente, inicia sesión';
-      }
+    // Enviar los datos al servicio de registro
+    this.authService.register(nickname, name, lastname, email, password).subscribe(
+        () => {
+            this.openLoginForm();
+            this.errorMessage = 'Usuario registrado correctamente, inicia sesión';
+        },
+        (error) => {
+            // Imprimir el error completo para revisar el contenido
+            console.log('Error durante el registro:', error);
+
+            // Manejar los errores específicos del servidor
+            if (error.status === 400) {
+                if (error.error === "Error: El nickname ya está en uso.") {
+                    this.errorMessage = 'El nickname ya está en uso';
+                } else if (error.error === "Error: El email ya está en uso.") {
+                    this.errorMessage = 'El email ya está en uso';
+                } else if (error.error) {
+                    this.errorMessage = `Error: ${error.error}`;  // Mostrar cualquier otro mensaje del servidor
+                } else {
+                    this.errorMessage = 'Error al registrarse. Por favor, intente nuevamente.';
+                }
+            } else {
+                this.errorMessage = 'Error inesperado. Por favor, intente nuevamente.';
+            }
+        }
     );
   }
 }

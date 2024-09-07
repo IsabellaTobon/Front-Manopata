@@ -14,7 +14,8 @@ interface LoginResponse {
 })
 
 export class AuthService {
-  private apiUrl = 'http://localhost:4200';
+  private apiUrl = 'http://localhost:8080/auth';
+  private userApiUrl = 'http://localhost:8080/api/user';
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -37,8 +38,28 @@ export class AuthService {
     );
   }
 
-  register (nickname: string, name: string, lastName: string, email: string ,password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, { nickname, name, lastName, email, password }).pipe(
+  // Enviar enlace para restablecer contraseña
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  // Cambiar contraseña
+  changePassword(nickname: string, oldPassword: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/change-password`, { nickname, oldPassword, newPassword });
+  }
+
+  // Restablecer contraseña con token
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reset-password`, { token, newPassword });
+  }
+
+  // Renovar token de autenticación
+  refreshToken(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/refresh-token`, {});
+  }
+
+  register(nickname: string, name: string, lastname: string, email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, { nickname, name, lastname, email, password }).pipe(
       tap(() => {
         this.router.navigate(['/login']);
       })
@@ -47,12 +68,12 @@ export class AuthService {
 
   //Verify if nickname are available
   checkNicknameAvailability(nickname: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/check-nickname/${nickname}`);
+    return this.http.get<boolean>(`${this.userApiUrl}/check-nickname`, { params: { nickname } });
   }
 
   //Verify if email are available
   checkEmailAvailability(email: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/check-email/${email}`);
+    return this.http.get<boolean>(`${this.userApiUrl}/check-email`, { params: { email } });
   }
 
   logout(): void {

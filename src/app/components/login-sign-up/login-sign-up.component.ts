@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class LoginSignUpComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   loginForm: FormGroup = new FormGroup({
@@ -134,62 +136,50 @@ export class LoginSignUpComponent implements OnInit{
     const { nickname, password } = this.loginForm.value;
 
     this.authService.login(nickname, password).subscribe(
-      (response) => {
-          console.log('Login exitoso', response);  // Depurar respuesta
-          this.router.navigate(['/']);
+      () => {
+        this.toastr.success('Inicio de sesión exitoso', 'Éxito');  // Mostrar notificación de éxito
+        this.closeForms();  // Cerrar el formulario después del login
       },
       (error) => {
-          console.error('Error durante el login:', error);  // Depurar error
-          if (error.status === 401) {
-              this.errorMessage = 'Usuario o contraseña incorrectos';
-          } else {
-              this.errorMessage = 'Error de autenticación, por favor intente nuevamente';
-          }
+        if (error.status === 401) {
+          this.toastr.error('Usuario o contraseña incorrectos', 'Error');
+        } else {
+          this.toastr.error('Error de autenticación. Intente nuevamente', 'Error');
+        }
       }
-  );
+    );
   }
 
   onSubmitRegister(): void {
     if (this.registerForm.invalid) {
-        return;
+      return;
     }
 
     const { name, lastname, nickname, email, password, confirmPassword } = this.registerForm.value;
 
-    // Imprimir los valores que se están enviando para verificar
-    console.log('Datos del formulario:', this.registerForm.value);
-
-    // Validar que las contraseñas coinciden antes de enviar
     if (password !== confirmPassword) {
-        this.errorMessage = 'Las contraseñas no coinciden';
-        return;
+      this.toastr.error('Las contraseñas no coinciden', 'Error');
+      return;
     }
 
-    // Enviar los datos al servicio de registro
     this.authService.register(nickname, name, lastname, email, password).subscribe(
-        () => {
-            this.openLoginForm();
-            this.errorMessage = 'Usuario registrado correctamente, inicia sesión';
-        },
-        (error) => {
-            // Imprimir el error completo para revisar el contenido
-            console.log('Error durante el registro:', error);
-
-            // Manejar los errores específicos del servidor
-            if (error.status === 400) {
-                if (error.error === "Error: El nickname ya está en uso.") {
-                    this.errorMessage = 'El nickname ya está en uso';
-                } else if (error.error === "Error: El email ya está en uso.") {
-                    this.errorMessage = 'El email ya está en uso';
-                } else if (error.error) {
-                    this.errorMessage = `Error: ${error.error}`;  // Mostrar cualquier otro mensaje del servidor
-                } else {
-                    this.errorMessage = 'Error al registrarse. Por favor, intente nuevamente.';
-                }
-            } else {
-                this.errorMessage = 'Error inesperado. Por favor, intente nuevamente.';
-            }
+      () => {
+        this.toastr.success('Usuario registrado correctamente', 'Éxito');  // Mostrar notificación de éxito
+        this.openLoginForm();  // Abrir el formulario de login
+      },
+      (error) => {
+        if (error.status === 400) {
+          if (error.error === "Error: El nickname ya está en uso.") {
+            this.toastr.error('El nickname ya está en uso', 'Error');
+          } else if (error.error === "Error: El email ya está en uso.") {
+            this.toastr.error('El email ya está en uso', 'Error');
+          } else {
+            this.toastr.error(`Error: ${error.error}`, 'Error');
+          }
+        } else {
+          this.toastr.error('Error inesperado. Inténtalo nuevamente.', 'Error');
         }
+      }
     );
   }
 }

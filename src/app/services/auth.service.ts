@@ -29,14 +29,20 @@ export class AuthService {
   }
 
   login(nickname: string, password: string): Observable<LoginResponse> {
+    console.log('Enviando datos al servidor:', { nickname, password });  // Depurar datos enviados
+
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { nickname, password }).pipe(
-      tap((response: LoginResponse) => {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('userId', response.userId); // Save the user ID
-        this.loggedIn.next(true);
-      })
+        tap((response: LoginResponse) => {
+            console.log('Respuesta recibida del servidor:', response);  // Depurar respuesta recibida
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('userId', response.userId);
+            this.loggedIn.next(true);
+        },
+        (error) => {
+            console.log('Error recibido del servidor:', error);  // Depurar errores recibidos
+        })
     );
-  }
+}
 
   // Enviar enlace para restablecer contraseña
   forgotPassword(email: string): Observable<any> {

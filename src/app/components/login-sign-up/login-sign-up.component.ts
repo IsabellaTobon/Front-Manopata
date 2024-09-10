@@ -132,16 +132,21 @@ export class LoginSignUpComponent implements OnInit{
     }
 
     const { nickname, password } = this.loginForm.value;
+
     this.authService.login(nickname, password).subscribe(
-      () => this.router.navigate(['/']),
+      (response) => {
+          console.log('Login exitoso', response);  // Depurar respuesta
+          this.router.navigate(['/']);
+      },
       (error) => {
-         if (error.status === 401) {
-            this.errorMessage = 'Usuario o contraseña incorrectos';
-         } else {
-            this.errorMessage = 'Error de autenticación, por favor intente nuevamente';
-         }
+          console.error('Error durante el login:', error);  // Depurar error
+          if (error.status === 401) {
+              this.errorMessage = 'Usuario o contraseña incorrectos';
+          } else {
+              this.errorMessage = 'Error de autenticación, por favor intente nuevamente';
+          }
       }
-   );
+  );
   }
 
   onSubmitRegister(): void {

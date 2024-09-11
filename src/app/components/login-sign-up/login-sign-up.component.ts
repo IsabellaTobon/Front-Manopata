@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -24,8 +23,7 @@ export class LoginSignUpComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private toastr: ToastrService
+    private router: Router
   ) {}
 
   loginForm: FormGroup = new FormGroup({
@@ -134,17 +132,14 @@ export class LoginSignUpComponent implements OnInit{
     }
 
     const { nickname, password } = this.loginForm.value;
-
     this.authService.login(nickname, password).subscribe(
-      () => {
-        this.toastr.success('Inicio de sesión exitoso', 'Éxito');  // Mostrar notificación de éxito
-        this.closeForms();  // Cerrar el formulario después del login
-      },
+      () => this.router.navigate(['/']),
       (error) => {
         if (error.status === 401) {
-          this.toastr.error('Usuario o contraseña incorrectos', 'Error');
+          this.errorMessage = 'Usuario o contraseña incorrectos';
         } else {
-          this.toastr.error('Error de autenticación. Intente nuevamente', 'Error');
+          this.errorMessage =
+            'Error de autenticación, por favor intente nuevamente';
         }
       }
     );
@@ -158,27 +153,18 @@ export class LoginSignUpComponent implements OnInit{
     const { name, lastname, nickname, email, password, confirmPassword } = this.registerForm.value;
 
     if (password !== confirmPassword) {
-      this.toastr.error('Las contraseñas no coinciden', 'Error');
+      this.errorMessage = 'Las contraseñas no coinciden';
       return;
     }
 
     this.authService.register(nickname, name, lastname, email, password).subscribe(
       () => {
-        this.toastr.success('Usuario registrado correctamente', 'Éxito');  // Mostrar notificación de éxito
-        this.openLoginForm();  // Abrir el formulario de login
+        this.openLoginForm();
+        this.errorMessage = 'Usuario registrado correctamente, inicia sesión';
       },
       (error) => {
-        if (error.status === 400) {
-          if (error.error === "Error: El nickname ya está en uso.") {
-            this.toastr.error('El nickname ya está en uso', 'Error');
-          } else if (error.error === "Error: El email ya está en uso.") {
-            this.toastr.error('El email ya está en uso', 'Error');
-          } else {
-            this.toastr.error(`Error: ${error.error}`, 'Error');
-          }
-        } else {
-          this.toastr.error('Error inesperado. Inténtalo nuevamente.', 'Error');
-        }
+        console.log('Error durante el registro:', error.message);
+        this.errorMessage = error.message;
       }
     );
   }

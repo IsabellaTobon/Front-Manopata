@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { catchError,tap } from 'rxjs/operators';
+
 
 interface LoginResponse {
   token: string;
@@ -34,12 +35,15 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { nickname, password }).pipe(
         tap((response: LoginResponse) => {
             console.log('Respuesta recibida del servidor:', response);  // Depurar respuesta recibida
+            // Guardar el token en localStorage
             localStorage.setItem('token', response.token);
             localStorage.setItem('userId', response.userId);
-            this.loggedIn.next(true);
-        },
-        (error) => {
-            console.log('Error recibido del servidor:', error);  // Depurar errores recibidos
+            this.loggedIn.next(true);  // Actualizar el estado de autenticación
+        }),
+        catchError((error) => {
+            // Manejar el error en caso de que ocurra
+            console.error('Error recibido del servidor:', error);
+            return throwError(() => new Error(error.error?.error || 'Error inesperado durante el inicio de sesión.'));
         })
     );
 }
@@ -67,7 +71,19 @@ export class AuthService {
   register(nickname: string, name: string, lastname: string, email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, { nickname, name, lastname, email, password }).pipe(
       tap(() => {
-        this.router.navigate(['/login']);
+        console.log('Usuario registrado correctamente');
+      }),
+      catchError((error) => {
+        console.error('Error durante el registro:', error);
+        // Manejo de errores específicos
+        if (error.status === 400 && error.error) {
+          if (error.error.error === 'El nickname ya está en uso.') {
+            return throwError(() => new Error('El nickname ya está en uso.'));
+          } else if (error.error.error === 'El email ya está en uso.') {
+            return throwError(() => new Error('El email ya está en uso.'));
+          }
+        }
+        return throwError(() => new Error('Error inesperado al registrarse. Intente nuevamente.'));
       })
     );
   }

@@ -3,10 +3,27 @@
   top: -50px; /* Para que aparezca justo encima del formulario */
   left: 50%;
   transform: translateX(-50%);
-  background-color: #f0ad4e; /* Color de fondo atractivo */
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 16px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Colores según el tipo de notificación */
+.alert-success {
+  background-color: #5cb85c; /* Verde atractivo para éxito */
+}
+
+.alert-error {
+  background-color: #d9534f; /* Rojo para errores */
+}
+
+.alert-info {
+  background-color: #5bc0de; /* Azul suave para información */
+}
+
+.alert-warning {
+  background-color: #f0ad4e; /* Naranja para advertencias (el color que ya utilizas) */
 }

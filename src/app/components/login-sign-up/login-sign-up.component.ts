@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -23,13 +23,16 @@ export class LoginSignUpComponent implements OnInit{
 
   @Input() showLoginForm: Boolean = false;
   @Input() showRegisterForm: Boolean = false;
+  @Input() showForgotPasswordForm: Boolean = false;
 
   errorMessage: string = '';
+  notificationType: 'success' | 'error' | 'info' | 'warning' = 'info';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   loginForm: FormGroup = new FormGroup({
@@ -45,6 +48,20 @@ export class LoginSignUpComponent implements OnInit{
     password: new FormControl(""),
     confirmPassword: new FormControl("")
   })
+
+  forgotPasswordForm: FormGroup = new FormGroup({
+    email: new FormControl("")
+  });
+
+  changePasswordForm: FormGroup = new FormGroup({
+    nickname: new FormControl(''),
+    oldPassword: new FormControl(''),
+    newPassword: new FormControl('')
+  });
+
+  resetPasswordForm: FormGroup = new FormGroup({
+    newPassword: new FormControl('')
+  });
 
   ngOnInit(): void {
      // Inicializar el formulario de login
@@ -92,6 +109,34 @@ export class LoginSignUpComponent implements OnInit{
         Validators.maxLength(20)
       ]]
     }, { validator: this.passwordMatchValidator });
+
+    // Inicializar el formulario de forgot password
+  this.forgotPasswordForm = this.fb.group({
+    email: ['', [
+      Validators.required,
+      Validators.email
+    ]]
+  });
+
+  // Inicializar el formulario de cambio de contraseña
+  this.changePasswordForm = this.fb.group({
+    nickname: ['', Validators.required],
+    oldPassword: ['', Validators.required],
+    newPassword: ['', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(20)
+    ]]
+  });
+
+  // Inicializar el formulario de restablecimiento de contraseña
+  this.resetPasswordForm = this.fb.group({
+    newPassword: ['', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(20)
+    ]]
+  });
   }
 
   // Validador para verificar si el nickname está en uso
@@ -117,14 +162,137 @@ export class LoginSignUpComponent implements OnInit{
     return password === confirmPassword ? null : { mismatch: true };
   }
 
+  onSubmitRegister(): void {
+    if (this.registerForm.invalid) {
+      this.notificationType = 'warning';  // Tipo de advertencia
+      this.errorMessage = 'Por favor, completa todos los campos correctamente';  // Mensaje de advertencia
+      return;
+    }
+
+    const { name, lastname, nickname, email, password, confirmPassword } = this.registerForm.value;
+    if (password !== confirmPassword) {
+      this.notificationType = 'error';  // Tipo de error
+      this.errorMessage = 'Las contraseñas no coinciden';  // Mensaje de error
+      return;
+    }
+
+    this.authService.register(nickname, name, lastname, email, password).subscribe(
+      () => {
+        this.notificationType = 'success';  // Tipo de éxito
+        this.errorMessage = 'Registro exitoso. Ahora puedes iniciar sesión';  // Mensaje de éxito
+        this.openLoginForm();  // Redirige al formulario de login
+      },
+      (error) => {
+        this.notificationType = 'error';  // Tipo de error
+        this.errorMessage = error.message || 'Error durante el registro';  // Mensaje de error
+      }
+    );
+  }
+
+  onSubmitLogin(): void {
+    const { nickname, password } = this.loginForm.value;
+    this.authService.login(nickname, password).subscribe(
+      (response) => {
+        this.notificationType = 'success';  // Tipo de mensaje de éxito
+        this.errorMessage = 'Inicio de sesión exitoso';  // Mensaje de éxito
+        // Redirige al usuario o realiza otra acción
+      },
+      (error) => {
+        this.notificationType = 'error';  // Tipo de mensaje de error
+        this.errorMessage = 'Usuario o contraseña incorrectos';  // Mensaje de error
+      }
+    );
+  }
+
+  onSubmitForgotPassword(): void {
+    if (this.forgotPasswordForm.invalid) {
+      this.notificationType = 'warning';
+      this.errorMessage = 'Por favor, ingresa un correo válido.';
+      return;
+    }
+
+    const email = this.forgotPasswordForm.value.email;
+    this.authService.forgotPassword(email).subscribe(
+      (response) => {
+        this.notificationType = 'success';
+        this.errorMessage = 'Enlace de restablecimiento enviado a tu email.';
+      },
+      (error) => {
+        this.notificationType = 'error';
+        this.errorMessage = error.message || 'Error al enviar el enlace de restablecimiento.';
+      }
+    );
+  }
+
+  onSubmitChangePassword(): void {
+    const { nickname, oldPassword, newPassword } = this.changePasswordForm.value;
+    if (this.changePasswordForm.invalid) {
+      this.notificationType = 'warning';
+      this.errorMessage = 'Por favor, completa todos los campos.';
+      return;
+    }
+
+    this.authService.changePassword(nickname, oldPassword, newPassword).subscribe(
+      (response) => {
+        this.notificationType = 'success';
+        this.errorMessage = 'Contraseña actualizada correctamente.';
+      },
+      (error) => {
+        this.notificationType = 'error';
+        this.errorMessage = error.message || 'Error al cambiar la contraseña.';
+      }
+    );
+  }
+
+  onSubmitResetPassword(): void {
+    const token = this.route.snapshot.queryParamMap.get('token');  // Obtener el token de la URL
+  const newPassword = this.resetPasswordForm.value.newPassword;
+
+  if (!token) {
+    this.notificationType = 'error';
+    this.errorMessage = 'Token no válido o no presente en la URL.';
+    return;
+  }
+
+  if (this.resetPasswordForm.invalid) {
+    this.notificationType = 'warning';
+    this.errorMessage = 'Por favor, ingresa una nueva contraseña válida.';
+    return;
+  }
+
+  this.authService.resetPassword(token, newPassword).subscribe(
+    (response) => {
+      this.notificationType = 'success';
+      this.errorMessage = 'Contraseña restablecida correctamente.';
+    },
+    (error) => {
+      this.notificationType = 'error';
+      this.errorMessage = error.message || 'Error al restablecer la contraseña.';
+    }
+  );
+  }
+
   openLoginForm(): void {
     this.showLoginForm = true;
     this.showRegisterForm = false;
+
+    this.showForgotPasswordForm = false;
+    this.loginForm.reset();
+  }
+
+  openForgotPasswordForm(): void {
+    this.showLoginForm = false;
+    this.showRegisterForm = false;
+    this.showForgotPasswordForm = true;
+    this.forgotPasswordForm.reset();
   }
 
   openRegisterForm(): void {
     this.showLoginForm = false;
     this.showRegisterForm = true;
+
+    this.showForgotPasswordForm = false;
+    this.registerForm.reset();
   }
 
   closeForms(): void {
@@ -132,43 +300,4 @@ export class LoginSignUpComponent implements OnInit{
     this.showRegisterForm = false;
   }
 
-  onSubmitLogin(): void {
-    if (this.loginForm.invalid) {
-      return;
-    }
-
-    const { nickname, password } = this.loginForm.value;
-    this.authService.login(nickname, password).subscribe(
-      () => {
-        this.router.navigate(['/']);
-        this.errorMessage = 'Login correcto';
-      },
-      (error) => {
-        this.errorMessage = error.status === 401 ? 'Usuario o contraseña incorrectos' : 'Error de autenticación, intente nuevamente';
-      }
-    );
-  }
-
-  onSubmitRegister(): void {
-    if (this.registerForm.invalid) {
-      return;
-    }
-
-    const { name, lastname, nickname, email, password, confirmPassword } = this.registerForm.value;
-
-    if (password !== confirmPassword) {
-      this.errorMessage = 'Las contraseñas no coinciden';
-      return;
-    }
-
-    this.authService.register(nickname, name, lastname, email, password).subscribe(
-      () => {
-        this.openLoginForm();
-        this.errorMessage = 'Usuario registrado correctamente, inicia sesión';
-      },
-      (error) => {
-        this.errorMessage = `Error: ${error.message}`;
-      }
-    );
-  }
 }

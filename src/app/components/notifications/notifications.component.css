@@ -1,0 +1,12 @@
+.notifications {
+  position: absolute;
+  top: -50px; /* Para que aparezca justo encima del formulario */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f0ad4e; /* Color de fondo atractivo */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}

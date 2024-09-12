@@ -57,6 +57,25 @@
   margin-right: auto !important;
 }
 
+.welcome-message {
+  font-size: 1.1rem;
+  color: rgb(247, 245, 244); /* Color de texto */
+  background-color: rgba(189, 126, 67); /* Fondo suave */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin-right: 10px;
+  margin-left: 10px;
+  opacity: 0;
+  transform: translateY(-20px); /* Efecto de deslizamiento */
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);  /* El texto se desliza a su lugar */
+}
+
 /* CUSTOM */
 
 .custom-border {
@@ -83,11 +102,20 @@
   .navbar-nav {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px; /* Ajusta el espaciado entre enlaces */
+  }
+
+  .navbar-brand {
+    font-size: medium; /* Reduce el tamaño del logo */
+  }
+
+  .nav-link {
+    font-size: medium; /* Ajusta el tamaño de los enlaces */
   }
 
   .d-flex {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left:10px;
+    padding-right: 10px;
   }
 
   .navbar-nav .nav-link {
@@ -107,8 +135,12 @@
     font-size: large;
   }
 
+  .navbar-nav {
+    gap: 20px; /* Reduce el espaciado en pantallas pequeñas */
+  }
+
   .nav-link {
-    margin-right: 10px;
+    margin-right: 5px;
     font-size: medium;
   }
 
@@ -116,10 +148,17 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     margin-left: 0;
+    padding-left: 10px;  /* Reduce el padding en pantallas pequeñas */
+    padding-right: 10px;
   }
 
   .btn {
     width: 100%;
     margin-bottom: 5px;
   }
+
+  body {
+    padding-top: 100px; /* Aumenta el padding-top en pantallas pequeñas para evitar solapamiento */
+  }
+
 }

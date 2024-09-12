@@ -1,23 +1,46 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'top-bar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.css',
 })
-export class TopBarComponent {
+export class TopBarComponent implements OnInit {
 
   @Output() loginFormOpened = new EventEmitter<void>();
   @Output() registerFormOpened = new EventEmitter<void>();
 
+  isLoggedIn: boolean = false;
+  nickname: string | null = '';
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    // Subscribirse al estado de autenticación
+    this.authService.isLoggedIn().subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+
+      if (this.isLoggedIn) {
+        // Obtener el nickname del localStorage
+        this.nickname = localStorage.getItem('nickname');
+      } else {
+        this.nickname = null;
+      }
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();  // Llamar al método de logout
+  }
+
   openLoginForm(): void {
-    console.log("login from button clicked");
     this.loginFormOpened.emit();
   }
 
   openRegisterForm(): void {
-    console.log("register from button clicked");
     this.registerFormOpened.emit();
   }
 }

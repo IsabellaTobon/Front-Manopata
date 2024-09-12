@@ -4,12 +4,18 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { NotificationsComponent } from '../notifications/notifications.component';
 
 
 @Component({
   selector: 'app-login-sign-up',
   standalone: true,
-  imports: [ FormsModule, ReactiveFormsModule, CommonModule ],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    NotificationsComponent
+  ],
   templateUrl: './login-sign-up.component.html',
   styleUrl: './login-sign-up.component.css'
 })
@@ -133,14 +139,12 @@ export class LoginSignUpComponent implements OnInit{
 
     const { nickname, password } = this.loginForm.value;
     this.authService.login(nickname, password).subscribe(
-      () => this.router.navigate(['/']),
+      () => {
+        this.router.navigate(['/']);
+        this.errorMessage = 'Login correcto';
+      },
       (error) => {
-        if (error.status === 401) {
-          this.errorMessage = 'Usuario o contraseña incorrectos';
-        } else {
-          this.errorMessage =
-            'Error de autenticación, por favor intente nuevamente';
-        }
+        this.errorMessage = error.status === 401 ? 'Usuario o contraseña incorrectos' : 'Error de autenticación, intente nuevamente';
       }
     );
   }
@@ -163,8 +167,7 @@ export class LoginSignUpComponent implements OnInit{
         this.errorMessage = 'Usuario registrado correctamente, inicia sesión';
       },
       (error) => {
-        console.log('Error durante el registro:', error.message);
-        this.errorMessage = error.message;
+        this.errorMessage = `Error: ${error.message}`;
       }
     );
   }

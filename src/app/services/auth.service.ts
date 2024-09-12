@@ -30,22 +30,32 @@ export class AuthService {
   }
 
   login(nickname: string, password: string): Observable<LoginResponse> {
-    console.log('Enviando datos al servidor:', { nickname, password });  // Depurar datos enviados
+    console.log('Enviando datos al servidor:', { nickname, password });
 
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { nickname, password }).pipe(
-        tap((response: LoginResponse) => {
-            console.log('Respuesta recibida del servidor:', response);  // Depurar respuesta recibida
-            // Guardar el token en localStorage
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('userId', response.userId);
-            this.loggedIn.next(true);  // Actualizar el estado de autenticación
-        }),
-        catchError((error) => {
-            // Manejar el error en caso de que ocurra
-            console.error('Error recibido del servidor:', error);
-            return throwError(() => new Error(error.error?.error || 'Error inesperado durante el inicio de sesión.'));
-        })
+      tap((response: LoginResponse) => {
+        console.log('Respuesta recibida del servidor:', response);
+
+        // Guardar el token y el userId en localStorage
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId);
+        localStorage.setItem('nickname', nickname);  // Guardar el nickname del usuario
+        this.loggedIn.next(true);  // Actualizar el estado de autenticación
+      }),
+      catchError((error) => {
+        console.error('Error recibido del servidor:', error);
+        return throwError(() => new Error(error.error?.error || 'Error inesperado durante el inicio de sesión.'));
+      })
     );
+}
+
+getUserData(): Observable<any> {
+  const userId = this.getUserId();
+  if (!userId) {
+    return throwError(() => new Error('No se encontró el ID de usuario.'));
+  }
+
+  return this.http.get<any>(`${this.userApiUrl}/profile/${userId}`);  // Asegúrate de que esta URL devuelva los datos correctos
 }
 
   // Enviar enlace para restablecer contraseña
@@ -101,8 +111,9 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-    this.loggedIn.next(false);
-    this.router.navigate(['/login']);
+    localStorage.removeItem('nickname');  // Eliminar el nickname del localStorage
+    this.loggedIn.next(false);  // Actualizar el estado de autenticación
+    this.router.navigate(['/']);  // Redirigir al Inicio
   }
 
   // Check if the user is logged in

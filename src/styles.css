@@ -56,3 +56,26 @@ body {
   border-color: rgba(0, 0, 0, 0.408);
 }
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@media (max-width: 768px) {
+  .navbar-nav {
+    gap: 20px; /* Reduce el espaciado en pantallas pequeñas */
+  }
+
+  .navbar-brand {
+    font-size: medium; /* Reduce el tamaño de la fuente del logotipo */
+  }
+
+  .nav-link {
+    font-size: medium; /* Ajusta el tamaño de los enlaces */
+    margin-right: 5px; /* Reduce el espacio entre los enlaces */
+  }
+
+  .d-flex {
+    padding-left: 10px; /* Reduce el padding en pantallas pequeñas */
+    padding-right: 10px;
+  }
+}

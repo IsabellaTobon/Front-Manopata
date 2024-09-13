@@ -8,7 +8,8 @@
         <form #filterForm="ngForm" (ngSubmit)="applyFilters(filterForm.value)">
           <div class="mb-3">
             <label for="region" class="form-label">Comunidad Autónoma</label>
-            <select class="form-select" id="region" name="region" ngModel (change)="onRegionChange(filterForm.value.region)">
+            <select class="form-select" id="region" name="region" ngModel
+              (change)="onRegionChange(filterForm.value.region)">
               <option value="">Todas</option>
               <option *ngFor="let region of regionsAndCities | keyvalue" [value]="region.key">{{ region.key }}</option>
             </select>
@@ -22,7 +23,8 @@
           </div>
           <div class="mb-3">
             <label for="animalType" class="form-label">Tipo de Animal</label>
-            <select class="form-select" id="animalType" name="animalType" ngModel (change)="onAnimalTypeChange(filterForm.value.animalType)">
+            <select class="form-select" id="animalType" name="animalType" ngModel
+              (change)="onAnimalTypeChange(filterForm.value.animalType)">
               <option value="">Todos</option>
               <option *ngFor="let type of animalTypesAndBreeds | keyvalue" [value]="type.key">{{ type.key }}</option>
             </select>
@@ -59,135 +61,33 @@
       </div>
     </div>
 
-
-
-    <!-- Tarjetas de Mascotas -->
+    <!-- Tarjetas de Mascotas desde el Backend -->
     <div class="col-lg-10">
       <div class="row">
-        <!-- Esto cuando coja las imagenes de la base de datos -->
-        <!-- <div *ngIf="posts.length === 0" class="col-12 text-center">
+        <!-- Verificación para mostrar el botón solo si el usuario ha iniciado sesión -->
+        <div *ngIf="isLoggedIn" class="text-end mb-3">
+          <a routerLink="/upload-post" class="btn btn-primary">Subir Post</a>
+        </div>
+
+        <div *ngIf="posts.length === 0" class="col-12 text-center">
           <h2>No se han encontrado mascotas</h2>
+        </div>
+
         <div *ngFor="let pet of posts" class="col-xl-3 col-lg-4 col-md-6 mb-4">
           <div class="card h-100 shadow-sm">
-            <img [src]="pet.imageUrl" class="card-img-top card-img-custom" [alt]="pet.name">
+            <img [src]="pet.photo" class="card-img-top card-img-custom" [alt]="pet.name">
             <div class="card-body text-center">
               <h5 class="card-title">{{ pet.name }}</h5>
               <p class="card-text">{{ pet.city }}</p>
-              <p class="card-text"><small class="text-muted">Publicado el {{ pet.fechaPublicacion | date:'shortDate' }}</small></p>
+              <p class="card-text">
+                <small class="text-muted">Publicado el {{ pet.registerDate | date:'shortDate' }}</small>
+              </p>
             </div>
             <div class="card-footer text-center">
-              <a href="specific-post/{{ pet.id }}" class="btn btn-primary">Más detalles</a>
-            </div>
-          </div> -->
-        <!-- Card 1 -->
-        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://images.pexels.com/photos/4587993/pexels-photo-4587993.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 1">
-            <div class="card-body text-center">
-              <h5 class="card-title">Milo</h5>
-              <p class="card-text">Madrid</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="specific-post" class="btn btn-primary">Más detalles</a>
+              <a [routerLink]="['/specific-post', pet.id]" class="btn btn-primary">Más detalles</a>
             </div>
           </div>
         </div>
-        <!-- Card 2 -->
-        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 2">
-            <div class="card-body text-center">
-              <h5 class="card-title">Bella</h5>
-              <p class="card-text">Barcelona</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="specific-post" class="btn btn-primary">Más detalles</a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://images.pexels.com/photos/2642068/pexels-photo-2642068.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 3">
-            <div class="card-body text-center">
-              <h5 class="card-title">Rocky</h5>
-              <p class="card-text">Valencia</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="specific-post" class="btn btn-primary">Más detalles</a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 4 -->
-        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://images.pexels.com/photos/4588006/pexels-photo-4588006.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 4">
-            <div class="card-body text-center">
-              <h5 class="card-title">Luna</h5>
-              <p class="card-text">Sevilla</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="specific-post" class="btn btn-primary">Más detalles</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hilera 2 -->
-        <!-- Card 5 -->
-        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://images.pexels.com/photos/1661179/pexels-photo-1661179.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 5">
-            <div class="card-body text-center">
-              <h5 class="card-title">Simba</h5>
-              <p class="card-text">Bilbao</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="specific-post" class="btn btn-primary">Más detalles</a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 6 -->
-        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://images.pexels.com/photos/59523/pexels-photo-59523.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 6">
-            <div class="card-body text-center">
-              <h5 class="card-title">Daisy</h5>
-              <p class="card-text">Málaga</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="specific-post" class="btn btn-primary">Más detalles</a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 7 -->
-        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://images.pexels.com/photos/450327/pexels-photo-450327.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 7">
-            <div class="card-body text-center">
-              <h5 class="card-title">Leo</h5>
-              <p class="card-text">Zaragoza</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="specific-post" class="btn btn-primary">Más detalles</a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 8 -->
-        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            <img src="https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top card-img-custom" alt="Pet 8">
-            <div class="card-body text-center">
-              <h5 class="card-title">Max</h5>
-              <p class="card-text">Granada</p>
-            </div>
-            <div class="card-footer text-center">
-              <a href="specific-post" class="btn btn-primary">Más detalles</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Más tarjetas... -->
       </div>
     </div>
-  </div>
 </div>

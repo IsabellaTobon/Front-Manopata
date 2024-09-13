@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PostService {
-  private apiUrl = 'http://localhost:4200/adoptions';
+  private apiUrl = 'http://localhost:8080/api/post';
 
   constructor(private http: HttpClient) { }
 
@@ -49,8 +49,13 @@ export class PostService {
   }
 
   // Método para crear un nuevo post
-  createPost(postData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, postData);
+  createPost(postData: any, headers: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create`, postData, { headers });
+  }
+
+  // Obtener URL de imagen de un post
+  getPostImage(imageName: string): string {
+    return `http://localhost:8080/api/files/${imageName}`; // Cambiar por la URL donde están almacenadas las imágenes
   }
 
 }

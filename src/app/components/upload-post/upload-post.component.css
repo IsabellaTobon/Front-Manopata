@@ -1,0 +1,62 @@
+/* Tarjeta */
+.card {
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+}
+
+/* Estilo más compacto para inputs */
+.form-control, .form-select {
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  height: auto;
+}
+
+/* Espacio entre elementos */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Botón principal con estilo moderno */
+.btn-primary {
+  background-color: #b36a42;
+  border-color: #b36a42;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #a85831;
+  box-shadow: 0 0 10px rgba(179, 106, 66, 0.5);
+}
+
+/* Botón secundario */
+.btn-secondary {
+  background-color: #a0a0a0;
+  border-color: #a0a0a0;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #8e8e8e;
+  box-shadow: 0 0 10px rgba(160, 160, 160, 0.5);
+}
+
+/* Ajuste del ancho de los botones */
+.w-45 {
+  width: 45%;
+}
+
+/* Espacios entre etiquetas */
+.form-label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Placeholder más estilizado */
+::placeholder {
+  color: #888888;
+  font-size: 0.9rem;
+}

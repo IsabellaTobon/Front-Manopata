@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class PostService {
   getPosts(filters: any = {}): Observable<any[]> {
     let params = new HttpParams();
 
-    // Añadir filtros según sean proporcionados
+    // Añadir filtros solo si están definidos y no son vacíos
     if (filters.province) {
       params = params.set('province', filters.province);
     }
@@ -35,27 +35,34 @@ export class PostService {
     if (filters.orderBy) {
       params = params.set('orderBy', filters.orderBy);
     }
-    if (filters.available !== undefined) {
+    if (filters.available !== undefined && filters.available !== null) {
       params = params.set('available', filters.available.toString());
     }
-    if (filters.isPPP !== undefined) {
+    if (filters.isPPP !== undefined && filters.isPPP !== null) {
       params = params.set('isPPP', filters.isPPP.toString());
     }
-    if (filters.vaccinated !== undefined) {
+    if (filters.vaccinated !== undefined && filters.vaccinated !== null) {
       params = params.set('vaccinated', filters.vaccinated.toString());
     }
 
-    return this.http.get<any[]>(this.apiUrl, { params });
+    return this.http.get<any>(this.apiUrl, { params });
   }
 
-  // Método para crear un nuevo post
-  createPost(postData: any, headers: any): Observable<any> {
+  createPost(postData: any): Observable<any> {
+    const token = localStorage.getItem('token');  // Obtener el token JWT desde el almacenamiento local
+
+    // Configurar los headers con el token de autorización
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    // Enviar el postData al backend con los headers
     return this.http.post(`${this.apiUrl}/create`, postData, { headers });
   }
 
   // Obtener URL de imagen de un post
   getPostImage(imageName: string): string {
-    return `http://localhost:8080/api/files/${imageName}`; // Cambiar por la URL donde están almacenadas las imágenes
+    return `${this.apiUrl.replace('/post', '')}/files/${imageName}`;
   }
 
 }

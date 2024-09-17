@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { NotificationsComponent } from '../notifications/notifications.component';
 import { CommonModule } from '@angular/common';
+import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
   selector: 'app-upload-post',
   standalone: true,
-  imports: [FormsModule, NotificationsComponent, CommonModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './upload-post.component.html',
   styleUrl: './upload-post.component.css'
 })
@@ -22,10 +23,6 @@ export class UploadPostComponent {
   animalTypesAndBreeds:{ [key: string]: string[] } = {};
 
   selectedFile: File | null = null;
-
-  // Propiedades para las notificaciones
-  notificationMessage: string = '';
-  notificationType: 'success' | 'error' | 'info' | 'warning' = 'info';
 
   newPost: any = {
     name: '',
@@ -44,16 +41,15 @@ export class UploadPostComponent {
   constructor(
     private postsService: PostService,
     private dataService: DataService,
+    private notificationsService: NotificationsService,
     private http: HttpClient,
     private router: Router
+
   ) { }
 
   ngOnInit(): void {
 
-    //Cargar las provincias y ciudades desde el DataService
     this.regionsAndCities = this.dataService.regionsAndCities;
-
-    //Cargar los tipos de animales y razas desde el DataService
     this.animalTypesAndBreeds = this.dataService.animalTypesAndBreeds;
   }
 
@@ -81,40 +77,35 @@ export class UploadPostComponent {
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
-
-      // Convertir newPost a un string JSON
       formData.append('post', JSON.stringify(this.newPost));
 
-      const token = localStorage.getItem('token');  // Obtener el token JWT
-      const headers = {
-        Authorization: `Bearer ${token}`  // Añadir el token a los headers
-      };
+      const token = localStorage.getItem('token');
+      const headers = { Authorization: `Bearer ${token}` };
 
-      // Enviar el post al backend
       this.http.post<{ fileName: string }>('http://localhost:8080/api/post/create', formData, { headers }).subscribe({
         next: () => {
-          this.notificationMessage = 'Post subido correctamente';
-          this.notificationType = 'success';
-          this.router.navigate(['/adoptions']);
+          this.notificationsService.showNotification('Post subido correctamente', 'success');
+          this.clearForm();  // Limpiar el formulario después de la subida
+
+          // Retrasar el redireccionamiento
+          setTimeout(() => {
+            this.router.navigate(['/adoptions']);
+          }, 3000);  // Redirigir después de 3 segundos
         },
         error: (error) => {
-          this.notificationMessage = 'Error al guardar el post';
-          this.notificationType = 'error';
+          this.notificationsService.showNotification('Error al guardar el post', 'error');
           console.error('Error al guardar el post', error);
         }
       });
     } else {
-      this.savePost();  // Si no hay imagen, guardar el post de todas formas
+      this.savePost(); // Si no hay imagen, guardar el post sin archivo
     }
   }
 
   savePost(): void {
-    const token = localStorage.getItem('token');  // Obtener el token JWT
-    const headers = {
-      Authorization: `Bearer ${token}`  // Añadir el token a los headers
-    };
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
 
-    // Asegúrate de que los datos que envías sean correctos
     const postData = {
       name: this.newPost.name,
       breed: this.newPost.breed,
@@ -131,16 +122,36 @@ export class UploadPostComponent {
 
     this.postsService.createPost(postData, headers).subscribe({
       next: () => {
-        this.notificationMessage = 'Post subido correctamente';
-        this.notificationType = 'success';
-        this.router.navigate(['/adoptions']);
+        this.notificationsService.showNotification('Post subido correctamente', 'success');
+        this.clearForm();  // Limpiar el formulario después de la subida
+
+        // Retrasar el redireccionamiento
+        setTimeout(() => {
+          this.router.navigate(['/adoptions']);
+        }, 3000);  // Redirigir después de 3 segundos
       },
       error: (error) => {
-        this.notificationMessage = 'Error al guardar el post';
-        this.notificationType = 'error';
+        this.notificationsService.showNotification('Error al guardar el post', 'error');
         console.error('Error al guardar el post', error);
       }
     });
+  }
+
+  clearForm(): void {
+    this.newPost = {
+      name: '',
+      breed: '',
+      ppp: false,
+      vaccinated: false,
+      available: true,
+      age: '',
+      city: '',
+      province: '',
+      description: '',
+      animalType: '',
+      photo: ''
+    };
+    this.selectedFile = null;  // Limpiar el archivo seleccionado
   }
 
   cancel(): void {

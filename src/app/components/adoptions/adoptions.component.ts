@@ -28,7 +28,7 @@ export class AdoptionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+
     this.loadPosts();
 
     this.authService.isLoggedIn().subscribe({
@@ -52,8 +52,15 @@ export class AdoptionsComponent implements OnInit {
   // Method to load posts whitout filters
   loadPosts(): void {
     this.postsService.getPosts().subscribe({
-      next: (data: any[]) => {
-        this.posts = data;
+      next: (data: any) => {
+        console.log(data);  // Verificar la estructura de la respuesta
+
+        // Si la respuesta es un PagedModel<EntityModel<Post>>, los posts estarán en _embedded.posts
+        if (data._embedded && data._embedded.posts) {
+          this.posts = data._embedded.posts;
+        } else {
+          this.posts = [];  // Asignar array vacío si no hay posts
+        }
       },
       error: (error: any) => {
         console.error('Error al cargar los posts', error);

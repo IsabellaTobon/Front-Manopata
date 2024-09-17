@@ -1,5 +1,6 @@
+import { Component, OnInit } from '@angular/core';
+import { NotificationsService } from '../../services/notifications.service';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-notifications',
@@ -9,16 +10,17 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrl: './notifications.component.css'
 })
 export class NotificationsComponent implements OnInit{
-  @Input() message: string = '';
-  @Input() type: 'success' | 'error' | 'info' | 'warning' = 'info';  // Tipo de notificación
-  @Input() duration: number = 3000;  // Tiempo antes de que desaparezca (opcional)
+  message: string = '';
+  type: 'success' | 'error' | 'info' | 'warning' = 'info';
+
+  constructor(private notificationsService: NotificationsService) { }
 
   ngOnInit(): void {
-    if (this.duration > 0) {
-      setTimeout(() => {
-        this.message = '';
-      }, this.duration);  // Ocultar después de la duración especificada
-    }
+    // Suscribirse al observable del servicio de notificaciones
+    this.notificationsService.notification$.subscribe(notification => {
+      this.message = notification.message;
+      this.type = notification.type;
+    });
   }
 
   // Método opcional para ocultar manualmente el mensaje

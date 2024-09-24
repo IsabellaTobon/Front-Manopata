@@ -4,18 +4,20 @@ import { PostService } from '../../services/posts.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../services/data.service';
-import { NotificationsComponent } from '../notifications/notifications.component';
 import { CommonModule } from '@angular/common';
 import { NotificationsService } from '../../services/notifications.service';
+import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
   selector: 'app-upload-post',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, NotificationsComponent],
   templateUrl: './upload-post.component.html',
   styleUrl: './upload-post.component.css'
 })
 export class UploadPostComponent {
+  notificationMessage: string = '';
+  notificationType: 'success' | 'error' | 'info' | 'warning' = 'info';
 
   cities: string[] = [];
   breeds: string[] = [];
@@ -79,26 +81,25 @@ export class UploadPostComponent {
       formData.append('file', this.selectedFile);
       formData.append('post', JSON.stringify(this.newPost));
 
-      const token = localStorage.getItem('token');
-      const headers = { Authorization: `Bearer ${token}` };
-
-      this.http.post<{ fileName: string }>('http://localhost:8080/api/post/create', formData, { headers }).subscribe({
+      this.http.post<{ fileName: string }>('http://localhost:8080/api/post/create', formData).subscribe({
         next: () => {
-          this.notificationsService.showNotification('Post subido correctamente', 'success');
-          this.clearForm();  // Limpiar el formulario después de la subida
+          // Mostrar notificación de éxito
+          this.notificationMessage = 'Post subido correctamente';
+          this.notificationType = 'success';
 
-          // Retrasar el redireccionamiento
-          setTimeout(() => {
-            this.router.navigate(['/adoptions']);
-          }, 3000);  // Redirigir después de 3 segundos
+          // Limpiar formulario y redireccionar
+          this.clearForm();
+          setTimeout(() => this.router.navigate(['/adoptions']), 3000);
         },
         error: (error) => {
-          this.notificationsService.showNotification('Error al guardar el post', 'error');
+          // Mostrar notificación de error
+          this.notificationMessage = 'Error al guardar el post';
+          this.notificationType = 'error';
           console.error('Error al guardar el post', error);
         }
       });
     } else {
-      this.savePost(); // Si no hay imagen, guardar el post sin archivo
+      this.savePost(); // Guardar el post sin archivo
     }
   }
 
@@ -120,7 +121,7 @@ export class UploadPostComponent {
       photo: this.newPost.photo
     };
 
-    this.postsService.createPost(postData, headers).subscribe({
+    this.postsService.createPost(postData).subscribe({
       next: () => {
         this.notificationsService.showNotification('Post subido correctamente', 'success');
         this.clearForm();  // Limpiar el formulario después de la subida

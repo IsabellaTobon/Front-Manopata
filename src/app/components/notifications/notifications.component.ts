@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NotificationsService } from '../../services/notifications.service';
 import { CommonModule } from '@angular/common';
 
@@ -10,8 +10,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './notifications.component.css'
 })
 export class NotificationsComponent implements OnInit{
-  message: string = '';
-  type: 'success' | 'error' | 'info' | 'warning' = 'info';
+  @Input() message: string = '';
+  @Input() type: 'success' | 'error' | 'info' | 'warning' = 'info';
 
   constructor(private notificationsService: NotificationsService) { }
 

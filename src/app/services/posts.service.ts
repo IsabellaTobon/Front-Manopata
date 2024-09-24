@@ -65,4 +65,18 @@ export class PostService {
     return `${this.apiUrl.replace('/post', '')}/files/${imageName}`;
   }
 
+  // Obtener provincias desde el backend
+  getProvinces(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/provinces`);
+  }
+
+  // Obtener ciudades según la provincia desde el backend
+  getCities(province: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/cities`, { params: { province } });
+  }
+
+  // Obtener razas según el tipo de animal desde el backend
+  getBreeds(animalType: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/breeds`, { params: { animalType } });
+  }
 }

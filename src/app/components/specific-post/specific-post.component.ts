@@ -14,7 +14,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 })
 export class SpecificPostComponent implements OnInit {
 
-  post:any;
+  post:any = {};
 
   message = {
     name: '',
@@ -26,15 +26,19 @@ export class SpecificPostComponent implements OnInit {
     private route: ActivatedRoute,
     private postService: PostService  ) { }
 
-  ngOnInit(): void {
-    const postId = +this.route.snapshot.paramMap.get('id')!;
-    this.postService.getPostById(postId).subscribe(data => {
-      this.post = data;
-      // Asegurarse de que registerDate sea un objeto Date
-      if (this.post.registerDate) {
-        this.post.registerDate = new Date(this.post.registerDate);
-      }
-    });
+    ngOnInit(): void {
+      const postId = +this.route.snapshot.paramMap.get('id')!;
+      this.postService.getPostById(postId).subscribe({
+        next: (data) => {
+          this.post = data;
+          if (this.post.registerDate) {
+            this.post.registerDate = new Date(this.post.registerDate);
+          }
+        },
+        error: (err) => {
+          console.error('Error al cargar el post:', err);
+        }
+      });
   }
 
   sendMessage() {

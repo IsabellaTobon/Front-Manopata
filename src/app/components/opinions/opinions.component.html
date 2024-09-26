@@ -1,7 +1,7 @@
 <div class="container-fluid mt-3 pl-6">
 
   <!-- Primera Fila: Carrusel de Imágenes y Opinión General -->
-  <div class="row g-5 mb-4 mt-1">
+  <div class="row g-5 mb-4">
     <div class="col-lg-8">
       <!-- Carrusel de Imágenes -->
       <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -26,16 +26,15 @@
         </button>
       </div>
     </div>
-    <div class="col-lg-2 pt-5">
+    <div class="col-lg-2 pt-4">
       <!-- Opinión General -->
       <div class="card shadow-sm mb-5 p-4 d-flex align-items-center general-opinion-card">
         <h3 class="card-title">Opinión General</h3>
+        <p class="card-text">Basado en {{ comments.length }} opiniones</p>
         <div class="d-flex align-items-center mb-3">
           <h1 class="display-3">{{ averageRating.toFixed(1) }}</h1>
           <app-star-rating [rating]="averageRating" [readonly]="true"></app-star-rating>
         </div>
-        <h5>Promedio basado en {{ comments.length }} opiniones.</h5>
-        <canvas id="ratingChart"></canvas>
       </div>
     </div>
   </div>
@@ -43,7 +42,7 @@
   <!-- Segunda Fila: Comentarios y Formulario -->
   <div class="row">
     <!-- Columna Izquierda: Comentarios -->
-    <div class="col-lg-6 mb-3">
+    <div class="col-lg-6">
       <div class="card shadow-sm  comments-container">
         <div *ngFor="let comment of comments" class="comment-card">
           <div class="d-flex align-items-center mb-2">

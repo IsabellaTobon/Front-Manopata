@@ -21,9 +21,11 @@
 }
 
 .nav-link:hover {
-  color: rgb(194, 108, 27) !important;
-  font-size: larger;
-  text-decoration: underline;
+  color: #f8f5f1 !important;
+  background-color: #5b452a;
+  border-radius: 1.5em;
+  transition: all 0.1s ease-in-out;
+
 }
 
 /* Ajuste para distribuir mejor los items en la navbar */

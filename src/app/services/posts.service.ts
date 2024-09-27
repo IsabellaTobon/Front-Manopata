@@ -48,6 +48,16 @@ export class PostService {
     return this.http.get<any>(this.apiUrl, { params });
   }
 
+  // Method to like a post
+  likePost(postId: number): Observable<any> {
+    const token = localStorage.getItem('token');  // Obtener el token JWT del localStorage
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post(`${this.apiUrl}/${postId}/like`, {}, { headers });
+  }
+
   createPost(postData: any): Observable<any> {
     const token = localStorage.getItem('token');  // Obtener el token JWT desde el almacenamiento local
 

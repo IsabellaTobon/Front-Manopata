@@ -35,8 +35,8 @@ export class AdoptionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadProvinces();  // Cargar provincias al inicio
-    this.loadPosts();  // Cargar posts
+    this.loadProvinces();
+    this.loadPosts();
 
     this.authService.isLoggedIn().subscribe({
       next: (loggedIn: boolean) => {
@@ -106,6 +106,30 @@ export class AdoptionsComponent implements OnInit {
         this.posts = [];  // En caso de error, asignar array vacío
       }
     });
+  }
+
+  // Check if the current user has liked the post
+  checkUserHasLiked(post: any): boolean {
+    const userId = localStorage.getItem('userId');  // Asume que tienes el userId en el localStorage
+    return post.likedByUsers?.some((user: any) => user.id === userId);
+  }
+
+  // Toggle like/unlike a post
+  toggleLike(post: any): void {
+    if (!this.isLoggedIn) {
+      alert("Necesitas estar logueado para dar like.");
+      return;
+    }
+
+    this.postsService.likePost(post.id).subscribe(
+      (response: any) => {
+        post.likes = response.likes;
+        post.userHasLiked = !post.userHasLiked;  // Alternar el estado del like
+      },
+      (error) => {
+        console.error('Error al dar like:', error);
+      }
+    );
   }
 
   // Method to apply filters

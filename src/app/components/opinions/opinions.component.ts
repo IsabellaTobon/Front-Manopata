@@ -4,12 +4,13 @@ import { CommentsService, UserComment } from '../../services/comments.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
-import { NotificationsService } from '../../services/notifications.service'; // Importar el servicio de notificaciones
+import { NotificationsService } from '../../services/notifications.service';
+import { NotificationsComponent } from "../notifications/notifications.component"; // Importar el servicio de notificaciones
 
 @Component({
   selector: 'app-opinions',
   standalone: true,
-  imports: [StarRatingComponent, CommonModule, FormsModule],
+  imports: [StarRatingComponent, CommonModule, FormsModule, NotificationsComponent],
   templateUrl: './opinions.component.html',
   styleUrls: ['./opinions.component.css']
 })
@@ -43,14 +44,13 @@ export class OpinionsComponent implements OnInit {
 
   submitComment(): void {
     if (!this.authService.isLoggedIn()) {
-      this.notificationsService.showNotification('Debe iniciar sesión para enviar un comentario.', 'warning'); // Notificación de advertencia
       this.authService.logout();
       return;
     }
 
     // Verificar si el rating es mayor que 0
     if (this.newComment.rating === 0) {
-      this.notificationsService.showNotification('Por favor selecciona una calificación antes de enviar tu comentario.', 'error'); // Notificación de error
+      this.notificationsService.showNotification('Por favor selecciona una calificación antes de enviar tu comentario.', 'warning');
       return;
     }
 
@@ -59,17 +59,27 @@ export class OpinionsComponent implements OnInit {
       rating: this.newComment.rating
     };
 
-    this.commentsService.postComment(commentToSubmit).subscribe(
-      (response: UserComment) => {
-        this.comments.push(response); // Añadir el nuevo comentario al array de comentarios
-        this.newComment = { text: '', rating: 0 }; // Limpiar el formulario
-        this.notificationsService.showNotification('Comentario enviado exitosamente.', 'success', 2000); // Notificación de éxito que se cierra en 2 segundos
+    this.commentsService.postComment(commentToSubmit).subscribe({
+      next: (response: any) => {
+        // Mostrar notificación de éxito
+        this.notificationsService.showNotification(response.message, 'success');
+
+        // Añadir el comentario recién creado al array de comentarios
+        this.comments.push(response.comment);
+
+        // Limpiar el formulario
+        this.newComment = { text: '', rating: 0 };
+
+        // Cerrar la notificación automáticamente después de 2 segundos
+        setTimeout(() => {
+          this.notificationsService.clearNotification();
+        }, 2000);
       },
-      (error) => {
-        this.notificationsService.showNotification('Error al enviar el comentario.', 'error', 2000); // Notificación de error
+      error: (error) => {
         console.error('Error al enviar el comentario:', error);
+        this.notificationsService.showNotification('Error al enviar el comentario.', 'error');
       }
-    );
+    });
   }
 
   onRatingChange(newRating: number): void {

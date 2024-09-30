@@ -43,17 +43,17 @@
   <div class="row">
     <!-- Columna Izquierda: Comentarios -->
     <div class="col-lg-6">
-      <div class="card shadow-sm  comments-container">
+      <div class="card shadow-sm comments-container">
+        <!-- Aquí seguimos mostrando el nickname en los comentarios -->
         <div *ngFor="let comment of comments" class="comment-card">
           <div class="d-flex align-items-center mb-2">
             <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Comentario">
             <div>
-              <h5 class="card-title mb-0">{{ comment.name }}</h5>
+              <h5 class="card-title mb-0">{{ comment.name }}</h5> <!-- El nombre será el nickname del usuario -->
               <app-star-rating [rating]="comment.rating" [readonly]="true"></app-star-rating>
             </div>
           </div>
           <p class="card-text">{{ comment.text }}</p>
-          <p class="text-muted">Publicado el {{ comment.date | date:'dd/MM/yyyy' }}</p>
         </div>
       </div>
     </div>
@@ -61,23 +61,15 @@
     <!-- Columna Derecha: Formulario de Opinión -->
     <div class="col-lg-4 mb-3">
       <div class="card shadow-sm p-3">
-        <h4 class="card-title">Escribe tu Opinión</h4>
-        <form>
-          <div class="mb-3">
-            <label for="name" class="form-label">Nombre / Usuario</label>
-            <input type="text" class="form-control" id="name" placeholder="Nombre / Usuario a mostrar">
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com">
-          </div>
+        <h4 class="card-title">Escribe tu Opinión sobre la experiencia</h4>
+        <form (ngSubmit)="submitComment()">
           <div class="mb-3">
             <label for="message" class="form-label">Opinión</label>
-            <textarea class="form-control" id="message" rows="3" placeholder="Escribe tu opinión aquí"></textarea>
+            <textarea class="form-control" id="message" rows="3" [(ngModel)]="newComment.text" name="text" placeholder="Escribe tu opinión aquí"></textarea>
           </div>
           <div class="mb-3">
             <label for="rating" class="form-label">Calificación</label>
-            <app-star-rating [(rating)]="userRating"></app-star-rating>
+            <app-star-rating [(rating)]="newComment.rating"></app-star-rating>
           </div>
           <button type="submit" class="btn btn-primary">Enviar</button>
         </form>

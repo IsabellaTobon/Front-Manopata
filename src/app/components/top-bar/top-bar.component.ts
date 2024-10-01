@@ -1,12 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'top-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './top-bar.component.html',
-  styleUrl: './top-bar.component.css',
+  styleUrls: ['./top-bar.component.css'],
 })
 export class TopBarComponent implements OnInit {
 

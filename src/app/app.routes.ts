@@ -8,6 +8,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { OpinionsComponent } from './components/opinions/opinions.component';
 import { SpecificPostComponent } from './components/specific-post/specific-post.component';
 import { UploadPostComponent } from './components/upload-post/upload-post.component';
+import { EditProfileComponent } from './components/edit-profile-component/edit-profile.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,5 +19,6 @@ export const routes: Routes = [
   { path: 'opinions',  component: OpinionsComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'login-sign-up', component: LoginSignUpComponent },
+  { path: 'edit-profile', component: EditProfileComponent },
   { path: "**", component: NotFoundComponent }
 ];

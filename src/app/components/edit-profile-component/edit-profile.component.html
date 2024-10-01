@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Panel lateral -->
+    <div class="col-md-3 sidebar bg-light p-4" style="min-height: 100vh;">
+      <h4 class="sidebar-title">Opciones de Cuenta</h4>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="selectedOption === 'edit'" (click)="selectOption('edit')">Editar Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="selectedOption === 'password'" (click)="selectOption('password')">Cambiar Contraseña</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" [class.active]="selectedOption === 'delete'" (click)="selectOption('delete')">Eliminar Cuenta</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="col-md-9 p-4 content">
+      <ng-container [ngSwitch]="selectedOption">
+        <!-- Formulario para editar perfil -->
+        <form *ngSwitchCase="'edit'" (ngSubmit)="onSubmit()" [formGroup]="editProfileForm">
+          <h4 class="section-title">Editar Perfil</h4>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="name" class="form-label">Nombre:</label>
+              <input id="name" formControlName="name" type="text" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="lastName" class="form-label">Apellido:</label>
+              <input id="lastName" formControlName="lastName" type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input id="email" formControlName="email" type="email" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="nickname" class="form-label">Nickname:</label>
+            <input id="nickname" formControlName="nickname" type="text" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña:</label>
+            <input id="password" formControlName="password" type="password" class="form-control" />
+          </div>
+          <div class="mb-3 text-center">
+            <label for="profileImage" class="form-label">Imagen de Perfil:</label>
+            <div class="d-flex flex-column align-items-center">
+              <img [src]="profileImageUrl" alt="Imagen de Perfil" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" />
+              <input type="file" (change)="onFileSelected($event)" class="form-control-file" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">Actualizar Perfil</button>
+        </form>
+
+        <!-- Formulario para cambiar contraseña -->
+        <form *ngSwitchCase="'password'" (ngSubmit)="onChangePassword()" [formGroup]="changePasswordForm">
+          <h4 class="section-title">Cambiar Contraseña</h4>
+          <div class="mb-3">
+            <label for="oldPassword" class="form-label">Contraseña Actual:</label>
+            <input id="oldPassword" formControlName="oldPassword" type="password" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">Nueva Contraseña:</label>
+            <input id="newPassword" formControlName="newPassword" type="password" class="form-control" />
+          </div>
+          <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+        </form>
+
+        <!-- Formulario para eliminar cuenta -->
+        <form *ngSwitchCase="'delete'" (ngSubmit)="onDeleteAccount()" [formGroup]="deleteAccountForm">
+          <h4 class="section-title text-danger">Eliminar Cuenta</h4>
+          <p class="text-danger">Esta acción no se puede deshacer. Si estás seguro, ingresa tu contraseña para confirmar.</p>
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña:</label>
+            <input id="password" formControlName="password" type="password" class="form-control" />
+          </div>
+          <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+</div>

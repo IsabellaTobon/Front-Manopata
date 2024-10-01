@@ -232,7 +232,7 @@ export class LoginSignUpComponent implements OnInit{
       return;
     }
 
-    this.authService.changePassword(nickname, oldPassword, newPassword).subscribe(
+    this.authService.changePassword(oldPassword, newPassword).subscribe(
       (response) => {
         this.notificationType = 'success';
         this.errorMessage = 'Contraseña actualizada correctamente.';

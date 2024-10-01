@@ -1,0 +1,103 @@
+/* Panel lateral */
+.sidebar {
+  background-color: rgb(240, 224, 203); /* Fondo suave pastel para el panel lateral */
+  padding: 1.5rem;
+  min-height: 100vh;
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  color: rgb(194, 108, 27); /* Color del título coherente con el navbar */
+  margin-bottom: 1rem;
+}
+
+/* Enlaces del panel lateral */
+.nav-link {
+  color: rgb(0, 0, 0); /* Texto negro para mejor visibilidad */
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #fff !important;
+  background-color: rgb(189, 126, 67); /* Fondo cálido al hacer hover */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Sección de contenido */
+.content {
+  background-color: rgb(248, 236, 220); /* Fondo pastel más cálido para el contenido */
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  padding: 2rem;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  color: rgb(194, 108, 27); /* Color de los títulos en la sección */
+  margin-bottom: 2rem;
+}
+
+.form-control {
+  border-color: rgba(0, 0, 0, 0.2);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.form-control:focus {
+  border-color: rgb(189, 126, 67); /* Foco cálido */
+  box-shadow: 0 0 5px rgba(189, 126, 67, 0.5);
+}
+
+.btn-primary {
+  background-color: rgb(189, 126, 67) !important;
+  border-color: rgb(189, 126, 67) !important;
+}
+
+.btn-primary:hover {
+  background-color: rgb(218, 159, 103) !important;
+}
+
+/* Imagen de perfil */
+.rounded-circle {
+  border: 3px solid rgba(189, 126, 67, 0.7); /* Borde de la imagen de perfil */
+}
+
+.form-control-file {
+  margin-top: 1rem;
+}
+
+.text-danger {
+  color: rgb(218, 59, 50) !important; /* Color coherente para textos de peligro */
+}
+
+/* Pequeños ajustes para pantallas medianas y pequeñas */
+@media (max-width: 992px) {
+  .sidebar {
+    padding: 1rem;
+  }
+
+  .nav-link {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-link {
+    font-size: 1rem;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+}

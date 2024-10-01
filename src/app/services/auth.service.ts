@@ -19,142 +19,107 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  // Método para obtener datos de ejemplo (si es necesario)
   getData(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/`);
   }
 
+  // Método para enviar datos de ejemplo (si es necesario)
   postData(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/`, data);
   }
 
+  // Inicio de sesión
   login(nickname: string, password: string): Observable<LoginResponse> {
-    console.log('Enviando datos al servidor:', { nickname, password });
-
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/login`, { nickname, password })
       .pipe(
         tap((response: LoginResponse) => {
-          console.log('Respuesta recibida del servidor:', response);
-
-          // Guardar el token y el userId en localStorage
           localStorage.setItem('token', response.token);
           localStorage.setItem('userId', response.userId);
-          localStorage.setItem('nickname', nickname); // Guardar el nickname del usuario
-          this.loggedIn.next(true); // Actualizar el estado de autenticación
+          localStorage.setItem('nickname', nickname);
+          this.loggedIn.next(true);
         }),
         catchError((error) => {
-          console.error('Error recibido del servidor:', error);
-          return throwError(
-            () =>
-              new Error(
-                error.error?.error ||
-                  'Error inesperado durante el inicio de sesión.'
-              )
-          );
+          return throwError(() => new Error(error.error?.error || 'Error inesperado durante el inicio de sesión.'));
         })
       );
   }
 
+  // Método para solicitar el restablecimiento de contraseña
   forgotPassword(email: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/forgot-password`, { email }).pipe(
-      tap(() => {
-        console.log('Enlace de restablecimiento de contraseña enviado');
-      }),
-      catchError((error) => {
-        console.error('Error durante el envío del enlace:', error);
-        return throwError(
-          () =>
-            new Error(
-              'Error al enviar el enlace de restablecimiento de contraseña.'
-            )
-        );
-      })
+      tap(() => console.log('Enlace de restablecimiento de contraseña enviado')),
+      catchError((error) => throwError(() => new Error('Error al enviar el enlace de restablecimiento de contraseña.')))
     );
   }
 
-  changePassword(
-    nickname: string,
-    oldPassword: string,
-    newPassword: string
-  ): Observable<any> {
+  // Cambiar contraseña
+  changePassword(oldPassword: string, newPassword: string): Observable<any> {
+    const nickname = localStorage.getItem('nickname');
     return this.http
-      .post(`${this.apiUrl}/change-password`, {
-        nickname,
-        oldPassword,
-        newPassword,
-      })
+      .post(`${this.apiUrl}/change-password`, { nickname, oldPassword, newPassword })
       .pipe(
-        tap(() => {
-          console.log('Contraseña cambiada correctamente');
-        }),
-        catchError((error) => {
-          console.error('Error al cambiar la contraseña:', error);
-          return throwError(() => new Error('Error al cambiar la contraseña.'));
-        })
+        tap(() => console.log('Contraseña cambiada correctamente')),
+        catchError((error) => throwError(() => new Error('Error al cambiar la contraseña.')))
       );
   }
 
+  // Restablecer contraseña con token
   resetPassword(token: string, newPassword: string): Observable<any> {
     return this.http
       .post(`${this.apiUrl}/reset-password`, { token, newPassword })
       .pipe(
-        tap(() => {
-          console.log('Contraseña restablecida correctamente');
-        }),
-        catchError((error) => {
-          console.error('Error al restablecer la contraseña:', error);
-          return throwError(
-            () => new Error('Error al restablecer la contraseña.')
-          );
-        })
+        tap(() => console.log('Contraseña restablecida correctamente')),
+        catchError((error) => throwError(() => new Error('Error al restablecer la contraseña.')))
       );
   }
 
-  refreshToken(): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/refresh-token`, {}).pipe(
-      tap((response) => {
-        const newToken = response.token;  // Acceder al token desde la respuesta
-        localStorage.setItem('token', newToken);  // Actualiza el token en localStorage
-        console.log('Token renovado correctamente');
-      }),
-      catchError((error) => {
-        console.error('Error al renovar el token:', error);
-        return throwError(() => new Error('Error al renovar el token.'));
-      })
+  // Actualizar perfil del usuario
+  updateUserProfile(userData: any): Observable<any> {
+    const userId = this.getUserId();
+    return this.http.put(`${this.userApiUrl}/${userId}`, userData).pipe(
+      tap(() => console.log('Perfil actualizado')),
+      catchError((error) => throwError(() => new Error('Error al actualizar el perfil.')))
     );
   }
 
+  // Eliminar cuenta del usuario
+  deleteAccount(password: string): Observable<any> {
+    return this.http.post(`${this.userApiUrl}/delete-account`, { password }).pipe(
+      tap(() => console.log('Cuenta eliminada')),
+      catchError((error) => throwError(() => new Error('Error al eliminar la cuenta.')))
+    );
+  }
+
+  // Actualizar token JWT
+  refreshToken(): Observable<any> {
+    return this.http.post<{ token: string }>(`${this.apiUrl}/refresh-token`, {}).pipe(
+      tap((response) => {
+        const newToken = response.token;
+        localStorage.setItem('token', newToken);
+        console.log('Token renovado correctamente');
+      }),
+      catchError((error) => throwError(() => new Error('Error al renovar el token.')))
+    );
+  }
+
+  // Obtener datos del usuario actual
   getUserData(): Observable<any> {
     const userId = this.getUserId();
     if (!userId) {
       return throwError(() => new Error('No se encontró el ID de usuario.'));
     }
-
-    return this.http.get<any>(`${this.userApiUrl}/profile/${userId}`); // Asegúrate de que esta URL devuelva los datos correctos
+    return this.http.get<any>(`${this.userApiUrl}/profile/${userId}`);
   }
 
-  register(
-    nickname: string,
-    name: string,
-    lastname: string,
-    email: string,
-    password: string
-  ): Observable<any> {
+  // Registrar usuario nuevo
+  register(nickname: string, name: string, lastname: string, email: string, password: string): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}/register`, {
-        nickname,
-        name,
-        lastname,
-        email,
-        password,
-      })
+      .post<any>(`${this.apiUrl}/register`, { nickname, name, lastname, email, password })
       .pipe(
-        tap(() => {
-          console.log('Usuario registrado correctamente');
-        }),
+        tap(() => console.log('Usuario registrado correctamente')),
         catchError((error) => {
-          console.error('Error durante el registro:', error);
-          // Manejo de errores específicos
           if (error.status === 400 && error.error) {
             if (error.error.error === 'El nickname ya está en uso.') {
               return throwError(() => new Error('El nickname ya está en uso.'));
@@ -162,55 +127,48 @@ export class AuthService {
               return throwError(() => new Error('El email ya está en uso.'));
             }
           }
-          return throwError(
-            () =>
-              new Error('Error inesperado al registrarse. Intente nuevamente.')
-          );
+          return throwError(() => new Error('Error inesperado al registrarse. Intente nuevamente.'));
         })
       );
   }
 
-  //Verify if nickname are available
+  // Verificar disponibilidad de nickname
   checkNicknameAvailability(nickname: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.userApiUrl}/check-nickname`, {
-      params: { nickname },
-    });
+    return this.http.get<boolean>(`${this.userApiUrl}/check-nickname`, { params: { nickname } });
   }
 
-  //Verify if email are available
+  // Verificar disponibilidad de email
   checkEmailAvailability(email: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.userApiUrl}/check-email`, {
-      params: { email },
-    });
+    return this.http.get<boolean>(`${this.userApiUrl}/check-email`, { params: { email } });
   }
 
+  // Cerrar sesión
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-    localStorage.removeItem('nickname'); // Eliminar el nickname del localStorage
-
-    sessionStorage.clear(); // Limpiar el sessionStorage
-    this.loggedIn.next(false); // Actualizar el estado de autenticación
-    this.router.navigate(['/']); // Redirigir al Inicio
+    localStorage.removeItem('nickname');
+    sessionStorage.clear();
+    this.loggedIn.next(false);
+    this.router.navigate(['/']);
   }
 
-  // Check if the user is logged in
+  // Verificar si el usuario está autenticado
   isLoggedIn(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
-  // Check if token exists
+
+  // Comprobar si existe un token en el localStorage
   private hasToken(): boolean {
     return !!localStorage.getItem('token');
   }
 
-  // Get the token
+  // Obtener el token JWT
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  // Get the user ID
+  // Obtener el ID de usuario
   getUserId(): string | null {
-    const userId = localStorage.getItem('userId');
-    return userId ? userId : null;
+    return localStorage.getItem('userId');
   }
 }

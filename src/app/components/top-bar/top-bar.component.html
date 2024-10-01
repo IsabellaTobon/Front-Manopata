@@ -24,11 +24,17 @@
         <a class="nav-link" href="/contact">Contáctanos</a>
       </li>
     </ul>
+
     <div class="d-flex flex-wrap">
-      <!-- Mostrar el nickname del usuario si está autenticado -->
-      <div *ngIf="isLoggedIn" class="d-flex align-items-center me-4 fade-in">
-        <span class="me-3 welcome-message fade-in">👋 ¡ Bienvenid&#64;, {{ nickname }} !</span>
-        <button class="btn btn-outline-danger" (click)="logout()">Cerrar sesión</button>
+      <!-- Menú desplegable cuando el usuario está autenticado -->
+      <div *ngIf="isLoggedIn" class="nav-item dropdown me-4">
+        <a class="nav-link dropdown-toggle welcome-message fade-in" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          👋 ¡Bienvenid&#64; {{ nickname }}!
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" [routerLink]="['/edit-profile']">Editar Perfil</a></li>
+          <li><a class="dropdown-item text-danger" (click)="logout()">Cerrar Sesión</a></li>
+        </ul>
       </div>
 
       <!-- Botones de Iniciar sesión/Registro si no está autenticado -->

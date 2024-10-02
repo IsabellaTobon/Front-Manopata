@@ -67,7 +67,6 @@ export class AdoptionsComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error al cargar las ciudades, usando respaldo estático', error);
-        // Si hay error, cargar ciudades desde el DataService
         this.cities = this.regionsAndCities[province] || [];
       }
     });
@@ -84,19 +83,23 @@ export class AdoptionsComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error al cargar las razas, usando respaldo estático', error);
-        // Si hay error, cargar razas desde el DataService
         this.breeds = this.animalTypesAndBreeds[animalType] || [];
       }
     });
   }
 
-  // Method to load posts whitout filters
-  loadPosts(): void {
-    this.postsService.getPosts().subscribe({
+  // Method to load posts without filters
+  loadPosts(filters: any = null): void {
+    // Si no se pasan filtros, cargar todos los posts
+    const postRequest = filters ? this.postsService.getPosts(filters) : this.postsService.getPosts();
+
+    postRequest.subscribe({
       next: (data: any) => {
         // Verificar si _embedded y postList están presentes
         if (data._embedded && data._embedded.postList) {
           this.posts = data._embedded.postList;  // Asignar los posts correctamente
+        } else if (Array.isArray(data)) {
+          this.posts = data;  // Manejar la respuesta como array si es necesario
         } else {
           this.posts = [];  // Si no hay posts, asignar array vacío
         }
@@ -134,23 +137,23 @@ export class AdoptionsComponent implements OnInit {
 
   // Method to apply filters
   applyFilters(filters: any): void {
-    this.postsService.getPosts(filters).subscribe({
-      next: (data: any[]) => {
-        if (filters.orderByDate === 'latest') {
-          this.posts = data.sort(
-            (a, b) => new Date(b.fechaPublicacion).getTime() - new Date(a.fechaPublicacion).getTime()
-          );
-        } else if (filters.orderByDate === 'oldest') {
-          this.posts = data.sort(
-            (a, b) => new Date(a.fechaPublicacion).getTime() - new Date(b.fechaPublicacion).getTime()
-          );
+    console.log('Filtros aplicados:', filters);
+
+    // Filtrar valores vacíos y renombrar 'region' a 'province' si es necesario
+    const cleanedFilters: { [key: string]: any } = Object.keys(filters)
+      .filter(key => filters[key] !== '' && filters[key] !== null && filters[key] !== undefined)
+      .reduce((obj, key) => {
+        if (key === 'region') {
+          obj['province'] = filters[key];  // Renombrar 'region' a 'province'
         } else {
-          this.posts = data;  // Mostrar los datos sin orden
+          obj[key] = filters[key];
         }
-      },
-      error: (error: any) => {
-        console.error('Error al cargar los filtros', error);
-      }
-    });
+        return obj;
+      }, {} as { [key: string]: any });
+
+    console.log('Filtros limpios:', cleanedFilters);
+
+    // Llamar al método `loadPosts` con los filtros limpios
+    this.loadPosts(Object.keys(cleanedFilters).length === 0 ? null : cleanedFilters);
   }
 }

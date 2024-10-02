@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class PostService {
   private apiUrl = 'http://localhost:8080/api/post';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // Método para obtener un post por ID
   getPostById(id: number): Observable<any> {
@@ -35,38 +36,42 @@ export class PostService {
     if (filters.orderBy) {
       params = params.set('orderBy', filters.orderBy);
     }
-    if (filters.available !== undefined && filters.available !== null) {
+    // Solo añadir parámetros si no son nulos ni vacíos
+    if (filters.available !== undefined && filters.available !== null && filters.available !== '') {
       params = params.set('available', filters.available.toString());
     }
-    if (filters.isPPP !== undefined && filters.isPPP !== null) {
+    if (filters.isPPP !== undefined && filters.isPPP !== null && filters.isPPP !== '') {
       params = params.set('isPPP', filters.isPPP.toString());
     }
-    if (filters.vaccinated !== undefined && filters.vaccinated !== null) {
+    if (filters.vaccinated !== undefined && filters.vaccinated !== null && filters.vaccinated !== '') {
       params = params.set('vaccinated', filters.vaccinated.toString());
     }
 
-    return this.http.get<any>(this.apiUrl, { params });
+    console.log('Parámetros enviados:', params.toString()); // Verificar los filtros que se están enviando
+
+    return this.http.get<any>(this.apiUrl, { params }).pipe(
+      map(data => {
+        console.log('Datos recibidos del backend:', data);  // Verifica la estructura de los datos
+        if (Array.isArray(data)) {
+          return data;
+        } else if (data._embedded && Array.isArray(data._embedded.postList)) {
+          return data._embedded.postList;
+        } else {
+          return []; // Devuelve un array vacío si no hay datos
+        }
+      })
+    );
   }
 
-  // Method to like a post
+  // Método para dar like a un post
   likePost(postId: number): Observable<any> {
-    const token = localStorage.getItem('token');  // Obtener el token JWT del localStorage
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-
+    const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/${postId}/like`, {}, { headers });
   }
 
+  // Método para crear un post
   createPost(postData: any): Observable<any> {
-    const token = localStorage.getItem('token');  // Obtener el token JWT desde el almacenamiento local
-
-    // Configurar los headers con el token de autorización
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-
-    // Enviar el postData al backend con los headers
+    const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/create`, postData, { headers });
   }
 
@@ -88,5 +93,17 @@ export class PostService {
   // Obtener razas según el tipo de animal desde el backend
   getBreeds(animalType: string): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/breeds`, { params: { animalType } });
+  }
+
+  // Método centralizado para obtener los headers de autorización
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('No se encontró token, continuando sin Authorization header');
+      return new HttpHeaders(); // Sin autorización
+    }
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
   }
 }

@@ -41,6 +41,7 @@ export class SpecificPostComponent implements OnInit {
       });
   }
 
+
   sendMessage() {
     // Lógica para enviar un mensaje al usuario
     console.log('Mensaje enviado:', this.message);

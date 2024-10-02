@@ -48,6 +48,11 @@ export class AdoptionsComponent implements OnInit {
     });
   }
 
+  // Función para verificar si la URL es externa
+  isExternalUrl(url: string): boolean {
+    return url.startsWith('http://') || url.startsWith('https://');
+  }
+
   loadProvinces(): void {
     this.postsService.getProvinces().subscribe({
       next: (provinces: string[]) => {
@@ -55,7 +60,6 @@ export class AdoptionsComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error al cargar las provincias', error);
-        // Podrías cargar datos estáticos si fuera necesario
       }
     });
   }

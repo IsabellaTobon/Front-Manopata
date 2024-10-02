@@ -5,20 +5,7 @@
       <label for="locationFilter" class="form-label">Filtrar por Ubicación:</label>
       <select id="locationFilter" class="form-select" (change)="filterByLocation($event)">
         <option value="">Todas las Ubicaciones</option>
-        <option value="Madrid">Madrid</option>
-        <option value="Barcelona">Barcelona</option>
-        <option value="Valencia">Valencia</option>
-        <!-- Agrega más ubicaciones según sea necesario -->
-      </select>
-    </div>
-    <div class="col-md-4">
-      <label for="serviceFilter" class="form-label">Filtrar por Servicios:</label>
-      <select id="serviceFilter" class="form-select" (change)="filterByService($event)">
-        <option value="">Todos los Servicios</option>
-        <option value="Adopción">Adopción</option>
-        <option value="Refugio">Refugio</option>
-        <option value="Veterinario">Veterinario</option>
-        <!-- Agrega más servicios según sea necesario -->
+        <option *ngFor="let province of provinces" [value]="province">{{ province }}</option>
       </select>
     </div>
   </div>
@@ -30,14 +17,14 @@
         <img [src]="protectora.photo" class="card-img-top" alt="Protectora Image">
         <div class="card-body text-center">
           <h5 class="card-title">{{ protectora.name }}</h5>
-          <p class="card-text">{{ protectora.city }}, {{ protectora.province }}</p>
+          <p class="card-text">{{ protectora.city }}</p>
           <button class="btn btn-primary" (click)="selectProtector(protectora)">Ver detalles</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal para Vista Ampliada -->
+  <!-- Modal de Detalles -->
   <div class="modal fade" id="protectorModal" tabindex="-1" aria-labelledby="protectorModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -46,10 +33,13 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p><strong>Ubicación:</strong> {{ selectedProtector?.city }}, {{ selectedProtector?.province }}</p>
-          <p><strong>Descripción:</strong> {{ selectedProtector?.description }}</p>
           <p><strong>Email:</strong> {{ selectedProtector?.email }}</p>
           <p><strong>Teléfono:</strong> {{ selectedProtector?.phone }}</p>
+          <p><strong>Descripción:</strong> {{ selectedProtector?.description }}</p>
+          <p><strong>Ubicación:</strong> {{ selectedProtector?.city }}, {{ selectedProtector?.province }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>

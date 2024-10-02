@@ -1,16 +1,3 @@
-/* Carrusel */
-.carousel-item img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-}
-
-/*Ajustar el contenedor del carrusel */
-.carousel-inner {
-  position: relative;
-  overflow: hidden;
-}
-
 /* Grid de Tarjetas */
 .card-img-top {
   width: 100%;
@@ -28,18 +15,51 @@
 /* MODAL*/
 
 .modal-content {
-  border-radius: 10px;
+  background: linear-gradient(135deg, #fefaf4 0%, #f9f1e7 100%); /* Suave y cálido */
+  border-radius: 15px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15); /* Sombras ligeras */
+  overflow: hidden;
+  border: 1px solid #5a4633; /* Borde marrón oscuro */
 }
 
 .modal-header {
-  background-color: #f8f9fa; /* Ajusta el color del encabezado del modal */
+  background-color: #d9a97b; /* Tono pastel más claro */
+  color: #5a4633; /* Marrón oscuro */
+  border-bottom: 2px solid #5a4633; /* Borde marrón oscuro */
+  padding: 1.5rem;
 }
 
 .modal-title {
-  font-size: 1.5rem; /* Ajusta el tamaño del título */
+  font-weight: 600; /* Letra más audaz */
+  font-size: 1.75rem; /* Tamaño de fuente más grande */
+  letter-spacing: 1px; /* Espaciado entre letras */
+  text-transform: uppercase; /* Transformar a mayúsculas para un look limpio */
 }
 
 .modal-body {
-  font-size: 1rem; /* Ajusta el tamaño del texto del cuerpo */
+  padding: 2rem;
+  background: #fefaf4; /* Fondo cálido y suave */
+  color: #5a4633; /* Texto en marrón oscuro */
 }
+
+.modal-footer {
+  border-top: 2px solid #5a4633; /* Borde superior marrón oscuro */
+  padding: 1rem 2rem;
+  background: #f9f1e7; /* Fondo ligeramente más cálido */
+}
+
+/* Botones del modal */
+.btn-custom {
+  border: 2px solid #5a4633 !important;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #c4886b;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
 

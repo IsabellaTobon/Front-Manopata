@@ -20,39 +20,16 @@
   <div class="container">
     <h2 class="text-center mb-4 animate__animated animate__fadeInDown">Mascotas Destacadas</h2>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4" *ngFor="let pet of featuredPets">
         <div class="card">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Mascota 1">
+          <img [src]="isExternalUrl(pet.photo) ? pet.photo : 'http://localhost:8080' + pet.photo"
+               class="card-img-top" alt="{{ pet.name }}">
           <div class="card-body">
-            <h5 class="card-title">Firulais</h5>
-            <p class="card-text">Firulais es un perro amigable que ama jugar al aire libre.</p>
+            <h5 class="card-title">{{ pet.name }}</h5>
+            <p class="card-text">{{ pet.description }}</p>
           </div>
           <div class="card-footer">
-            <a href="#" class="btn btn-primary">Adoptar</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Mascota 2">
-          <div class="card-body">
-            <h5 class="card-title">Michi</h5>
-            <p class="card-text">Michi es una gata tranquila que busca un hogar lleno de amor.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Adoptar</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Mascota 3">
-          <div class="card-body">
-            <h5 class="card-title">Rex</h5>
-            <p class="card-text">Rex es un perro leal y protector, perfecto para familias activas.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Adoptar</a>
+            <a [routerLink]="['/specific-post', pet.id]" class="btn btn-primary">Adoptar</a>
           </div>
         </div>
       </div>

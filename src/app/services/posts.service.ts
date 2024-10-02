@@ -11,9 +11,13 @@ export class PostService {
 
   constructor(private http: HttpClient) {}
 
-  // Método para obtener un post por ID
   getPostById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
+  getPostsByIds(ids: number[]): Observable<any[]> {
+    const idsParam = ids.join(','); // Convertir el array de IDs en una cadena separada por comas
+    return this.http.get<any[]>(`${this.apiUrl}/by-ids`, { params: { ids: idsParam } });
   }
 
   // Método para obtener todos los posts con filtros opcionales

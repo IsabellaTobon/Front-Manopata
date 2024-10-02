@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ProtectorsService {
 
-  private apiUrl = 'http://localhost:4200/protectors';
+  private apiUrl = 'http://localhost:8080/protectors';
 
   constructor( private http: HttpClient) { }
 

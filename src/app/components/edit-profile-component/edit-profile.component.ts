@@ -17,7 +17,7 @@ export class EditProfileComponent implements OnInit {
   changePasswordForm!: FormGroup;
   deleteAccountForm!: FormGroup;
   selectedOption: string = 'edit';
-  profileImageUrl: string = 'http://localhost:8080/images/default-image.jpg.webp'; // URL pública de la imagen predeterminada
+  profileImageUrl: string = 'http://localhost:8080/images/default-image.webp'; // URL pública de la imagen predeterminada
   selectedFile: File | null = null;
   userProfile: any;
 

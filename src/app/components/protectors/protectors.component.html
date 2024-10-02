@@ -23,41 +23,33 @@
     </div>
   </div>
 
-  <!-- Carrusel Horizontal -->
-  <div id="protectorasCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item" *ngFor="let protectora of filteredProtectors; let i = index" [class.active]="i === 0">
-        <img [src]="protectora.image" class="d-block w-100" alt="Protectora Image" (click)="selectProtector(protectora)">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#protectorasCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#protectorasCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Siguiente</span>
-    </button>
-  </div>
-
-  <!-- Vista Previa Expandible -->
-  <div *ngIf="selectedProtector" class="mt-5">
-    <h3>{{ selectedProtector.name }}</h3>
-    <p><strong>Ubicación:</strong> {{ selectedProtector.location }}</p>
-    <p><strong>Servicios:</strong> {{ selectedProtector.services.join(', ') }}</p>
-    <p><strong>Descripción:</strong> {{ selectedProtector.description }}</p>
-    <!-- Agrega más detalles según sea necesario -->
-  </div>
-
   <!-- Grid de Tarjetas de Protectoras -->
-  <div class="row mt-5" *ngIf="!selectedProtector">
+  <div class="row mt-5">
     <div class="col-lg-4 col-md-6 mb-4" *ngFor="let protectora of filteredProtectors">
       <div class="card h-100 shadow-sm">
-        <img [src]="protectora.image" class="card-img-top" alt="Protectora Image">
+        <img [src]="protectora.photo" class="card-img-top" alt="Protectora Image">
         <div class="card-body text-center">
           <h5 class="card-title">{{ protectora.name }}</h5>
-          <p class="card-text">{{ protectora.location }}</p>
+          <p class="card-text">{{ protectora.city }}, {{ protectora.province }}</p>
           <button class="btn btn-primary" (click)="selectProtector(protectora)">Ver detalles</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Vista Ampliada -->
+  <div class="modal fade" id="protectorModal" tabindex="-1" aria-labelledby="protectorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="protectorModalLabel">{{ selectedProtector?.name }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Ubicación:</strong> {{ selectedProtector?.city }}, {{ selectedProtector?.province }}</p>
+          <p><strong>Descripción:</strong> {{ selectedProtector?.description }}</p>
+          <p><strong>Email:</strong> {{ selectedProtector?.email }}</p>
+          <p><strong>Teléfono:</strong> {{ selectedProtector?.phone }}</p>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css']
 })
@@ -20,6 +20,7 @@ export class EditProfileComponent implements OnInit {
   profileImageUrl: string = 'http://localhost:8080/images/default-image.webp'; // URL pública de la imagen predeterminada
   selectedFile: File | null = null;
   userProfile: any;
+  passwordsDoNotMatch: boolean = false; // Bandera para la validación de contraseñas
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +33,6 @@ export class EditProfileComponent implements OnInit {
     this.initForms();
 
     const userId = this.authService.getUserId();
-
     if (userId) {
       this.authService.getUserData().subscribe(
         (data) => {
@@ -48,27 +48,32 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  // Inicializar los formularios con los datos del usuario
+  // Inicializar formularios
   initForms(): void {
     this.editProfileForm = this.fb.group({
-      name: [this.userProfile?.name || '', Validators.required],
-      lastName: [this.userProfile?.lastName || '', Validators.required],
-      email: [this.userProfile?.email || '', [Validators.required, Validators.email]],
-      nickname: [this.userProfile?.nickname || '', Validators.required],
-      password: ['', Validators.minLength(6)]  // Contraseña opcional
+      name: [''],
+      lastName: [''],
+      email: ['', [Validators.email]],
+      nickname: [''],
+      password: ['', Validators.required]
     });
 
     this.changePasswordForm = this.fb.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmNewPassword: ['', Validators.required]
     });
 
     this.deleteAccountForm = this.fb.group({
       password: ['', Validators.required],
     });
+
+    this.changePasswordForm.valueChanges.subscribe(() => {
+      this.validatePasswords();
+    });
   }
 
-  // Actualiza los valores de los formularios una vez que se cargan los datos del usuario
+  // Actualiza los valores de los formularios con los datos del usuario
   updateForms(): void {
     this.editProfileForm.patchValue({
       name: this.userProfile?.name || '',
@@ -76,46 +81,18 @@ export class EditProfileComponent implements OnInit {
       email: this.userProfile?.email || '',
       nickname: this.userProfile?.nickname || ''
     });
-
-    if (this.userProfile?.profileImageUrl) {
-      this.profileImageUrl = this.userProfile.profileImageUrl;
-    }
   }
 
-  // Seleccionar una opción en el panel lateral
-  selectOption(option: string): void {
-    this.selectedOption = option;
-  }
-
-  // Manejar el envío del formulario de edición de perfil
-  onSubmit(): void {
-    if (this.editProfileForm.valid) {
-      const formData = new FormData();
-      formData.append('name', this.editProfileForm.get('name')?.value ?? '');
-      formData.append('lastName', this.editProfileForm.get('lastName')?.value ?? '');
-      formData.append('email', this.editProfileForm.get('email')?.value ?? '');
-      formData.append('nickname', this.editProfileForm.get('nickname')?.value ?? '');
-      if (this.editProfileForm.get('password')?.value) {
-        formData.append('password', this.editProfileForm.get('password')?.value ?? '');
-      }
-      if (this.selectedFile) {
-        formData.append('profileImage', this.selectedFile);
-      }
-
-      this.http.put(`/api/user/${this.authService.getUserId()}`, formData).subscribe({
-        next: () => {
-          this.notificationService.showNotification('Perfil actualizado con éxito', 'success');
-        },
-        error: () => {
-          this.notificationService.showNotification('Error al actualizar el perfil', 'error');
-        }
-      });
-    }
+  // Validar que las contraseñas coincidan
+  validatePasswords(): void {
+    const newPassword = this.changePasswordForm.get('newPassword')?.value;
+    const confirmNewPassword = this.changePasswordForm.get('confirmNewPassword')?.value;
+    this.passwordsDoNotMatch = newPassword !== confirmNewPassword;
   }
 
   // Manejar el cambio de contraseña
   onChangePassword(): void {
-    if (this.changePasswordForm.valid) {
+    if (this.changePasswordForm.valid && !this.passwordsDoNotMatch) {
       const { oldPassword, newPassword } = this.changePasswordForm.value;
       this.authService.changePassword(oldPassword, newPassword).subscribe({
         next: () => {
@@ -128,17 +105,19 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  // Manejar la eliminación de la cuenta
-  onDeleteAccount(): void {
-    if (this.deleteAccountForm.valid) {
-      const password = this.deleteAccountForm.get('password')?.value;
-      this.authService.deleteAccount(password).subscribe({
+  // Manejar el envío del formulario de edición de perfil
+  onSubmit(): void {
+    if (this.editProfileForm.valid) {
+      const userId = this.authService.getUserId(); // Obtener el ID del usuario
+      const userData = this.editProfileForm.value;
+
+      // Actualizar el perfil del usuario
+      this.authService.updateUserProfile(userData).subscribe({
         next: () => {
-          this.notificationService.showNotification('Cuenta eliminada', 'success');
-          window.location.href = '/';  // Redirigir al inicio tras eliminar la cuenta
+          this.notificationService.showNotification('Perfil actualizado con éxito', 'success');
         },
         error: () => {
-          this.notificationService.showNotification('Error al eliminar la cuenta', 'error');
+          this.notificationService.showNotification('Error al actualizar el perfil', 'error');
         }
       });
     }
@@ -151,9 +130,48 @@ export class EditProfileComponent implements OnInit {
       this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.profileImageUrl = e.target.result;  // Actualiza la vista previa de la imagen
+        this.profileImageUrl = e.target.result;
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  // Manejar el cambio de imagen de perfil
+  onSaveProfileImage(): void {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+
+      const userId = this.authService.getUserId();
+      this.http.put(`/api/user/${userId}/profile-image`, formData).subscribe({
+        next: () => {
+          this.notificationService.showNotification('Imagen de perfil actualizada', 'success');
+        },
+        error: () => {
+          this.notificationService.showNotification('Error al actualizar la imagen de perfil', 'error');
+        }
+      });
+    }
+  }
+
+  // Manejar la desactivación de la cuenta
+  onDeleteAccount(): void {
+    if (this.deleteAccountForm.valid) {
+      const password = this.deleteAccountForm.get('password')?.value;
+      this.authService.deactivateAccount(password).subscribe({
+        next: () => {
+          this.notificationService.showNotification('Cuenta desactivada', 'success');
+          window.location.href = '/';
+        },
+        error: () => {
+          this.notificationService.showNotification('Error al desactivar la cuenta', 'error');
+        }
+      });
+    }
+  }
+
+  // Seleccionar una opción del panel lateral
+  selectOption(option: string): void {
+    this.selectedOption = option;
   }
 }

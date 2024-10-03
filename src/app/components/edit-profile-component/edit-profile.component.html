@@ -11,6 +11,9 @@
           <a class="nav-link" [class.active]="selectedOption === 'password'" (click)="selectOption('password')">Cambiar Contraseña</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" [class.active]="selectedOption === 'image'" (click)="selectOption('image')">Cambiar Imagen de Perfil</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-danger" [class.active]="selectedOption === 'delete'" (click)="selectOption('delete')">Eliminar Cuenta</a>
         </li>
       </ul>
@@ -40,17 +43,6 @@
             <label for="nickname" class="form-label">Nickname:</label>
             <input id="nickname" formControlName="nickname" type="text" class="form-control" />
           </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Contraseña:</label>
-            <input id="password" formControlName="password" type="password" class="form-control" />
-          </div>
-          <div class="mb-3 text-center">
-            <label for="profileImage" class="form-label">Imagen de Perfil:</label>
-            <div class="d-flex flex-column align-items-center">
-              <img [src]="profileImageUrl" alt="Imagen de Perfil" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" />
-              <input type="file" (change)="onFileSelected($event)" class="form-control-file" />
-            </div>
-          </div>
           <button type="submit" class="btn btn-primary btn-lg">Actualizar Perfil</button>
         </form>
 
@@ -65,7 +57,25 @@
             <label for="newPassword" class="form-label">Nueva Contraseña:</label>
             <input id="newPassword" formControlName="newPassword" type="password" class="form-control" />
           </div>
-          <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+          <div class="mb-3">
+            <label for="confirmNewPassword" class="form-label">Confirmar Nueva Contraseña:</label>
+            <input id="confirmNewPassword" formControlName="confirmNewPassword" type="password" class="form-control" />
+          </div>
+          <div *ngIf="passwordsDoNotMatch" class="text-danger">Las contraseñas no coinciden</div>
+          <button type="submit" class="btn btn-primary" [disabled]="passwordsDoNotMatch">Cambiar Contraseña</button>
+        </form>
+
+        <!-- Formulario para cambiar imagen de perfil -->
+        <form *ngSwitchCase="'image'" (ngSubmit)="onSaveProfileImage()">
+          <h4 class="section-title">Cambiar Imagen de Perfil</h4>
+          <div class="mb-3 text-center">
+            <label for="profileImage" class="form-label">Imagen de Perfil:</label>
+            <div class="d-flex flex-column align-items-center">
+              <img [src]="profileImageUrl" alt="Imagen de Perfil" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" />
+              <input type="file" (change)="onFileSelected($event)" class="form-control-file" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">Actualizar Imagen de Perfil</button>
         </form>
 
         <!-- Formulario para eliminar cuenta -->
@@ -73,8 +83,8 @@
           <h4 class="section-title text-danger">Eliminar Cuenta</h4>
           <p class="text-danger">Esta acción no se puede deshacer. Si estás seguro, ingresa tu contraseña para confirmar.</p>
           <div class="mb-3">
-            <label for="password" class="form-label">Contraseña:</label>
-            <input id="password" formControlName="password" type="password" class="form-control" />
+            <label for="deletePassword" class="form-label">Contraseña:</label>
+            <input id="deletePassword" formControlName="password" type="password" class="form-control" />
           </div>
           <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
         </form>

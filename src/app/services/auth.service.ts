@@ -19,26 +19,20 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // Método para obtener datos de ejemplo (si es necesario)
-  getData(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/`);
-  }
-
-  // Método para enviar datos de ejemplo (si es necesario)
-  postData(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/`, data);
-  }
-
   // Inicio de sesión
   login(nickname: string, password: string): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/login`, { nickname, password })
       .pipe(
         tap((response: LoginResponse) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('userId', response.userId);
-          localStorage.setItem('nickname', nickname);
-          this.loggedIn.next(true);
+          if (response.userId) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('userId', response.userId);
+            localStorage.setItem('nickname', nickname);
+            this.loggedIn.next(true);
+          } else {
+            console.error('userId is missing in the login response.');
+          }
         }),
         catchError((error) => {
           return throwError(() => new Error(error.error?.error || 'Error inesperado durante el inicio de sesión.'));
@@ -84,13 +78,25 @@ export class AuthService {
     );
   }
 
-  // Eliminar cuenta del usuario
-  deleteAccount(password: string): Observable<any> {
-    return this.http.post(`${this.userApiUrl}/delete-account`, { password }).pipe(
-      tap(() => console.log('Cuenta eliminada')),
-      catchError((error) => throwError(() => new Error('Error al eliminar la cuenta.')))
+  // Actualizar imagen de perfil
+  updateProfileImage(imageFile: File): Observable<any> {
+    const userId = this.getUserId();
+    const formData = new FormData();
+    formData.append('image', imageFile);
+
+    return this.http.put(`${this.userApiUrl}/${userId}/profile-image`, formData).pipe(
+      tap(() => console.log('Imagen de perfil actualizada')),
+      catchError((error) => throwError(() => new Error('Error al actualizar la imagen de perfil.')))
     );
   }
+
+  // Desactivar cuenta del usuario
+  deactivateAccount(password: string): Observable<any> {
+    return this.http.post(`${this.userApiUrl}/deactivate-account`, { password }).pipe(
+      tap(() => console.log('Cuenta desactivada')),
+      catchError((error) => throwError(() => new Error('Error al desactivar la cuenta.')))
+    );
+}
 
   // Actualizar token JWT
   refreshToken(): Observable<any> {

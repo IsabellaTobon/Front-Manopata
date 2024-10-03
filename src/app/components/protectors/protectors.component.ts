@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProtectorsService } from '../../services/protectors.service';
 import { CommonModule } from '@angular/common';
-import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-protectors',
@@ -14,7 +13,7 @@ export class ProtectorsComponent implements OnInit {
 
   protectors: any[] = [];
   filteredProtectors: any[] = [];
-  selectedProtector: any = null;
+  selectedProtector: any;
   provinces: string[] = [];
   cities: string[] = [];
 
@@ -62,22 +61,26 @@ export class ProtectorsComponent implements OnInit {
   selectProtector(protector: any) {
     this.selectedProtector = protector;
 
-    // Obtener el elemento del modal
+    // Obtener el modal y mostrarlo utilizando Bootstrap nativo
     const modalElement = document.getElementById('protectorModal');
+    if (modalElement) {
 
-    if (modalElement) { // Verificar que el elemento no sea nulo
-      const modal = new Modal(modalElement);
-      modal.show();
+      const bootstrapModal = new (window as any).bootstrap.Modal(modalElement);
+      bootstrapModal.show();
     } else {
-      console.error('No se pudo encontrar el elemento del modal.');
+      console.error('No se pudo encontrar el modal.');
     }
   }
 
   filterByLocation(event: any) {
     const location = event.target.value;
-    this.filteredProtectors = this.protectors.filter(protector =>
-      location === '' || protector.city === location // Ajusta si la propiedad del objeto es 'city'
-    );
+    if (location) {
+      // Filtrar sobre el array original de protectoras
+      this.filteredProtectors = this.protectors.filter(protector => protector.province === location);
+    } else {
+      // Restaura la lista completa de protectoras
+      this.filteredProtectors = [...this.protectors];  // Crea una copia del array original
+    }
   }
 
 }

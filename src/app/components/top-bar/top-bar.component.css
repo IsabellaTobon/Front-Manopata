@@ -78,6 +78,16 @@
   transform: translateY(0);  /* El texto se desliza a su lugar */
 }
 
+/* PROFILE */
+.profile-image {
+  width: 80px; /* Ajusta el tamaño de la imagen */
+  height: 80px; /* Asegúrate de que la imagen sea cuadrada */
+  border-radius: 15px; /* Bordes redondeados */
+  object-fit: cover; /* Asegura que la imagen cubra el contenedor */
+  margin-right: 10px; /* Separación entre la imagen y el saludo */
+}
+
+
 /* CUSTOM */
 
 .custom-border {

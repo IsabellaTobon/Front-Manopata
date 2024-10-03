@@ -25,8 +25,8 @@
       </li>
     </ul>
 
-    <div class="d-flex flex-wrap">
-      <!-- Menú desplegable cuando el usuario está autenticado -->
+    <div class="d-flex flex-wrap align-items-center">
+      <img [src]="profileImageUrl" alt="Imagen de perfil" class="profile-image">
       <div *ngIf="isLoggedIn" class="nav-item dropdown me-4">
         <a class="nav-link dropdown-toggle welcome-message fade-in" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           👋 ¡Bienvenid&#64; {{ nickname }}!
@@ -37,7 +37,6 @@
         </ul>
       </div>
 
-      <!-- Botones de Iniciar sesión/Registro si no está autenticado -->
       <button *ngIf="!isLoggedIn" class="btn btn-primary me-2 mb-2" (click)="openLoginForm()" aria-label="Iniciar sesión">Iniciar sesión</button>
       <button *ngIf="!isLoggedIn" class="btn btn-outline custom-border me-4 mb-2" (click)="openRegisterForm()" aria-label="Registrarse">Registrarse</button>
     </div>

@@ -17,6 +17,8 @@ export class AuthService {
   private userApiUrl = 'http://localhost:8080/api/user';
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
 
+  profileImageChanged$ = new BehaviorSubject<string>('http://localhost:8080/images/default-image.webp');
+
   constructor(private http: HttpClient, private router: Router) {}
 
   // Inicio de sesión
@@ -85,7 +87,10 @@ export class AuthService {
     formData.append('image', imageFile);
 
     return this.http.put(`${this.userApiUrl}/${userId}/profile-image`, formData).pipe(
-      tap(() => console.log('Imagen de perfil actualizada')),
+      tap((response: any) => {
+        const newImageUrl = `http://localhost:8080/images/${response.fileName}`;
+        this.profileImageChanged$.next(newImageUrl);  // Actualizar la nueva URL de la imagen de perfil
+      }),
       catchError((error) => throwError(() => new Error('Error al actualizar la imagen de perfil.')))
     );
   }

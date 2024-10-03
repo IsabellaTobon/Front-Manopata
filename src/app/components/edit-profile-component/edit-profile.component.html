@@ -43,7 +43,9 @@
             <label for="nickname" class="form-label">Nickname:</label>
             <input id="nickname" formControlName="nickname" type="text" class="form-control" />
           </div>
-          <button type="submit" class="btn btn-primary btn-lg">Actualizar Perfil</button>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary btn-lg">Actualizar Perfil</button>
+          </div>
         </form>
 
         <!-- Formulario para cambiar contraseña -->
@@ -61,8 +63,10 @@
             <label for="confirmNewPassword" class="form-label">Confirmar Nueva Contraseña:</label>
             <input id="confirmNewPassword" formControlName="confirmNewPassword" type="password" class="form-control" />
           </div>
-          <div *ngIf="passwordsDoNotMatch" class="text-danger">Las contraseñas no coinciden</div>
-          <button type="submit" class="btn btn-primary" [disabled]="passwordsDoNotMatch">Cambiar Contraseña</button>
+          <div *ngIf="passwordsDoNotMatch" class="text-danger text-center">Las contraseñas no coinciden</div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary" [disabled]="passwordsDoNotMatch">Cambiar Contraseña</button>
+          </div>
         </form>
 
         <!-- Formulario para cambiar imagen de perfil -->
@@ -75,18 +79,22 @@
               <input type="file" (change)="onFileSelected($event)" class="form-control-file" />
             </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg">Actualizar Imagen de Perfil</button>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary btn-lg">Actualizar Imagen de Perfil</button>
+          </div>
         </form>
 
         <!-- Formulario para eliminar cuenta -->
         <form *ngSwitchCase="'delete'" (ngSubmit)="onDeleteAccount()" [formGroup]="deleteAccountForm">
           <h4 class="section-title text-danger">Eliminar Cuenta</h4>
-          <p class="text-danger">Esta acción no se puede deshacer. Si estás seguro, ingresa tu contraseña para confirmar.</p>
+          <p class="text-danger text-center">Esta acción no se puede deshacer. Si estás seguro, ingresa tu contraseña para confirmar.</p>
           <div class="mb-3">
             <label for="deletePassword" class="form-label">Contraseña:</label>
             <input id="deletePassword" formControlName="password" type="password" class="form-control" />
           </div>
-          <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+          </div>
         </form>
       </ng-container>
     </div>

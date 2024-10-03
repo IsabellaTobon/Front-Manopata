@@ -16,6 +16,7 @@ export class TopBarComponent implements OnInit {
 
   isLoggedIn: boolean = false;
   nickname: string | null = '';
+  profileImageUrl: string = '';
 
   constructor(private authService: AuthService) {}
 
@@ -27,6 +28,10 @@ export class TopBarComponent implements OnInit {
       if (this.isLoggedIn) {
         // Obtener el nickname del localStorage
         this.nickname = localStorage.getItem('nickname');
+        // Obtener la URL de la imagen de perfil más reciente
+        this.authService.profileImageChanged$.subscribe(newImageUrl => {
+          this.profileImageUrl = newImageUrl;
+        });
       } else {
         this.nickname = null;
       }
@@ -34,7 +39,7 @@ export class TopBarComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout();  // Llamar al método de logout
+    this.authService.logout();
   }
 
   openLoginForm(): void {

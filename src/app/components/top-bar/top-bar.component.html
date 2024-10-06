@@ -9,10 +9,10 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav me-auto mb-4 mb-lg-0 h5">
       <li class="nav-item">
-        <a class="nav-link " href="/" id="first-link">Inicio</a>
+        <a class="nav-link" href="/" id="first-link">Inicio</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="/adoptions">Adopciones</a>
+        <a class="nav-link" href="/adoptions">Adopciones</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/protectors">Protectoras</a>
@@ -26,7 +26,9 @@
     </ul>
 
     <div class="d-flex flex-wrap align-items-center">
-      <img [src]="profileImageUrl" alt="Imagen de perfil" class="profile-image">
+      <!-- Mostrar imagen de perfil solo si el usuario está logueado -->
+      <img *ngIf="isLoggedIn && profileImageUrl" [src]="profileImageUrl" alt="Imagen de perfil" class="profile-image me-2">
+
       <div *ngIf="isLoggedIn" class="nav-item dropdown me-4">
         <a class="nav-link dropdown-toggle welcome-message fade-in" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           👋 ¡Bienvenid&#64; {{ nickname }}!

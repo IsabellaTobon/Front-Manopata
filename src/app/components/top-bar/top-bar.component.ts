@@ -38,6 +38,7 @@ export class TopBarComponent implements OnInit {
         });
       } else {
         this.nickname = null;
+        this.profileImageUrl = '';
       }
     });
   }

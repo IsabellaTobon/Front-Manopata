@@ -152,8 +152,8 @@ export class EditProfileComponent implements OnInit {
 
   // Manejar el cambio de imagen de perfil
   onSaveProfileImage(): void {
-    var debug = false;  // Activar el modo de depuración
     if (this.selectedFile) {
+      
       const formData = new FormData();
       formData.append('image', this.selectedFile);
 

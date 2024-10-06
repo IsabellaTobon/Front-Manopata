@@ -17,10 +17,10 @@ export class EditProfileComponent implements OnInit {
   changePasswordForm!: FormGroup;
   deleteAccountForm!: FormGroup;
   selectedOption: string = 'edit';
-  profileImageUrl: string = 'http://localhost:8080/images/default-image.webp'; // URL pública de la imagen predeterminada
+  profileImageUrl: string = '';
   selectedFile: File | null = null;
   userProfile: any;
-  passwordsDoNotMatch: boolean = false; // Bandera para la validación de contraseñas
+  passwordsDoNotMatch: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -34,18 +34,24 @@ export class EditProfileComponent implements OnInit {
 
     const userId = this.authService.getUserId();
     if (userId) {
-      this.authService.getUserData().subscribe(
-        (data) => {
+      this.authService.getUserData().subscribe({
+        next: (data) => {
           this.userProfile = data;
+          this.profileImageUrl = 'http://localhost:8080' + this.userProfile.photo;
           this.updateForms();
         },
-        (error) => {
+        error: (error) => {
           console.error('Error fetching profile:', error);
         }
-      );
-    } else {
-      console.error('User ID is undefined, cannot fetch profile.');
+      });
     }
+
+    // Suscribirse a los cambios de la imagen de perfil
+    this.authService.profileImageChanged$.subscribe((newImageUrl) => {
+      if (this.userProfile) {
+        this.profileImageUrl = newImageUrl;
+      }
+    });
   }
 
   // Inicializar formularios
@@ -77,9 +83,10 @@ export class EditProfileComponent implements OnInit {
   updateForms(): void {
     this.editProfileForm.patchValue({
       name: this.userProfile?.name || '',
-      lastName: this.userProfile?.lastName || '',
+      lastName: this.userProfile?.lastname || '',
       email: this.userProfile?.email || '',
-      nickname: this.userProfile?.nickname || ''
+      nickname: this.userProfile?.nickname || '',
+      profileImageUrl: this.userProfile?.photo || ''
     });
   }
 
@@ -127,10 +134,17 @@ export class EditProfileComponent implements OnInit {
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
+      // Verificar si el archivo es una imagen
+      const validImageTypes = ['image/jpeg', 'image/png'];
+      if (!validImageTypes.includes(file.type)) {
+        this.notificationService.showNotification('El archivo seleccionado no es una imagen válida', 'error');
+        return;
+      }
+
       this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.profileImageUrl = e.target.result;
+        this.profileImageUrl = e.target.result;  // Mostrar vista previa de la imagen
       };
       reader.readAsDataURL(file);
     }
@@ -138,16 +152,17 @@ export class EditProfileComponent implements OnInit {
 
   // Manejar el cambio de imagen de perfil
   onSaveProfileImage(): void {
+    var debug = false;  // Activar el modo de depuración
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('image', this.selectedFile);
 
-      const userId = this.authService.getUserId();
-      this.http.put(`/api/user/${userId}/profile-image`, formData).subscribe({
-        next: () => {
+      this.authService.updateProfileImage(this.selectedFile).subscribe({
+        next: (response: any) => {
+          this.profileImageUrl = `http://localhost:8080/uploads/${response.fileName}`;
           this.notificationService.showNotification('Imagen de perfil actualizada', 'success');
         },
-        error: () => {
+        error: (err) => {
           this.notificationService.showNotification('Error al actualizar la imagen de perfil', 'error');
         }
       });

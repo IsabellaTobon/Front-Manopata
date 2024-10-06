@@ -70,17 +70,17 @@
         </form>
 
         <!-- Formulario para cambiar imagen de perfil -->
-        <form *ngSwitchCase="'image'" (ngSubmit)="onSaveProfileImage()">
+        <form *ngSwitchCase="'image'">
           <h4 class="section-title">Cambiar Imagen de Perfil</h4>
           <div class="mb-3 text-center">
             <label for="profileImage" class="form-label">Imagen de Perfil:</label>
             <div class="d-flex flex-column align-items-center">
-              <img [src]="profileImageUrl" alt="Imagen de Perfil" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" />
+              <img [src]="profileImageUrl" alt="Imagen de Perfil" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" accept="image/*" />
               <input type="file" (change)="onFileSelected($event)" class="form-control-file" />
             </div>
           </div>
           <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary btn-lg">Actualizar Imagen de Perfil</button>
+            <button type="submit" class="btn btn-primary btn-lg" (click)="onSaveProfileImage()">Guardar Imagen</button>
           </div>
         </form>
 

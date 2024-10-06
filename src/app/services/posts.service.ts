@@ -81,7 +81,15 @@ export class PostService {
 
   // Obtener URL de imagen de un post
   getPostImage(imageName: string): string {
+    if (this.isExternalUrl(imageName)) {
+      return imageName;
+    }
     return `${this.apiUrl.replace('/post', '')}/files/${imageName}`;
+  }
+
+  // Función para verificar si la URL es externa
+  private isExternalUrl(url: string): boolean {
+    return url.startsWith('http://') || url.startsWith('https://');
   }
 
   // Obtener provincias desde el backend

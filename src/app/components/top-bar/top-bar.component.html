@@ -29,6 +29,22 @@
       <!-- Mostrar imagen de perfil solo si el usuario está logueado -->
       <img *ngIf="isLoggedIn && profileImageUrl" [src]="profileImageUrl" alt="Imagen de perfil" class="profile-image me-2">
 
+      <!-- Botón de notificaciones -->
+      <div *ngIf="isLoggedIn" class="nav-item dropdown me-4">
+        <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          🛎️ Notificaciones <span *ngIf="unreadCount > 0" class="badge bg-danger">{{ unreadCount }}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+          <li *ngIf="notifications.length === 0" class="dropdown-item text-muted">No tienes nuevas notificaciones</li>
+          <li *ngFor="let notification of notifications" class="dropdown-item">
+            <a href="#" class="d-block">
+              <strong>{{ notification.sender.nickname }}:</strong> {{ notification.bodyText }}
+              <small class="d-block text-muted">{{ notification.sentDate | date: 'short' }}</small>
+            </a>
+          </li>
+        </ul>
+      </div>
+
       <div *ngIf="isLoggedIn" class="nav-item dropdown me-4">
         <a class="nav-link dropdown-toggle welcome-message fade-in" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           👋 ¡Bienvenid&#64; {{ nickname }}!

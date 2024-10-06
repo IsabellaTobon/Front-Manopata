@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MessagesService } from '../../services/messages.service';
 @Component({
   selector: 'top-bar',
   standalone: true,
@@ -18,7 +19,13 @@ export class TopBarComponent implements OnInit {
   nickname: string | null = '';
   profileImageUrl: string = '';
 
-  constructor(private authService: AuthService) {}
+  notifications: any[] = [];
+  unreadCount: number = 0;
+
+  constructor(
+    private authService: AuthService,
+    private messageService: MessagesService
+  ) {}
 
   ngOnInit(): void {
     // Subscribirse al estado de autenticación
@@ -31,6 +38,10 @@ export class TopBarComponent implements OnInit {
         this.authService.getUserData().subscribe({
           next: (data) => {
             this.profileImageUrl = 'http://localhost:8080' + data.photo;
+
+            const userId = data.id;
+
+            this.loadNotifications(userId);
           },
           error: (error) => {
             console.error('Error fetching profile:', error);
@@ -39,6 +50,19 @@ export class TopBarComponent implements OnInit {
       } else {
         this.nickname = null;
         this.profileImageUrl = '';
+      }
+    });
+  }
+
+  // Cargar las notificaciones desde el servicio de mensajes
+  loadNotifications(userId: number): void {
+    this.messageService.getInboxMessages(userId).subscribe({
+      next: (messages) => {
+        this.notifications = messages;
+        this.unreadCount = messages.length;  // Suponiendo que todas las notificaciones son no leídas
+      },
+      error: (error) => {
+        console.error('Error fetching messages:', error);
       }
     });
   }

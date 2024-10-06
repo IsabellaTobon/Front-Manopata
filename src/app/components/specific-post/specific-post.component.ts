@@ -1,8 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PostService } from '../../services/posts.service';
-import { ActivatedRoute } from '@angular/router'; // Add this line
+import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
+import { NotificationsService } from '../../services/notifications.service';
+import { MessagesService } from '../../services/messages.service';
+
+
 
 @Component({
   selector: 'specific-post',
@@ -10,7 +15,7 @@ import { CommonModule, DatePipe } from '@angular/common';
   imports: [FormsModule, CommonModule],
   providers: [DatePipe],
   templateUrl: './specific-post.component.html',
-  styleUrl: './specific-post.component.css'
+  styleUrls: ['./specific-post.component.css']
 })
 export class SpecificPostComponent implements OnInit {
 
@@ -22,15 +27,27 @@ export class SpecificPostComponent implements OnInit {
     text: ''
   };
 
+  senderId: number | null = null;
+
   constructor(
     private route: ActivatedRoute,
-    private postService: PostService  ) { }
+    private postService: PostService,
+    private authService: AuthService,
+    private notificationsService: NotificationsService,
+    private messagesService: MessagesService
+
+    ) { }
 
     ngOnInit(): void {
       const postId = +this.route.snapshot.paramMap.get('id')!;
       this.postService.getPostById(postId).subscribe({
         next: (data) => {
           this.post = data;
+
+          if (this.post.photo) {
+            this.post.photo = this.postService.getPostImage(this.post.photo);
+          }
+
           if (this.post.registerDate) {
             this.post.registerDate = new Date(this.post.registerDate);
           }
@@ -39,15 +56,44 @@ export class SpecificPostComponent implements OnInit {
           console.error('Error al cargar el post:', err);
         }
       });
+
+      // Obtener datos del usuario autenticado
+      this.authService.getUserData().subscribe({
+        next: (data) => {
+          this.message.name = data.nickname;
+          this.message.email = data.email;
+          this.senderId = data.id;
+        },
+        error: (error) => {
+          console.error('Error fetching user data:', error);
+        }
+      });
+
+
   }
 
-
   sendMessage() {
-    // Lógica para enviar un mensaje al usuario
-    console.log('Mensaje enviado:', this.message);
-    alert('Mensaje enviado al usuario.');
-    // Limpiar el formulario
-    this.message = { name: '', email: '', text: '' };
+    if (this.senderId === null) {
+      console.error('El ID del remitente no está disponible.');
+      this.notificationsService.showNotification('No se puede enviar el mensaje. Usuario no autenticado.', 'error');
+      return;
+    }
+
+    const receiverId = this.post.userId; // Suponiendo que el post tiene un campo userId que indica el propietario del post
+    const postId = this.post.id;
+    const bodyText = this.message.text;
+
+    this.messagesService.sendMessage(this.senderId, receiverId, bodyText, postId).subscribe({
+      next: (response) => {
+        console.log('Mensaje enviado:', response);
+        this.notificationsService.showNotification('Mensaje enviado correctamente', 'success');
+        this.message.text = ''; // Limpiar el campo de texto después de enviar
+      },
+      error: (err) => {
+        console.error('Error al enviar el mensaje:', err);
+        this.notificationsService.showNotification('Error al enviar el mensaje', 'error');
+      }
+    });
   }
 
 }

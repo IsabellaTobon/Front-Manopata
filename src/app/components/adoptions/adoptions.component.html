@@ -75,10 +75,8 @@
 
         <div *ngFor="let pet of posts" class="col-xl-3 col-lg-4 col-md-6 mb-4">
           <div class="card h-100 shadow-sm">
-            <img *ngIf="pet.photo"
-                 [src]="isExternalUrl(pet.photo) ? pet.photo : 'http://localhost:8080' + pet.photo"
-                 class="card-img-top card-img-custom"
-                 [alt]="pet.name">
+            <img *ngIf="pet.photo" [src]="isExternalUrl(pet.photo) ? pet.photo : 'http://localhost:8080' + pet.photo"
+              class="card-img-top card-img-custom" [alt]="pet.name">
             <div class="card-body text-center">
               <h5 class="card-title">{{ pet.name }}</h5>
               <p class="card-text">{{ pet.city }}</p>

@@ -11,13 +11,10 @@
   font-size: x-large;
 }
 
-#first-link {
-  margin-left: 60px;
-}
-
 .nav-link {
   color: rgb(0, 0, 0) !important;
   font-size: large;
+  margin-right: 20px;  /* Ajustar el espacio entre los enlaces */
 }
 
 .nav-link:hover {
@@ -25,77 +22,56 @@
   background-color: #5b452a;
   border-radius: 1.5em;
   transition: all 0.1s ease-in-out;
-
 }
 
-/* Ajuste para distribuir mejor los items en la navbar */
-.navbar-nav {
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  gap: 60px; /* Ajusta el espaciado entre enlaces */
-}
-
-.d-flex {
-  padding-left: 30px; /* Ajuste del padding para pantallas medianas */
-  padding-right: 30px;
-  display: flex;
+/* Ajuste para la campanita */
+.notification-icon {
+  font-size: 1.5rem;  /* Aumentar el tamaño de la campanita */
+  margin-right: 20px;
 }
 
 .navbar-toggler {
   border: none;
-  padding: 0;
 }
 
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-.ms-3 {
-  margin-left: 1rem;
-}
-
-.me-auto {
-  margin-right: auto !important;
-}
-
 .welcome-message {
   font-size: 1.1rem;
-  color: rgb(247, 245, 244); /* Color de texto */
-  background-color: rgba(189, 126, 67); /* Fondo suave */
+  color: rgb(247, 245, 244);
+  background-color: rgba(189, 126, 67);
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   margin-right: 10px;
   margin-left: 10px;
   opacity: 0;
-  transform: translateY(-20px); /* Efecto de deslizamiento */
+  transform: translateY(-20px);
   transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+  white-space: normal; /* Permite que el texto se divida en varias líneas */
+  word-wrap: break-word; /* Si el texto es largo, permite que se ajuste */
+  max-width: 200px; /* Limitar el ancho máximo del botón */
 }
 
 .fade-in {
   opacity: 1;
-  transform: translateY(0);  /* El texto se desliza a su lugar */
+  transform: translateY(0);
 }
 
-/* PROFILE */
 .profile-image {
-  width: 80px; /* Ajusta el tamaño de la imagen */
-  height: 80px; /* Asegúrate de que la imagen sea cuadrada */
-  border-radius: 15px; /* Bordes redondeados */
-  object-fit: cover; /* Asegura que la imagen cubra el contenedor */
-  margin-right: 10px; /* Separación entre la imagen y el saludo */
+  width: 80px;
+  height: 80px;
+  border-radius: 15px;
+  object-fit: cover;
+  margin-right: 10px;
 }
-
-
-/* CUSTOM */
 
 .custom-border {
   border-color: rgb(194, 108, 27);
   color: rgb(194, 108, 27);
   border-width: 3px;
-  align-items: center;
-  display: flex;
   font-weight: bold;
   border-style: dashed;
 }
@@ -105,72 +81,58 @@
   border-color: rgb(134, 74, 17) !important;
 }
 
-#open-close-menu {
-  z-index: 10;
-}
-
-/* Ajustes adicionales para pantallas medianas */
-@media (max-width: 992px) { /* Colapsar el menú en pantallas medianas */
+/* Responsividad */
+@media (max-width: 992px) {
   .navbar-nav {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 10px; /* Ajusta el espaciado entre enlaces */
+    gap: 10px;
   }
 
   .navbar-brand {
-    font-size: medium; /* Reduce el tamaño del logo */
+    font-size: medium;
   }
 
   .nav-link {
-    font-size: medium; /* Ajusta el tamaño de los enlaces */
+    font-size: medium;
   }
 
   .d-flex {
-    padding-left:10px;
+    padding-left: 10px;
     padding-right: 10px;
-  }
-
-  .navbar-nav .nav-link {
-    margin: 5px 0;
-  }
-
-  .btn {
-    width: 100%;
-    margin-bottom: 5px;
   }
 }
 
-/* Ajustes adicionales para pantallas pequeñas */
 @media (max-width: 768px) {
-  .navbar-brand {
-    margin-right: 10px;
-    font-size: large;
+  .navbar-nav {
+    gap: 20px;
+    flex-direction: column;
+    text-align: center;
   }
 
-  .navbar-nav {
-    gap: 20px; /* Reduce el espaciado en pantallas pequeñas */
+  .profile-image {
+    margin-top: 10px;
   }
 
   .nav-link {
-    margin-right: 5px;
     font-size: medium;
+    margin-right: 5px;
   }
 
   .d-flex {
     flex-wrap: wrap;
     justify-content: flex-end;
-    margin-left: 0;
-    padding-left: 10px;  /* Reduce el padding en pantallas pequeñas */
+    padding-left: 10px;
     padding-right: 10px;
   }
 
-  .btn {
-    width: 100%;
-    margin-bottom: 5px;
+  .welcome-message {
+    font-size: 1rem; /* Reducir el tamaño de fuente en pantallas pequeñas */
+    padding: 8px;
+    max-width: 150px; /* Limitar el tamaño máximo en pantallas pequeñas */
+    text-align: center; /* Asegurar que el texto esté centrado */
   }
 
   body {
-    padding-top: 100px; /* Aumenta el padding-top en pantallas pequeñas para evitar solapamiento */
+    padding-top: 100px;
   }
-
 }

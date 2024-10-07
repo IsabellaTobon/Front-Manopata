@@ -40,9 +40,11 @@ export class SpecificPostComponent implements OnInit {
 
     ngOnInit(): void {
       const postId = +this.route.snapshot.paramMap.get('id')!;
+
       this.postService.getPostById(postId).subscribe({
         next: (data) => {
           this.post = data;
+          console.log('Post cargado:', this.post);
 
           if (this.post.photo) {
             this.post.photo = this.postService.getPostImage(this.post.photo);
@@ -62,13 +64,12 @@ export class SpecificPostComponent implements OnInit {
         next: (data) => {
           this.message.name = data.nickname;
           this.message.email = data.email;
-          this.senderId = data.id;
+          this.senderId = data.userId;
         },
         error: (error) => {
           console.error('Error fetching user data:', error);
         }
       });
-
 
   }
 
@@ -79,7 +80,13 @@ export class SpecificPostComponent implements OnInit {
       return;
     }
 
-    const receiverId = this.post.userId; // Suponiendo que el post tiene un campo userId que indica el propietario del post
+    const receiverId = this.post.user?.id;
+    if (!receiverId) {
+      console.error('El ID del receptor no está disponible.');
+      this.notificationsService.showNotification('No se puede enviar el mensaje. El propietario del post no está disponible.', 'error');
+      return;
+    }
+
     const postId = this.post.id;
     const bodyText = this.message.text;
 

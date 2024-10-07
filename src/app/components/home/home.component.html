@@ -23,13 +23,13 @@
       <div class="col-md-4" *ngFor="let pet of featuredPets">
         <div class="card">
           <img [src]="isExternalUrl(pet.photo) ? pet.photo : 'http://localhost:8080' + pet.photo"
-               class="card-img-top" alt="{{ pet.name }}">
+              class="card-img-top" alt="{{ pet.name }}">
           <div class="card-body">
             <h5 class="card-title">{{ pet.name }}</h5>
             <p class="card-text">{{ pet.description }}</p>
           </div>
           <div class="card-footer">
-            <a [routerLink]="['/specific-post', pet.id]" class="btn btn-primary">Adoptar</a>
+            <a [routerLink]="['/specific-post', pet.id]" class="btn btn-primary">Más Detalles</a>
           </div>
         </div>
       </div>

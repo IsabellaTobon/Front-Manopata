@@ -3,7 +3,7 @@
     <!-- Imagen destacada -->
     <div class="col-lg-8 mb-4">
       <div class="card h-100 shadow-sm">
-        <img [src]="post.photo" class="card-img-top" alt="Pet Image">
+        <img *ngIf="post.photo" [src]="isExternalUrl(post.photo) ? post.photo : 'http://localhost:8080' + post.photo" class="card-img-top" [alt]="post.name">
       </div>
     </div>
     <!-- Detalles del post -->
@@ -20,7 +20,7 @@
           <p class="card-text"><strong>Ciudad:</strong> {{ post.city }}</p>
           <p class="card-text"><strong>Provincia:</strong> {{ post.province }}</p>
           <p class="card-text"><strong>Disponible:</strong> {{ post.available ? 'Sí' : 'No' }}</p>
-          <p class="card-text"><strong>Likes:</strong> {{ post.likes }}</p>
+          <p class="card-text"><strong>Likes:</strong> {{ post.likes }} ❤</p>
           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Contactar</button>
         </div>
       </div>

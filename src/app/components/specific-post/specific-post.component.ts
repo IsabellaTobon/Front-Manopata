@@ -36,7 +36,9 @@ export class SpecificPostComponent implements OnInit {
     const postId = +this.route.snapshot.paramMap.get('id')!;
     this.loadPost(postId);
     this.loadUserData();
+
   }
+
 
   // Cargar la publicación
   loadPost(postId: number): void {
@@ -44,8 +46,16 @@ export class SpecificPostComponent implements OnInit {
       next: (data) => {
         console.log('Datos del post cargados:', data);
         this.post = data;
+
+        // Verificar si la foto es una URL externa o una ruta interna
         if (this.post.photo) {
-          this.post.photo = this.postService.getPostImage(this.post.photo);
+          if (!this.isExternalUrl(this.post.photo)) {
+            this.post.photo = 'http://localhost:8080' + this.post.photo; // Ruta de la carpeta uploads
+          }
+        }
+
+        if (this.post.registerDate) {
+          this.post.registerDate = new Date(this.post.registerDate);
         }
       },
       error: (err) => {
@@ -53,6 +63,12 @@ export class SpecificPostComponent implements OnInit {
       }
     });
   }
+
+  // Verificar si la URL es externa
+  isExternalUrl(url: string): boolean {
+    return url.startsWith('http://') || url.startsWith('https://');
+  }
+
 
   // Cargar datos del usuario autenticado
   loadUserData(): void {

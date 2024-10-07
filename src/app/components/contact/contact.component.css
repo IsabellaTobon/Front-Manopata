@@ -1,14 +1,8 @@
-.container {
-  max-width: 1200px;
-}
-
-.faq-section {
-  margin-top: 50px;
-}
 
 /* ACCORDION */
 
 .accordion-button {
+  height: 60px;
   font-weight: bold;
   background-color: rgb(230, 211, 165);
   color: #252525;

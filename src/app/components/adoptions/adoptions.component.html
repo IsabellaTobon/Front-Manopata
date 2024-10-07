@@ -3,7 +3,7 @@
 
     <!-- Filtros Laterales -->
     <div class="col-lg-2 mb-4">
-      <div class="card shadow-sm p-3">
+      <div id= filtersForm class="card shadow-sm p-3 mt-5">
         <h5 class="card-title">Filtrar Mascotas</h5>
         <form #filterForm="ngForm" (ngSubmit)="applyFilters(filterForm.value)">
           <div class="mb-3">
@@ -59,15 +59,16 @@
           <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
         </form>
       </div>
+
+      <!-- Verificación para mostrar el botón solo si el usuario ha iniciado sesión -->
+      <div *ngIf="isLoggedIn" class="text-center mb-3 p-4">
+        <a routerLink="/upload-post" class="btn btn-lg btn-secondary w-100">Subir Post</a>
+      </div>
     </div>
 
     <!-- Tarjetas de Mascotas desde el Backend -->
     <div class="col-lg-10">
       <div class="row">
-        <!-- Verificación para mostrar el botón solo si el usuario ha iniciado sesión -->
-        <div *ngIf="isLoggedIn" class="text-end mb-3">
-          <a routerLink="/upload-post" class="btn btn-primary">Subir Post</a>
-        </div>
 
         <div *ngIf="posts.length === 0" class="col-12 text-center">
           <h2>No se han encontrado mascotas</h2>

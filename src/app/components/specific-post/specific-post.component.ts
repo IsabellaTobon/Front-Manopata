@@ -6,6 +6,7 @@ import { PostService } from '../../services/posts.service';
 import { AuthService } from '../../services/auth.service';
 import { MessagesService } from '../../services/messages.service';
 import { NotificationsService } from '../../services/notifications.service';
+import { NotificationsComponent } from "../notifications/notifications.component";
 
 
 
@@ -13,7 +14,7 @@ import { NotificationsService } from '../../services/notifications.service';
 @Component({
   selector: 'specific-post',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NotificationsComponent],
   providers: [DatePipe],
   templateUrl: './specific-post.component.html',
   styleUrls: ['./specific-post.component.css']

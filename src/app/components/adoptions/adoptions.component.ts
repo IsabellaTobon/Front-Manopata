@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../services/posts.service';
 import { AuthService } from '../../services/auth.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { RouterModule } from '@angular/router';
 import { NotificationsService } from '../../services/notifications.service';
+import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
   selector: 'app-adoptions',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, NotificationsComponent],
+  providers:[DatePipe],
   templateUrl: './adoptions.component.html',
   styleUrl: './adoptions.component.css',
 })

@@ -139,6 +139,12 @@ export class LoginSignUpComponent implements OnInit {
       (response) => {
         this.notificationType = 'success';
         this.errorMessage = 'Inicio de sesión exitoso';
+
+        // Cierra el modal automáticamente cuando el inicio de sesión es exitoso
+        setTimeout(() => {
+          this.closeForms();  // Cierra el modal
+        }, 1000);  // Puedes ajustar el tiempo si es necesario (1 segundo en este caso)
+
       },
       (error) => {
         this.notificationType = 'error';

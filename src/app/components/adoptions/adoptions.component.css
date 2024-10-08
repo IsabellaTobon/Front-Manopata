@@ -60,13 +60,37 @@
   color: #333;
 }
 
+#filtersForm{
+  transform: none;
+}
+
 .btn-primary {
   background-color: rgb(189, 126, 67);
   border-color: rgb(189, 126, 67);
 }
 
 .btn-primary:hover {
-  background-color: rgb(218, 159, 103);
+  background-color: rgb(187, 115, 48) !important;
+  font-weight: bold;
+}
+
+.btn-light{
+  border: dashed 3px rgb(189, 126, 67);
+}
+
+.btn-light:hover {
+  background-color: rgb(243, 220, 198) !important;
+  font-weight: bold;
+}
+
+.btn-secondary {
+  background-color: rgba(61, 39, 19, 0.89);
+  border-radius: 160px 5px;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(61, 39, 19, 0.829) !important;
+  font-weight: bold;
 }
 
 /* Estilo para asegurar la disposición de 4 tarjetas por fila */

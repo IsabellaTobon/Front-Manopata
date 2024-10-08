@@ -3,7 +3,7 @@
 
     <!-- Filtros Laterales -->
     <div class="col-lg-2 mb-4">
-      <div id= filtersForm class="card shadow-sm p-3 mt-5">
+      <div id=filtersForm class="card shadow-sm p-3 mt-5">
         <h5 class="card-title">Filtrar Mascotas</h5>
         <form #filterForm="ngForm" (ngSubmit)="applyFilters(filterForm.value)">
           <div class="mb-3">
@@ -57,6 +57,8 @@
             <label class="form-check-label" for="vaccinated">Vacunado</label>
           </div>
           <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
+          <button type="button" class="btn btn-light w-100 mt-2" (click)="resetFilters(filterForm)">Restablecer
+            Filtros</button>
         </form>
       </div>
 

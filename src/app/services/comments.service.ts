@@ -27,4 +27,5 @@ export class CommentsService {
     name?: string;
     text: string;
     rating: number;
+    commentDate?: Date;
   }

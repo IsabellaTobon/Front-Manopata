@@ -17,13 +17,16 @@ import { NotificationsComponent } from "../notifications/notifications.component
 export class OpinionsComponent implements OnInit {
 
   comments: UserComment[] = [];
+  extraComments: UserComment[] = [];
+  showExtraComments: boolean = false;
   newComment: UserComment = { text: '', rating: 0 };
   userRating: number = 0;
+  isSubmitting: boolean = false;
 
   constructor(
     private commentsService: CommentsService,
     private authService: AuthService,
-    private notificationsService: NotificationsService // Inyectar el servicio de notificaciones
+    private notificationsService: NotificationsService
   ) { }
 
   ngOnInit(): void {
@@ -32,14 +35,21 @@ export class OpinionsComponent implements OnInit {
 
   loadComments(): void {
     this.commentsService.getComments().subscribe(comments => {
-      this.comments = comments;
+
+       // Ordenar los comentarios por fecha de más reciente a más antiguo
+    comments.sort((a, b) => new Date(b.commentDate!).getTime() - new Date(a.commentDate!).getTime());
+
+      // Mostrar solo los primeros 3 comentarios, el resto va a extraComments
+      this.comments = comments.slice(0, 3);
+      this.extraComments = comments.slice(3);
     });
   }
 
   get averageRating(): number {
-    if (this.comments.length === 0) return 5;
-    const totalRating = this.comments.reduce((sum, comment) => sum + comment.rating, 0);
-    return totalRating / this.comments.length;
+    const allComments = [...this.comments, ...this.extraComments]; // Combinar ambos arrays
+    if (allComments.length === 0) return 5; // Si no hay comentarios, retornar 5 como valor predeterminado
+    const totalRating = allComments.reduce((sum, comment) => sum + comment.rating, 0);
+    return totalRating / allComments.length; // Calcular la media de todos los comentarios
   }
 
   submitComment(): void {
@@ -54,9 +64,12 @@ export class OpinionsComponent implements OnInit {
       return;
     }
 
+    this.isSubmitting = true; // Iniciar el estado de envío
+
     const commentToSubmit: UserComment = {
       text: this.newComment.text,
       rating: this.newComment.rating
+      // No incluimos commentDate, el servidor lo manejará automáticamente
     };
 
     this.commentsService.postComment(commentToSubmit).subscribe({
@@ -74,16 +87,27 @@ export class OpinionsComponent implements OnInit {
         setTimeout(() => {
           this.notificationsService.clearNotification();
         }, 2000);
+
+        this.isSubmitting = false; // Restablecer el estado de envío
       },
       error: (error) => {
-        console.error('Error al enviar el comentario:', error);
         this.notificationsService.showNotification('Error al enviar el comentario.', 'error');
+        this.isSubmitting = false; // Restablecer el estado de envío
       }
     });
   }
 
+  // Mostrar todos los comentarios adicionales
+  viewAllComments(): void {
+    this.showExtraComments = true; // Mostrar los comentarios adicionales
+  }
+
+  // Ocultar los comentarios adicionales
+  hideExtraComments(): void {
+    this.showExtraComments = false; // Ocultar los comentarios adicionales
+  }
+
   onRatingChange(newRating: number): void {
     this.userRating = newRating;
-    console.log('New rating:', newRating);
   }
 }

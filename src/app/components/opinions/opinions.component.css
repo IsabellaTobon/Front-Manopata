@@ -1,98 +1,50 @@
-
-.container-fluid {
-  padding-left: 60px !important;
-  padding-right: 20px !important;
+/* Ajuste del tamaño del carrusel */
+#imageCarousel {
+  max-height: 300px;
 }
 
-.row {
-  gap: 30px;
+.carousel-item img {
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
 }
 
-/* Comments */
-.comments-container {
-  max-height: 480px;
-  overflow-y: auto;
-  padding-right: 40px; /* Scrollbar space */
-}
-
-.comment-card {
-  margin-bottom: 1rem;
-}
-
-/* Form */
-.form-control {
-  border-width: 1px;
-  border-color: rgba(0, 0, 0, 0.408);
-}
-
-/* Card */
+/* Ajustar padding y márgenes */
 .card {
   border-width: 1px;
   border-color: black;
   border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin-bottom: 1.5rem; /* Espacio ajustado */
 }
 
-.card-title {
-  margin-bottom: 1rem;
+.comment-card, .opinion-card {
+  padding: 1rem;
 }
 
-.general-opinion-card {
-  max-width: 350px;
-  max-height: 250px;
-  margin: 0 auto;
-  text-align: center;
+/* Ajustar el tamaño del texto dentro del contenedor de comentarios */
+.comment-card h5 {
+  font-size: 1rem; /* Reducir tamaño del nombre del usuario */
+  font-weight: bold; /* Opcional, para mantener visibilidad */
 }
 
-/* Carousel */
-.carousel-inner img {
-  border-radius: 15px;
-}
-.carousel-item .card {
-  margin: 0 auto;
-  width: 90%;
+.comment-card p {
+  font-size: 0.875rem; /* Reducir tamaño del texto de los comentarios */
+  line-height: 1.4; /* Ajustar el espaciado entre líneas */
 }
 
-.carousel-indicators [data-bs-target] {
-  background-color: black;
+textarea.form-control {
+  min-height: 90px; /* Altura compacta para el formulario */
 }
 
-/* Star Rating */
-.star-rating {
-  font-size: 1.5rem;
-  color: gray;
-  cursor: pointer;
-}
-.star-rating .selected {
-  color: gold;
+/* Animaciones de entrada */
+.animate__animated {
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
 }
 
-/* RESPONSIVE */
 @media (max-width: 992px) {
-  .container {
-    padding: 0 15px;
-  }
-
-  .carousel-inner img {
-    height: auto;
-    max-height: 300px;
-  }
-
-  .star-rating {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .container-fluid {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-
-  .card-title {
-    font-size: 1.25rem;
-  }
-
-    .star-rating {
-    font-size: 1rem;
+  .col-lg-8, .col-lg-4, .col-lg-6 {
+    margin-bottom: 1.5rem;
   }
 }

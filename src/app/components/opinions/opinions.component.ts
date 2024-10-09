@@ -5,21 +5,29 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { NotificationsService } from '../../services/notifications.service';
-import { NotificationsComponent } from "../notifications/notifications.component"; // Importar el servicio de notificaciones
+import { NotificationsComponent } from '../notifications/notifications.component'; // Importar el servicio de notificaciones
 
 @Component({
   selector: 'app-opinions',
   standalone: true,
-  imports: [StarRatingComponent, CommonModule, FormsModule, NotificationsComponent],
+  imports: [
+    StarRatingComponent,
+    CommonModule,
+    FormsModule,
+    NotificationsComponent,
+  ],
   templateUrl: './opinions.component.html',
-  styleUrls: ['./opinions.component.css']
+  styleUrls: ['./opinions.component.css'],
 })
 export class OpinionsComponent implements OnInit {
-
   comments: UserComment[] = [];
   extraComments: UserComment[] = [];
   showExtraComments: boolean = false;
-  newComment: UserComment = { text: '', rating: 0 };
+  newComment: UserComment = {
+    text: '',
+    rating: 0,
+    user: { name: '', nickname: '' },
+  };
   userRating: number = 0;
   isSubmitting: boolean = false;
 
@@ -27,17 +35,20 @@ export class OpinionsComponent implements OnInit {
     private commentsService: CommentsService,
     private authService: AuthService,
     private notificationsService: NotificationsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadComments();
   }
 
   loadComments(): void {
-    this.commentsService.getComments().subscribe(comments => {
-
-       // Ordenar los comentarios por fecha de más reciente a más antiguo
-    comments.sort((a, b) => new Date(b.commentDate!).getTime() - new Date(a.commentDate!).getTime());
+    this.commentsService.getComments().subscribe((comments) => {
+      // Ordenar los comentarios por fecha de más reciente a más antiguo
+      comments.sort(
+        (a, b) =>
+          new Date(b.commentDate!).getTime() -
+          new Date(a.commentDate!).getTime()
+      );
 
       // Mostrar solo los primeros 3 comentarios, el resto va a extraComments
       this.comments = comments.slice(0, 3);
@@ -45,10 +56,18 @@ export class OpinionsComponent implements OnInit {
     });
   }
 
+  // Función para verificar si una URL es externa
+  isExternalUrl(url: string): boolean {
+    return /^https?:\/\//.test(url);
+  }
+
   get averageRating(): number {
     const allComments = [...this.comments, ...this.extraComments]; // Combinar ambos arrays
     if (allComments.length === 0) return 5; // Si no hay comentarios, retornar 5 como valor predeterminado
-    const totalRating = allComments.reduce((sum, comment) => sum + comment.rating, 0);
+    const totalRating = allComments.reduce(
+      (sum, comment) => sum + comment.rating,
+      0
+    );
     return totalRating / allComments.length; // Calcular la media de todos los comentarios
   }
 
@@ -59,17 +78,22 @@ export class OpinionsComponent implements OnInit {
     }
 
     // Verificar si el rating es mayor que 0
-    if (this.newComment.rating === 0) {
-      this.notificationsService.showNotification('Por favor selecciona una calificación antes de enviar tu comentario.', 'warning');
+    if (this.newComment.rating === 0 || !this.newComment.text) {
+      this.notificationsService.showNotification(
+        'Por favor completa el comentario y selecciona una calificación antes de enviar.',
+        'warning'
+      );
       return;
     }
 
     this.isSubmitting = true; // Iniciar el estado de envío
 
+    // Crear el objeto de comentario para enviar
     const commentToSubmit: UserComment = {
       text: this.newComment.text,
-      rating: this.newComment.rating
-      // No incluimos commentDate, el servidor lo manejará automáticamente
+      rating: this.newComment.rating,
+      commentDate: new Date(), // Esto podría ser opcional, ya que el backend puede manejar la fecha
+      user: this.newComment.user, // Los datos del usuario serán ignorados o controlados por el backend
     };
 
     this.commentsService.postComment(commentToSubmit).subscribe({
@@ -81,7 +105,11 @@ export class OpinionsComponent implements OnInit {
         this.comments.push(response.comment);
 
         // Limpiar el formulario
-        this.newComment = { text: '', rating: 0 };
+        this.newComment = {
+          text: '',
+          rating: 0,
+          user: { name: '', nickname: '' },
+        };
 
         // Cerrar la notificación automáticamente después de 2 segundos
         setTimeout(() => {
@@ -91,12 +119,14 @@ export class OpinionsComponent implements OnInit {
         this.isSubmitting = false; // Restablecer el estado de envío
       },
       error: (error) => {
-        this.notificationsService.showNotification('Error al enviar el comentario.', 'error');
+        this.notificationsService.showNotification(
+          'Error al enviar el comentario.',
+          'error'
+        );
         this.isSubmitting = false; // Restablecer el estado de envío
-      }
+      },
     });
   }
-
   // Mostrar todos los comentarios adicionales
   viewAllComments(): void {
     this.showExtraComments = true; // Mostrar los comentarios adicionales

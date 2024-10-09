@@ -44,11 +44,13 @@
       <!-- Comentarios -->
       <div class="card shadow-sm p-5" style="max-height: 400px; overflow-y: auto;"> <!-- Ajustar altura y habilitar scroll -->
         <h4>Comentarios</h4>
-        <div *ngFor="let comment of comments" class="mb-3">
+        <div *ngFor="let comment of comments" class="comment-card mb-3 d-flex">
           <div class="d-flex align-items-center mb-2">
-            <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Comentario">
+            <div class="comment-img-container">
+              <img [src]="isExternalUrl(comment.user.photo ?? '/images/default-image.webp') ? comment.user.photo : 'http://localhost:8080' + comment.user.photo" class="comment-img rounded-circle me-3" alt="Foto de perfil">
+            </div>
             <div>
-              <h5>{{ comment.name }}</h5>
+              <h5>{{ comment.user.nickname }}</h5>
               <app-star-rating [rating]="comment.rating" [readonly]="true"></app-star-rating>
               <p class="text-muted">{{ comment.commentDate | date:'short' }}</p>
             </div>
@@ -59,11 +61,13 @@
 
         <!-- Mostrar los comentarios adicionales si showExtraComments es verdadero -->
         <div *ngIf="showExtraComments">
-          <div *ngFor="let extraComment of extraComments" class="mb-3">
+          <div *ngFor="let extraComment of extraComments" class="comment-card mb-3 d-flex">
             <div class="d-flex align-items-center mb-2">
-              <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Comentario">
+              <div class="comment-img-container">
+                <img [src]="isExternalUrl(extraComment.user.photo ?? '/images/default-image.webp') ? extraComment.user.photo : 'http://localhost:8080' + extraComment.user.photo" class="comment-img rounded-circle me-3" alt="Foto de perfil">
+              </div>
               <div>
-                <h5>{{ extraComment.name }}</h5>
+                <h5>{{ extraComment.user.name }}</h5>
                 <app-star-rating [rating]="extraComment.rating" [readonly]="true"></app-star-rating>
               </div>
             </div>

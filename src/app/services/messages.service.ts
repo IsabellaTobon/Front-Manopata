@@ -50,7 +50,7 @@ export class MessagesService {
     return this.http.get<any[]>(`${this.apiUrl}/inbox`, { headers, params: { userId: userId.toString() } }).pipe(
       tap(() => {
 
-        this.notificationsService.showNotification('Mensajes recibidos cargados con éxito.', 'success');
+        // this.notificationsService.showNotification('Mensajes recibidos cargados con éxito.', 'success');
       }),
       catchError((error) => {
 
@@ -69,10 +69,10 @@ export class MessagesService {
     return this.http.get<any[]>(`${this.apiUrl}/sent`, { headers, params: { userId: userId.toString() } }).pipe(
       tap(() => {
 
-        this.notificationsService.showNotification('Mensajes enviados cargados con éxito.', 'success');
+        // this.notificationsService.showNotification('Mensajes enviados cargados con éxito.', 'success');
       }),
       catchError((error) => {
-        
+
         this.notificationsService.showNotification('Error al cargar los mensajes enviados.', 'error');
         throw error;
       })

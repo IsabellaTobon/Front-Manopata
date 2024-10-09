@@ -1,4 +1,4 @@
-/* Ajustes para expandir y espaciar la disposición */
+/* Settings to expand and space the layout */
 .container-fluid {
   max-width: 95%;
 }
@@ -93,7 +93,7 @@
   font-weight: bold;
 }
 
-/* Estilo para asegurar la disposición de 4 tarjetas por fila */
+/* Style to ensure the arrangement of 4 cards per row */
 .col-xl-3 {
   flex: 0 0 25%;
   max-width: 25%;

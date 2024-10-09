@@ -2,7 +2,7 @@
   <app-notifications></app-notifications>
   <div class="row">
 
-    <!-- Filtros Laterales -->
+    <!-- SIDE FILTERS -->
     <div class="col-lg-2 mb-4">
       <div id=filtersForm class="card shadow-sm p-3 mt-5">
         <h5 class="card-title">Filtrar Mascotas</h5>
@@ -63,13 +63,13 @@
         </form>
       </div>
 
-      <!-- Verificación para mostrar el botón solo si el usuario ha iniciado sesión -->
+      <!-- CHECK TO SHOW BUTTON ONLY IF USER IS LOGGED IN -->
       <div *ngIf="isLoggedIn" class="text-center mb-3 p-4">
         <a routerLink="/upload-post" class="btn btn-lg btn-secondary w-100">Subir Post</a>
       </div>
     </div>
 
-    <!-- Tarjetas de Mascotas desde el Backend -->
+    <!-- PET CARDS FROM THE BACKEND -->
     <div class="col-lg-10">
       <div class="row">
 
@@ -87,7 +87,7 @@
               <p class="card-text">
                 <small class="text-muted">Publicado el {{ pet.registerDate | date:'shortDate' }}</small>
               </p>
-              <!-- Icono de corazón para dar like -->
+              <!-- HEART ICON -->
               <span class="heart-symbol" [ngClass]="pet.userHasLiked ? 'liked' : 'not-liked'"
                 (click)="toggleLike(pet)">❤</span>
               <span>{{ pet.likes }}</span>

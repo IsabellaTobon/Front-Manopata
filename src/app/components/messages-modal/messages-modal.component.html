@@ -1,0 +1,45 @@
+<div class="modal show d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.7);">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mensajes</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Mostrar la bandeja de entrada si no se ha seleccionado un usuario -->
+        <div *ngIf="!selectedUserId">
+          <h6>Bandeja de entrada</h6>
+          <ul class="list-group">
+            <li *ngFor="let message of messages" class="list-group-item list-group-item-action" (click)="loadChatHistory(message.sender.id)">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>{{ message.sender.nickname }}</strong><br />
+                  <small class="text-muted">{{ message.sentDate | date:'short' }}</small>
+                </div>
+                <div class="message-preview text-truncate">{{ message.bodyText }}</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Mostrar el historial de chat si se ha seleccionado un usuario -->
+        <div *ngIf="selectedUserId">
+          <h6 class="text-uppercase">Conversación con {{ chatHistory[0]?.receiver?.nickname || chatHistory[0]?.sender?.nickname }}</h6>
+          <ul class="list-group">
+            <li *ngFor="let message of chatHistory" class="list-group-item">
+              <strong>{{ message.sender.nickname }}:</strong> {{ message.bodyText }}
+              <small class="text-muted float-end">{{ message.sentDate | date:'short' }}</small>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-footer d-flex justify-content-between" *ngIf="selectedUserId">
+        <!-- Campo para enviar un nuevo mensaje en la conversación -->
+        <input [(ngModel)]="messageText" type="text" class="form-control flex-grow-1 me-3" placeholder="Escribe un mensaje..." />
+        <button (click)="sendMessage()" class="btn btn-custom">Enviar</button>
+        <button (click)="selectedUserId = 0" class="btn btn-secondary">Volver a bandeja</button>
+      </div>
+    </div>
+  </div>
+</div>

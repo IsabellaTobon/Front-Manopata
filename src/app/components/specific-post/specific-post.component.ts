@@ -86,27 +86,28 @@ export class SpecificPostComponent implements OnInit {
 
   // Enviar el mensaje
   sendMessage(): void {
-    console.log('Sender ID:', this.senderId);
-    console.log('Receiver ID:', this.post.user.id);
-    console.log('Post ID:', this.post.id);
-    console.log('Mensaje:', this.message.text);
-
-    if (!this.senderId || !this.post.user.id || !this.message.text) {
+    // Validación de campos
+    if (!this.senderId || !this.post || !this.post.user || !this.post.user.id || !this.message.text.trim()) {
       this.notificationsService.showNotification('Todos los campos son obligatorios.', 'error');
       return;
     }
 
-    this.messagesService.sendMessage(this.senderId, this.post.user.id, this.message.text, this.post.id)
-      .subscribe({
-        next: (response) => {
-          this.notificationsService.showNotification('Mensaje enviado correctamente', 'success');
-          this.message.text = ''; // Limpiar el mensaje después de enviarlo
-        },
-        error: (error) => {
-          console.error('Error al enviar el mensaje:', error);
-          this.notificationsService.showNotification('Error al enviar el mensaje', 'error');
-        }
-      });
+    // Enviar el mensaje usando el servicio
+    this.messagesService.sendMessage({
+      senderId: this.senderId!,
+      recipientId: this.post.user.id!,
+      bodyText: this.message.text.trim(),
+      postId: this.post.id!  // Se asegura que postId está presente
+    }).subscribe({
+      next: (response) => {
+        this.notificationsService.showNotification('Mensaje enviado correctamente', 'success');
+        this.message.text = ''; // Limpiar el mensaje después de enviarlo
+      },
+      error: (error) => {
+        const errorMsg = error?.message || 'Error al enviar el mensaje';
+        console.error('Error al enviar el mensaje:', error);
+        this.notificationsService.showNotification(errorMsg, 'error');
+      }
+    });
   }
-
 }

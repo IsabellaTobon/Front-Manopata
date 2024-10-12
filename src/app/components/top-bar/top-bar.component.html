@@ -1,9 +1,11 @@
 <nav class="navbar navbar-expand-lg" style="background-color: rgb(230, 211, 165);">
   <a class="navbar-brand ms-5" href="/">
-    <img src="https://imgs.search.brave.com/cXYFBBFcXWwYYrFTgKFn_EnfkwVa3hCdeQQwPT9hso8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzMyMzc3OC9p/c29sYXRlZC9wcmV2/aWV3LzZhNDQzMTY1/YjI0MWUwYmM3ZDQ4/ZTA4M2U3OGQ5Yzcx/LWxsYW1hdGl2YXMt/bWFuY2hhcy1hbmlt/YWwtcHJpbnQtZW4t/bWFyY28tY29uLWZv/cm1hLWRlLXphcnBh/LnBuZw" alt="logo" width="50" height="50" class="d-inline-block align-text-center">
+    <img src="https://imgs.search.brave.com/cXYFBBFcXWwYYrFTgKFn_EnfkwVa3hCdeQQwPT9hso8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzMyMzc3OC9p/c29sYXRlZC9wcmV2/aWV3LzZhNDQzMTY1/YjI0MWUwYmM3ZDQ4/ZTA4M2U3OGQ5Yzcx/LWxsYW1hdGl2YXMt/bWFuY2hhcy1hbmlt/YWwtcHJpbnQtZW4t/bWFyY28tY29uLWZv/cm1hLWRlLXphcnBh/LnBuZw"
+      alt="logo" width="50" height="50" class="d-inline-block align-text-center">
     MANOPATA
   </a>
-  <button id="open-close-menu" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <button id="open-close-menu" class="navbar-toggler" type="button" data-bs-toggle="collapse"
+    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
@@ -27,11 +29,13 @@
 
     <div class="d-flex flex-wrap align-items-center">
       <!-- Mostrar imagen de perfil solo si el usuario está logueado -->
-      <img *ngIf="isLoggedIn && profileImageUrl" [src]="profileImageUrl" alt="Imagen de perfil" class="profile-image me-4">
+      <img *ngIf="isLoggedIn && profileImageUrl" [src]="profileImageUrl" alt="Imagen de perfil"
+        class="profile-image me-4">
 
       <!-- Botón de notificaciones (campanita) solo si está logueado -->
       <div *ngIf="isLoggedIn" class="nav-item dropdown me-4">
-        <a class="nav-link notification-icon me-2" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link notification-icon me-2" href="#" id="notificationsDropdown" role="button"
+          data-bs-toggle="dropdown" aria-expanded="false">
           🛎️ <span *ngIf="unreadCount > 0" class="badge bg-danger">{{ unreadCount }}</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
@@ -41,12 +45,18 @@
               <strong>{{ notification.sender.nickname }}:</strong> {{ notification.bodyText }}
               <small class="d-block text-muted">{{ notification.sentDate | date: 'short' }}</small>
             </a>
+            <!-- Botón para ver y responder -->
+            <button class="btn btn-link text-decoration-none p-0"
+              (click)="openReplyModal(notification.sender.id, notification.postId, notification.bodyText, notification)">
+              Ver y Responder
+            </button>
           </li>
         </ul>
       </div>
 
       <div *ngIf="isLoggedIn" class="nav-item dropdown me-4">
-        <a class="nav-link dropdown-toggle welcome-message fade-in text-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link dropdown-toggle welcome-message fade-in text-center" href="#" id="navbarDropdown"
+          role="button" data-bs-toggle="dropdown" aria-expanded="false">
           👋 ¡Bienvenid&#64; {{ nickname }}!
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -56,7 +66,30 @@
       </div>
 
       <!-- Botón de iniciar sesión -->
-      <button *ngIf="!isLoggedIn" class="btn btn-primary me-5 mb-2" (click)="openLoginForm()" aria-label="Iniciar sesión">Iniciar sesión</button>
+      <button *ngIf="!isLoggedIn" class="btn btn-primary me-5 mb-2" (click)="openLoginForm()"
+        aria-label="Iniciar sesión">Iniciar sesión</button>
     </div>
   </div>
 </nav>
+
+<!-- Modal para ver y responder mensajes -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="replyModalLabel">Mensaje de {{ currentRecipientNickname }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Mostrar el mensaje recibido -->
+        <p>{{ currentMessageBody }}</p>
+        <hr>
+        <textarea class="form-control" [(ngModel)]="replyMessage" placeholder="Escribe tu respuesta aquí"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="sendReply()">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>

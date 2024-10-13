@@ -4,15 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { NotificationsComponent } from '../notifications/notifications.component';
-import { ReactiveFormsModule } from '@angular/forms'; // Para los formularios reactivos
-
+import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-login-sign-up',
   standalone: true,
   imports: [
     CommonModule,
     NotificationsComponent,
-    ReactiveFormsModule // Importar ReactiveFormsModule
+    ReactiveFormsModule
   ],
   templateUrl: './login-sign-up.component.html',
   styleUrls: ['./login-sign-up.component.css'],
@@ -38,7 +37,7 @@ export class LoginSignUpComponent implements OnInit {
   forgotPasswordForm: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
-    // Inicializar el formulario de login
+    // INITIALIZE THE LOGIN FORM
     this.loginForm = this.fb.group({
       nickname: ['', [
         Validators.required,
@@ -53,7 +52,7 @@ export class LoginSignUpComponent implements OnInit {
       ]],
     });
 
-    // Inicializar el formulario de registro
+    // INITIALIZE THE REGISTER FORM
     this.registerForm = this.fb.group({
       name: ['', [
         Validators.required,
@@ -90,7 +89,7 @@ export class LoginSignUpComponent implements OnInit {
       ]],
     }, { validator: this.passwordMatchValidator });
 
-    // Inicializar el formulario de forgot password
+    // INITIALIZE THE FORGOT PASSWORD FORM
     this.forgotPasswordForm = this.fb.group({
       email: ['', [
         Validators.required,
@@ -99,7 +98,7 @@ export class LoginSignUpComponent implements OnInit {
     });
   }
 
-  // Valida si las contraseñas coinciden
+  // VALIDATE THAT PASSWORDS MATCH
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
@@ -124,7 +123,7 @@ export class LoginSignUpComponent implements OnInit {
       () => {
         this.notificationType = 'success';
         this.errorMessage = 'Registro exitoso. Ahora puedes iniciar sesión';
-        this.openLoginForm(); // Cambio para asegurarnos de que esta función exista
+        this.openLoginForm(); // SWITCH TO LOGIN FORM AUTOMATICALLY
       },
       (error) => {
         this.notificationType = 'error';
@@ -140,10 +139,10 @@ export class LoginSignUpComponent implements OnInit {
         this.notificationType = 'success';
         this.errorMessage = 'Inicio de sesión exitoso';
 
-        // Cierra el modal automáticamente cuando el inicio de sesión es exitoso
+        // CLOSE THE FORMS AFTER SUCCESSFUL LOGIN
         setTimeout(() => {
-          this.closeForms();  // Cierra el modal
-        }, 1000);  // Puedes ajustar el tiempo si es necesario (1 segundo en este caso)
+          this.closeForms();
+        }, 1000);  // 1 SECOND DELAY
 
       },
       (error) => {
@@ -153,7 +152,7 @@ export class LoginSignUpComponent implements OnInit {
     );
   }
 
-  // Método para manejar el envío del formulario de "Olvidé mi contraseña"
+  // METHOD TO HANDLE FORGOT PASSWORD FORM SUBMISSION
   onSubmitForgotPassword(): void {
     if (this.forgotPasswordForm.invalid) {
       this.notificationType = 'warning';

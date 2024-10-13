@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" (click)="closeModal()"></button>
       </div>
       <div class="modal-body">
-        <!-- Mostrar la bandeja de entrada si no se ha seleccionado un usuario -->
+        <!-- SHOW INBOX IF NO USER IS SELECTED -->
         <div *ngIf="!selectedUserId">
           <h6>Bandeja de entrada</h6>
           <ul class="list-group">
@@ -22,7 +22,7 @@
           </ul>
         </div>
 
-        <!-- Mostrar el historial de chat si se ha seleccionado un usuario -->
+        <!-- SHOW CHAT HISTORY IF A USER IS SELECTED -->
         <div *ngIf="selectedUserId">
           <h6 class="text-uppercase">Conversación con {{ chatHistory[0]?.receiver?.nickname || chatHistory[0]?.sender?.nickname }}</h6>
           <ul class="list-group">
@@ -35,7 +35,7 @@
       </div>
 
       <div class="modal-footer d-flex justify-content-between" *ngIf="selectedUserId">
-        <!-- Campo para enviar un nuevo mensaje en la conversación -->
+        <!-- FIELD TO SEND A NEW MESSAGE IN THE CONVERSATION -->
         <input [(ngModel)]="messageText" type="text" class="form-control flex-grow-1 me-3" placeholder="Escribe un mensaje..." />
         <button (click)="sendMessage()" class="btn btn-custom">Enviar</button>
         <button (click)="selectedUserId = 0" class="btn btn-secondary">Volver a bandeja</button>

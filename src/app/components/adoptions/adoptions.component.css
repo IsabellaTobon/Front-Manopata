@@ -93,7 +93,7 @@
   font-weight: bold;
 }
 
-/* Style to ensure the arrangement of 4 cards per row */
+/* STYLE TO ENSURE THE ARRANGEMENT OF 4 CARDS PER ROW */
 .col-xl-3 {
   flex: 0 0 25%;
   max-width: 25%;

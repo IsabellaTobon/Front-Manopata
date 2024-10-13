@@ -46,7 +46,7 @@ export class EditProfileComponent implements OnInit {
       });
     }
 
-    // Suscribirse a los cambios de la imagen de perfil
+    // SUBSCRIBE TO PROFILE PICTURE CHANGES
     this.authService.profileImageChanged$.subscribe((newImageUrl) => {
       if (this.userProfile) {
         this.profileImageUrl = newImageUrl;
@@ -54,7 +54,7 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  // Inicializar formularios
+  // INITIALIZE FORMS
   initForms(): void {
     this.editProfileForm = this.fb.group({
       name: [''],
@@ -79,7 +79,7 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  // Actualiza los valores de los formularios con los datos del usuario
+  // UPDATES FORM VALUES ​​WITH USER DATA
   updateForms(): void {
     this.editProfileForm.patchValue({
       name: this.userProfile?.name || '',
@@ -90,14 +90,14 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  // Validar que las contraseñas coincidan
+  // VALIDATE THAT PASSWORDS MATCH
   validatePasswords(): void {
     const newPassword = this.changePasswordForm.get('newPassword')?.value;
     const confirmNewPassword = this.changePasswordForm.get('confirmNewPassword')?.value;
     this.passwordsDoNotMatch = newPassword !== confirmNewPassword;
   }
 
-  // Manejar el cambio de contraseña
+  // HANDLE PASSWORD CHANGE
   onChangePassword(): void {
     if (this.changePasswordForm.valid && !this.passwordsDoNotMatch) {
       const { oldPassword, newPassword } = this.changePasswordForm.value;
@@ -112,13 +112,13 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  // Manejar el envío del formulario de edición de perfil
+  // HANDLE PROFILE EDIT FORM SUBMISSION
   onSubmit(): void {
     if (this.editProfileForm.valid) {
-      const userId = this.authService.getUserId(); // Obtener el ID del usuario
+      const userId = this.authService.getUserId();
       const userData = this.editProfileForm.value;
 
-      // Actualizar el perfil del usuario
+      // UPDATE USER DATA
       this.authService.updateUserProfile(userData).subscribe({
         next: () => {
           this.notificationService.showNotification('Perfil actualizado con éxito', 'success');
@@ -130,11 +130,11 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  // Manejar la selección de archivo para la imagen de perfil
+  // HANDLE FILE SELECTION FOR PROFILE PICTURE
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      // Verificar si el archivo es una imagen
+      // VERIFY THAT THE FILE IS AN IMAGE
       const validImageTypes = ['image/jpeg', 'image/png'];
       if (!validImageTypes.includes(file.type)) {
         this.notificationService.showNotification('El archivo seleccionado no es una imagen válida', 'error');
@@ -144,16 +144,16 @@ export class EditProfileComponent implements OnInit {
       this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.profileImageUrl = e.target.result;  // Mostrar vista previa de la imagen
+        this.profileImageUrl = e.target.result;  // SHOW IMAGE PREVIEW
       };
       reader.readAsDataURL(file);
     }
   }
 
-  // Manejar el cambio de imagen de perfil
+  // MANAGE PROFILE PICTURE CHANGE
   onSaveProfileImage(): void {
     if (this.selectedFile) {
-      
+
       const formData = new FormData();
       formData.append('image', this.selectedFile);
 
@@ -169,7 +169,7 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  // Manejar la desactivación de la cuenta
+  // MANAGE ACCOUNT DEACTIVATION
   onDeleteAccount(): void {
     if (this.deleteAccountForm.valid) {
       const password = this.deleteAccountForm.get('password')?.value;
@@ -185,7 +185,7 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  // Seleccionar una opción del panel lateral
+  // SELECT AN OPTION FROM THE SIDE PANEL
   selectOption(option: string): void {
     this.selectedOption = option;
   }

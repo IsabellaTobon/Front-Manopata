@@ -1,41 +1,41 @@
-/* Panel lateral */
+/* SIDE PANEL */
 .sidebar {
-  background-color: rgb(240, 224, 203); /* Fondo suave pastel para el panel lateral */
+  background-color: rgb(240, 224, 203);
   padding: 1.5rem;
   min-height: 100vh;
 }
 
 .sidebar-title {
   font-size: 1.5rem;
-  color: rgb(194, 108, 27); /* Color del título coherente con el navbar */
+  color: rgb(194, 108, 27);
   margin-bottom: 1rem;
 }
 
-/* Enlaces del panel lateral */
+/* SIDEBAR LINKS */
 .nav-link {
-  color: rgb(0, 0, 0); /* Texto negro para mejor visibilidad */
+  color: rgb(0, 0, 0);
   font-size: 1.2rem;
   margin-bottom: 1rem;
 }
 
 .nav-link:hover, .nav-link.active {
   color: #fff !important;
-  background-color: rgb(189, 126, 67); /* Fondo cálido al hacer hover */
-  border-radius: 0.5rem; /* Bordes redondeados */
+  background-color: rgb(189, 126, 67);
+  border-radius: 0.5rem;
   transition: background-color 0.3s ease-in-out;
 }
 
-/* Sección de contenido */
+/* CONTENT SECTION */
 .content {
-  background-color: rgb(248, 236, 220); /* Fondo pastel más cálido para el contenido */
+  background-color: rgb(248, 236, 220);
   border-radius: 15px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   padding: 2rem;
 }
 
 .section-title {
   font-size: 1.8rem;
-  color: rgb(194, 108, 27); /* Color de los títulos en la sección */
+  color: rgb(194, 108, 27);
   margin-bottom: 2rem;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .form-control:focus {
-  border-color: rgb(189, 126, 67); /* Foco cálido */
+  border-color: rgb(189, 126, 67);
   box-shadow: 0 0 5px rgba(189, 126, 67, 0.5);
 }
 
@@ -59,9 +59,9 @@
   background-color: rgb(218, 159, 103) !important;
 }
 
-/* Imagen de perfil */
+/* PROFILE IMAGE */
 .rounded-circle {
-  border: 3px solid rgba(189, 126, 67, 0.7); /* Borde de la imagen de perfil */
+  border: 3px solid rgba(189, 126, 67, 0.7);
 }
 
 .form-control-file {
@@ -69,10 +69,10 @@
 }
 
 .text-danger {
-  color: rgb(218, 59, 50) !important; /* Color coherente para textos de peligro */
+  color: rgb(218, 59, 50) !important;
 }
 
-/* Pequeños ajustes para pantallas medianas y pequeñas */
+/* RESPONSIVE */
 @media (max-width: 992px) {
   .sidebar {
     padding: 1rem;

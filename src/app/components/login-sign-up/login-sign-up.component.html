@@ -8,11 +8,11 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="closeForms()"></button>
       </div>
 
-      <!-- Componente de notificación -->
+      <!-- NOTIFICATION COMPONENT -->
       <app-notifications [message]="errorMessage" [type]="notificationType"></app-notifications>
 
       <div class="modal-body">
-        <!-- Formulario de Login -->
+        <!-- LOGIN FORM -->
         <div *ngIf="showLoginForm">
           <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()" novalidate>
             <div class="form-floating mb-4">
@@ -34,7 +34,7 @@
           </form>
         </div>
 
-        <!-- Formulario de Forgot Password -->
+        <!-- FORGOT PASSWORD FORM -->
         <div *ngIf="showForgotPasswordForm">
           <form [formGroup]="forgotPasswordForm" (ngSubmit)="onSubmitForgotPassword()">
             <div class="form-floating mb-4">
@@ -45,10 +45,10 @@
           </form>
         </div>
 
-        <!-- Formulario de Registro -->
+        <!-- REGISTER FORM -->
         <div *ngIf="showRegisterForm">
           <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
-            <!-- Nombre -->
+            <!-- NAME -->
             <div class="form-floating mb-4">
               <input formControlName="name" type="text" class="form-control" id="name" placeholder="Nombre" />
               <label for="name">Nombre</label>
@@ -57,7 +57,7 @@
               </div>
             </div>
 
-            <!-- Apellido -->
+            <!-- FIRSTNAME -->
             <div class="form-floating mb-4">
               <input formControlName="lastname" type="text" class="form-control" id="lastname" placeholder="Apellido" />
               <label for="lastname">Apellido</label>
@@ -66,16 +66,16 @@
               </div>
             </div>
 
-            <!-- Nickname -->
+            <!-- NICKNAME -->
             <div class="form-floating mb-4">
-              <input formControlName="nickname" type="text" class="form-control" id="nickname" placeholder="Nickname" />
-              <label for="nickname">Nickname</label>
+              <input formControlName="nickname" type="text" class="form-control" id="nickname" placeholder="Nombre de Usuario" />
+              <label for="nickname">Nombre de Usuario</label>
               <div *ngIf="registerForm.get('nickname')?.invalid && registerForm.get('nickname')?.touched" class="text-danger">
-                El nickname solo puede contener caracteres alfanuméricos.
+                El nombre de usuario solo puede contener caracteres alfanuméricos.
               </div>
             </div>
 
-            <!-- Email -->
+            <!-- EMAIL -->
             <div class="form-floating mb-4">
               <input formControlName="email" type="email" class="form-control" id="email" placeholder="Email" />
               <label for="email">Email</label>
@@ -84,7 +84,7 @@
               </div>
             </div>
 
-            <!-- Contraseña -->
+            <!-- PASSWORD -->
             <div class="form-floating mb-4">
               <input formControlName="password" type="password" class="form-control" id="password" placeholder="Contraseña" autocomplete="off"/>
               <label for="password">Contraseña</label>
@@ -93,7 +93,7 @@
               </div>
             </div>
 
-            <!-- Confirmar Contraseña -->
+            <!-- CONFIRM PASSWORD -->
             <div class="form-floating mb-4">
               <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="Confirmar Contraseña" autocomplete="off"/>
               <label for="confirmPassword">Confirmar Contraseña</label>
@@ -109,7 +109,7 @@
 
       <div class="modal-footer d-flex justify-content-between">
         <button type="button" class="btn btn-secondary" (click)="closeForms()">Cerrar</button>
-        <!-- Botones para cambiar entre formularios -->
+        <!-- BUTTONS TO SWITCH BETWEEN FORMS -->
         <button *ngIf="showLoginForm" type="button" class="btn btn-link" (click)="openRegisterForm()">¿No tienes cuenta? Regístrate</button>
         <button *ngIf="showRegisterForm" type="button" class="btn btn-link" (click)="openLoginForm()">¿Ya tienes cuenta? Inicia sesión</button>
         <button *ngIf="showForgotPasswordForm" type="button" class="btn btn-link" (click)="openLoginForm()">Volver al inicio de sesión</button>

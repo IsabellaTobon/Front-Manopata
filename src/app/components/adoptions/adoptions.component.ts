@@ -22,7 +22,7 @@ export class AdoptionsComponent implements OnInit {
   cities: string[] = [];
   breeds: string[] = [];
 
-  // Static data as a backup
+  // STATIC DATA AS A BACKUP
   regionsAndCities: { [key: string]: string[] } = {};
   animalTypesAndBreeds: { [key: string]: string[] } = {};
 
@@ -44,7 +44,7 @@ export class AdoptionsComponent implements OnInit {
 
     this.authService.isLoggedIn().subscribe({
       next: (loggedIn: boolean) => {
-        this.isLoggedIn = loggedIn; // Actualizar estado de autenticación
+        this.isLoggedIn = loggedIn; // UPDATE AUTHENTICATION STATUS
       },
       error: (error: any) => {
         console.error('Error al verificar el estado de autenticación', error);
@@ -52,7 +52,7 @@ export class AdoptionsComponent implements OnInit {
     });
   }
 
-  // Función para verificar si la URL es externa
+  // FUNCTION TO CHECK IF URL IS EXTERNAL
   isExternalUrl(url: string): boolean {
     return url.startsWith('http://') || url.startsWith('https://');
   }
@@ -60,7 +60,7 @@ export class AdoptionsComponent implements OnInit {
   loadProvinces(): void {
     this.postsService.getProvinces().subscribe({
       next: (provinces: string[]) => {
-        this.provinces = provinces; // Asignar provincias obtenidas
+        this.provinces = provinces; // ASSIGN OBTAINED PROVINCES
       },
       error: (error: any) => {
         console.error('Error al cargar las provincias', error);
@@ -71,7 +71,7 @@ export class AdoptionsComponent implements OnInit {
   onProvinceChange(province: string): void {
     this.postsService.getCities(province).subscribe({
       next: (cities: string[]) => {
-        this.cities = cities; // Asignar ciudades obtenidas
+        this.cities = cities; // ASSIGN OBTAINED CITIES
       },
       error: (error: any) => {
         console.error(
@@ -102,7 +102,7 @@ export class AdoptionsComponent implements OnInit {
     });
   }
 
-  // Method to load posts without filters
+  // METHOD TO LOAD POSTS WITHOUT FILTERS
   loadPosts(filters: any = null): void {
     const postRequest = filters
       ? this.postsService.getPosts(filters)
@@ -120,7 +120,7 @@ export class AdoptionsComponent implements OnInit {
           this.posts = [];
         }
 
-        // Verificar si el usuario ha dado like a cada post
+        // CHECK IF THE USER HAS LIKED EACH POST
         this.posts.forEach((post) => {
           console.log(
             `Post ${post.id} - Usuario ha dado like: ${post.userHasLiked}`
@@ -134,15 +134,15 @@ export class AdoptionsComponent implements OnInit {
     });
   }
 
-  // Check if the current user has liked the post
+  // CHECK IF THE CURRENT USER HAS LIKED THE POST
   checkUserHasLiked(post: any): boolean {
-    const userId = localStorage.getItem('userId'); // Asume que tienes el userId en el localStorage
+    const userId = localStorage.getItem('userId');
     const hasLiked = post.likedByUsers?.some((user: any) => user.id === userId);
-    console.log(`Post ${post.id} - Usuario ${userId} ha dado like:`, hasLiked); // Log para verificar si el usuario ha dado like
+    console.log(`Post ${post.id} - Usuario ${userId} ha dado like:`, hasLiked); // LOG TO CHECK IF THE USER HAS GIVEN A LIKE
     return hasLiked;
   }
 
-  // Toggle like/unlike a post
+  // TOGGLE LIKE/UNLIKE A POST
   toggleLike(post: any): void {
     if (!this.isLoggedIn) {
       this.notificationsService.showNotification(
@@ -158,10 +158,10 @@ export class AdoptionsComponent implements OnInit {
       (response: any) => {
         post.likes = response.likes;
 
-        // Alternar el estado del like
+        // TOGGLE LIKE STATUS
         post.userHasLiked = !hasLiked;
 
-        // Mostrar notificación de éxito
+        // SHOW SUCCESS NOTIFICATION
         const message = hasLiked
           ? 'Like quitado correctamente.'
           : 'Like añadido correctamente.';
@@ -176,11 +176,11 @@ export class AdoptionsComponent implements OnInit {
     );
   }
 
-  // Method to apply filters
+  // METHOD TO APPLY FILTERS
   applyFilters(filters: any): void {
     console.log('Filtros aplicados:', filters);
 
-    // Filtrar valores vacíos y renombrar 'region' a 'province' si es necesario
+    // FILTER OUT EMPTY VALUES ​​AND RENAME 'REGION' TO 'PROVINCE' IF NECESSARY
     const cleanedFilters: { [key: string]: any } = Object.keys(filters)
       .filter(
         (key) =>
@@ -190,7 +190,7 @@ export class AdoptionsComponent implements OnInit {
       )
       .reduce((obj, key) => {
         if (key === 'region') {
-          obj['province'] = filters[key]; // Renombrar 'region' a 'province'
+          obj['province'] = filters[key]; // RENAME 'REGION' TO 'PROVINCE'
         } else {
           obj[key] = filters[key];
         }
@@ -199,19 +199,19 @@ export class AdoptionsComponent implements OnInit {
 
     console.log('Filtros limpios:', cleanedFilters);
 
-    // Llamar al método `loadPosts` con los filtros limpios
+    // CALLING `LOADPOSTS` METHOD WITH CLEAN FILTERS
     this.loadPosts(
       Object.keys(cleanedFilters).length === 0 ? null : cleanedFilters
     );
   }
 
-  // Method to reset filters and reload posts
+  // METHOD TO RESET FILTERS AND RELOAD POSTS
   resetFilters(form: any): void {
-    form.resetForm(); // Restablece todos los campos del formulario a su estado inicial
-    this.loadPosts(); // Carga los posts sin filtros
+    form.resetForm(); // RESET FORM
+    this.loadPosts(); // RELOAD POSTS
     this.notificationsService.showNotification(
       'Filtros restablecidos.',
       'info'
-    ); // Muestra una notificación
+    );
   }
 }

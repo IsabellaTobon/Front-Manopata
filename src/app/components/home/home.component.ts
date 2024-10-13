@@ -16,11 +16,11 @@ export class HomeComponent implements OnInit {
   constructor(private postService: PostService) {}
 
   ngOnInit(): void {
-    this.selectFeaturedPosts(); // Llama a la función para cargar mascotas destacadas
+    this.selectFeaturedPosts(); // CALL THE FUNCTION TO LOAD FEATURED PETS
   }
 
   selectFeaturedPosts(): void {
-    const featuredPostIds = [1, 2, 3]; // Cambiar estos IDs según necesidad
+    const featuredPostIds = [1, 2, 3]; // CHANGE THESE IDS AS NEEDED
     this.postService.getPostsByIds(featuredPostIds).subscribe({
       next: (data) => {
         this.featuredPets = data;

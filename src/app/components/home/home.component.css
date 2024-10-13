@@ -1,28 +1,28 @@
-/* Header */
+/* HEADER */
 header {
   padding: 2rem 0;
 }
 
 header h1 {
   font-size: 2.5rem;
-  color: #333; /* Color de texto oscuro para contraste */
-  font-weight: 700; /* Negrita para el título */
+  color: #333;
+  font-weight: 700;
   animation: fadeIn 1s ease-in-out;
 }
 
 header h3 {
-  color: #555; /* Gris medio para el subtítulo */
+  color: #555;
   margin-bottom: 1rem;
 }
 
 header p {
-  color: #666; /* Gris claro para el texto */
-  max-width: 800px; /* Limitar el ancho del texto para mejor legibilidad */
-  margin: 0 auto; /* Centrar el párrafo */
-  font-size: 1.1rem; /* Tamaño de texto ligeramente mayor */
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
 }
 
-/* Hero image */
+/* HERO IMAGE */
 .hero-image {
   height: 400px;
   background-size: cover;
@@ -46,28 +46,28 @@ header p {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/*Featured Animals*/
+/*FEATURED ANIMALS*/
 .adoptables {
   padding: 4rem 0;
-  background-color: #f8f9fa; /* Fondo claro para contraste */
+  background-color: #f8f9fa;
 }
 
 .adoptables h2 {
   margin-bottom: 2rem;
   font-size: 2rem;
-  color: #333; /* Color de texto oscuro */
+  color: #333;
   font-weight: 700;
   text-align: center;
   animation: fadeInDown 1s ease-in-out;
 }
 
 
-/* Cards */
+/* CARDS */
 .card {
   border-width: 1px;
   border-color: black;
   border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
   overflow: hidden;
   transition: transform 0.3s ease;
@@ -80,8 +80,8 @@ header p {
 
 .card-img-top {
   border-radius: 15px 15px 0 0;
-  height: 200px; /* Tamaño fijo para imágenes */
-  object-fit: cover; /* Ajustar imagen sin distorsionar */
+  height: 200px;
+  object-fit: cover;
 }
 
 .card-body {
@@ -91,12 +91,12 @@ header p {
 .card-title {
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
-  color: rgb(189, 126, 67); /* Color principal */
+  color: rgb(189, 126, 67);
 }
 
 .card-text {
   font-size: 1rem;
-  color: #555; /* Gris medio */
+  color: #555;
 }
 
 .card-footer {
@@ -109,15 +109,15 @@ header p {
   background-color: rgb(189, 126, 67);
   color: white;
   padding: 0.5rem 1.5rem;
-  border-radius: 25px; /* Bordes más redondeados */
+  border-radius: 25px;
   transition: background-color 0.3s ease;
 }
 
 .card-footer a.btn:hover {
-  background-color: rgb(218, 159, 103); /* Color hover */
+  background-color: rgb(218, 159, 103);
 }
 
-/* Testimonials */
+/* TESTIMONIALS */
 .testimonios {
   padding: 4rem 0;
 }
@@ -150,7 +150,7 @@ header p {
 }
 
 
-/* Animations */
+/* ANIMATIONS */
 @keyframes fadeIn {
   0% {
     opacity: 0;

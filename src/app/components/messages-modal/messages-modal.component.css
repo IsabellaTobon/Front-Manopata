@@ -1,4 +1,4 @@
-/* General modal content */
+/* GENERAL MODAL CONTENT */
 .modal-content {
   background: linear-gradient(135deg, #fefaf4 0%, #f9f1e7 100%);
   border-radius: 15px;
@@ -6,7 +6,7 @@
   border: 1px solid #5a4633;
 }
 
-/* Modal header */
+/* MODAL HEADER */
 .modal-header {
   background-color: #d9a97b;
   color: #5a4633;
@@ -22,14 +22,14 @@
   color: #5a4633;
 }
 
-/* Modal body */
+/* MODAL BODY */
 .modal-body {
   padding: 2rem;
   background: #fefaf4;
   color: #5a4633;
 }
 
-/* List of messages */
+/* LIST OF MESSAGES */
 .list-group-item {
   border: 1px solid #5a4633;
   border-radius: 8px;
@@ -48,7 +48,7 @@
   opacity: 0.8;
 }
 
-/* Chat messages */
+/* CHAT MESSAGES */
 .list-group-item-action {
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -58,13 +58,13 @@
   background-color: #f9f1e7;
 }
 
-/* Modal footer */
+/* MODAL FOOTER */
 .modal-footer {
   border-top: 2px solid #5a4633;
   background: #f9f1e7;
 }
 
-/* Input field */
+/* INPUT FIELD */
 input.form-control {
   border-radius: 8px;
   border: 2px solid #5a4633;
@@ -78,7 +78,7 @@ input.form-control:focus {
   box-shadow: 0 0 10px rgba(90, 70, 51, 0.3);
 }
 
-/* Buttons */
+/* BUTTONS */
 .btn-custom {
   background-color: #d9a97b;
   border: 2px solid #5a4633;

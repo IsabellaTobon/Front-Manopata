@@ -1,43 +1,43 @@
-/* General modal content */
+/* GENERAL MODAL CONTENT */
 .modal-content {
-  background: linear-gradient(135deg, #fefaf4 0%, #f9f1e7 100%); /* Suave y cálido */
+  background: linear-gradient(135deg, #fefaf4 0%, #f9f1e7 100%);
   border-radius: 15px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.08); /* Sombras ligeras */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  border: 1px solid #5a4633; /* Borde marrón oscuro */
+  border: 1px solid #5a4633;
 }
 
-/* Modal header */
+/* MODAL HEADER */
 .modal-header {
-  background-color: #d9a97b; /* Tono pastel más claro */
-  color: #5a4633; /* Marrón oscuro */
-  border-bottom: 2px solid #5a4633; /* Borde marrón oscuro */
+  background-color: #d9a97b;
+  color: #5a4633;
+  border-bottom: 2px solid #5a4633;
   padding: 1.5rem;
 }
 
 .modal-title {
-  font-weight: 300; /* Letra más ligera */
+  font-weight: 300;
   font-size: 1.5rem;
-  letter-spacing: 2px; /* Espaciado entre letras */
-  text-transform: uppercase; /* Transformar a mayúsculas para un look limpio */
-  color: #5a4633; /* Marrón oscuro */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5a4633;
 }
 
-/* Modal body */
+/* MODAL BODY */
 .modal-body {
   padding: 2rem;
-  background: #fefaf4; /* Fondo cálido y suave */
-  color: #5a4633; /* Texto en marrón oscuro */
+  background: #fefaf4;
+  color: #5a4633;
 }
 
-/* Modal footer */
+/* MODAL FOOTER */
 .modal-footer {
-  border-top: 2px solid #5a4633; /* Borde superior marrón oscuro */
+  border-top: 2px solid #5a4633;
   padding: 1rem 2rem;
-  background: #f9f1e7; /* Fondo ligeramente más cálido */
+  background: #f9f1e7;
 }
 
-/* Floating labels */
+/* FLOATING LABELS */
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label {
   opacity: 1;
@@ -48,7 +48,7 @@
   position: absolute;
   top: 0.75rem;
   left: 1rem;
-  color: #5a4633; /* Marrón oscuro para mayor visibilidad */
+  color: #5a4633;
   transition: transform 0.3s ease, opacity 0.3s ease;
   transform-origin: left;
   opacity: 0.8;
@@ -56,25 +56,25 @@
   transform: translateY(0) scale(1);
 }
 
-/* Input styles */
+/* INPUT STYLES */
 input.form-control {
   border-radius: 8px;
   padding: 1rem 1rem 0.25rem;
-  border: 2px solid #5a4633; /* Borde marrón oscuro */
-  color: #5a4633; /* Texto en marrón oscuro */
+  border: 2px solid #5a4633;
+  color: #5a4633;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input.form-control:focus {
-  border-color: #d9a97b; /* Tono pastel claro */
-  box-shadow: 0 0 10px rgba(90, 70, 51, 0.3); /* Sombra cálida */
+  border-color: #d9a97b;
+  box-shadow: 0 0 10px rgba(90, 70, 51, 0.3);
 }
 
-/* Buttons */
+/* BUTTONS */
 .btn-custom {
-  background-color: #d9a97b; /* Tono pastel claro */
-  border: 2px solid #5a4633; /* Borde marrón oscuro */
-  color: #5a4633; /* Texto marrón oscuro */
+  background-color: #d9a97b;
+  border: 2px solid #5a4633;
+  color: #5a4633;
   font-weight: bold;
   padding: 0.75rem;
   border-radius: 8px;
@@ -82,14 +82,14 @@ input.form-control:focus {
 }
 
 .btn-custom:hover {
-  background-color: #c4886b; /* Hover más profundo */
+  background-color: #c4886b;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary {
-  background-color: #e0b091; /* Tono pastel secundario */
-  border: 2px solid #5a4633; /* Borde marrón oscuro */
-  color: #5a4633; /* Texto marrón oscuro */
+  background-color: #e0b091;
+  border: 2px solid #5a4633;
+  color: #5a4633;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -101,7 +101,7 @@ input.form-control:focus {
 }
 
 .btn-link {
-  color: #5a4633; /* Texto marrón oscuro */
+  color: #5a4633;
   text-decoration: none;
   transition: color 0.3s ease;
 }

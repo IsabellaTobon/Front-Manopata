@@ -58,9 +58,9 @@
 
 /* CAROUSEL */
 .carousel-caption {
-  background: rgba(255, 255, 255, 0.116); /* Fondo semi-transparente */
-  backdrop-filter: blur(10px); /* Efecto de desenfoque */
-  border-radius: 10px; /* Bordes redondeados */
-  color: white; /* Texto en blanco para visibilidad */
-  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.7); /* Sombra para mejorar legibilidad */
+  background: rgba(255, 255, 255, 0.116);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  color: white;
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.7);
 }

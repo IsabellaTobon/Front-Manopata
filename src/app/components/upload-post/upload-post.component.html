@@ -1,21 +1,21 @@
 <div class="container mt-5">
-  <!-- Componente de notificaciones -->
+  <!-- NOTIFICATION COMPONENT -->
   <app-notifications [message]="notificationMessage" [type]="notificationType"></app-notifications>
 
-  <!-- Tarjeta del formulario de subida de mascotas -->
+  <!-- PET UPLOAD FORM CARD -->
   <div class="card shadow-sm p-4">
     <h5 class="card-title mb-4 text-center">Subir Nueva Mascota</h5>
 
     <form (ngSubmit)="submitPost()">
-      <!-- Fila para Nombre de la Mascota y Tipo de Animal -->
+      <!-- ROW FOR PET NAME AND ANIMAL TYPE -->
       <div class="row">
-        <!-- Nombre de la Mascota -->
+        <!-- PET NAME -->
         <div class="form-group col-md-6">
           <label for="name" class="form-label">Nombre de la Mascota</label>
           <input type="text" id="name" [(ngModel)]="newPost.name" name="name" class="form-control" required>
         </div>
 
-        <!-- Tipo de Animal -->
+        <!-- ANIMAL TYPE -->
         <div class="form-group col-md-6">
           <label for="animalType" class="form-label">Tipo de Animal</label>
           <select id="animalType" [(ngModel)]="newPost.animalType" name="animalType" class="form-select" (change)="onAnimalTypeChange(newPost.animalType)" required>
@@ -25,9 +25,9 @@
         </div>
       </div>
 
-      <!-- Fila para Raza y Edad -->
+      <!-- RACE AND AGE ROW -->
       <div class="row mt-3">
-        <!-- Raza -->
+        <!-- RACE -->
         <div class="form-group col-md-6">
           <label for="breed" class="form-label">Raza</label>
           <select id="breed" [(ngModel)]="newPost.breed" name="breed" class="form-select">
@@ -36,16 +36,16 @@
           </select>
         </div>
 
-        <!-- Edad -->
+        <!-- AGE -->
         <div class="form-group col-md-6">
           <label for="age" class="form-label">Edad</label>
           <input type="number" id="age" [(ngModel)]="newPost.age" name="age" class="form-control" required>
         </div>
       </div>
 
-      <!-- Fila para Provincia y Ciudad -->
+      <!-- LINE FOR PROVINCE AND CITY -->
       <div class="row mt-3">
-        <!-- Provincia -->
+        <!-- PROVINCE -->
         <div class="form-group col-md-6">
           <label for="province" class="form-label">Provincia</label>
           <select id="province" [(ngModel)]="newPost.province" name="province" class="form-select" (change)="onProvinceChange(newPost.province)" required>
@@ -54,7 +54,7 @@
           </select>
         </div>
 
-        <!-- Ciudad -->
+        <!-- CITY -->
         <div class="form-group col-md-6">
           <label for="city" class="form-label">Ciudad</label>
           <select id="city" [(ngModel)]="newPost.city" name="city" class="form-select" required>
@@ -64,13 +64,13 @@
         </div>
       </div>
 
-      <!-- Descripción -->
+      <!-- DESCRIPTION -->
       <div class="form-group mt-3">
         <label for="description" class="form-label">Descripción</label>
         <textarea id="description" [(ngModel)]="newPost.description" name="description" class="form-control" rows="3" required></textarea>
       </div>
 
-      <!-- Fila de checkboxes -->
+      <!-- ROW OF CHECKBOXES -->
       <div class="row mt-3">
         <div class="col-md-4">
           <label class="form-check-label">
@@ -92,13 +92,13 @@
         </div>
       </div>
 
-      <!-- Subir Imagen -->
+      <!-- UPLOAD POST -->
       <div class="form-group mt-3">
         <label for="image" class="form-label">Subir Imagen</label>
         <input type="file" id="image" (change)="onFileSelected($event)" class="form-control">
       </div>
 
-      <!-- Botones -->
+      <!-- BUTTONS -->
       <div class="d-flex justify-content-between mt-4">
         <button type="submit" class="btn btn-primary w-45">Subir Post</button>
         <button type="button" class="btn btn-secondary w-45" (click)="cancel()">Cancelar</button>

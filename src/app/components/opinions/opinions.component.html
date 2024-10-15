@@ -2,10 +2,10 @@
   <div class="container-fluid py-4">
     <app-notifications></app-notifications>
 
-    <!-- Grid con filas y columnas para organizar el contenido -->
+    <!-- GRID WITH ROWS AND COLUMNS TO ORGANIZE CONTENT -->
     <div class="row">
 
-      <!-- Carrusel de Imágenes -->
+      <!-- IMAGES CAROUSEL -->
       <div id="carouselTop" class="col-lg-7">
         <div id="imageCarousel" class="carousel slide mb-4 mt-4 ms-5" data-bs-ride="carousel" style="max-height: 300px;">
           <div class="carousel-inner rounded-3 overflow-hidden">
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <!-- Opinión General -->
+      <!-- GENERAL OPINION -->
       <div id="GeneralOpinion" class="col-lg-3 p-4 ms-5">
         <div class="card text-center p-4 shadow-sm mb-4">
           <h3>Opinión General</h3>
@@ -39,10 +39,10 @@
       </div>
     </div>
 
-    <!-- Comentarios y Formulario en una nueva fila -->
+    <!-- COMMENTS AND FORM IN A NEW ROW -->
     <div class="row">
       <div class="col-sm-6 ms-5 mt-4">
-        <!-- Comentarios -->
+        <!-- COMMENTS -->
         <div class="card shadow-sm p-4" style="max-height: 400px; overflow-y: auto;">
           <h4>Comentarios</h4>
           <div *ngFor="let comment of comments" class="comment-card mb-3 d-flex">
@@ -60,7 +60,7 @@
             <hr>
           </div>
 
-          <!-- Mostrar los comentarios adicionales si showExtraComments es verdadero -->
+          <!-- SHOW EXTRA COMMENTS IF SHOWEXTRACOMMENTS IS TRUE -->
           <div *ngIf="showExtraComments">
             <div *ngFor="let extraComment of extraComments" class="comment-card mb-3 d-flex">
               <div class="d-flex align-items-center mb-2">
@@ -77,21 +77,21 @@
             </div>
           </div>
 
-          <!-- Botón para ver más comentarios si hay más de 3 -->
+          <!-- BUTTON TO SEE MORE COMMENTS IF THERE ARE MORE THAN 3 -->
           <button *ngIf="!showExtraComments && extraComments.length > 0" class="btn btn-primary btn-block mt-3" (click)="viewAllComments()">
             Ver todas las opiniones
           </button>
 
-          <!-- Botón para minimizar los comentarios adicionales -->
+          <!-- MINIMIZE ADDITIONAL COMMENTS BUTTON -->
           <button *ngIf="showExtraComments" class="btn btn-primary btn-block mt-3" (click)="hideExtraComments()">
             Minimizar comentarios
           </button>
         </div>
       </div>
 
-      <!-- Formulario de Opinión -->
+      <!-- OPINION FORM -->
       <div class="col-sm-4 ms-5 mt-5">
-        <div class="card shadow-sm p-4 mt-4"> <!-- Aumentar margen superior para separarlo -->
+        <div class="card shadow-sm p-4 mt-4">
           <h4 class="mb-3">Escribe tu Opinión</h4>
           <form (ngSubmit)="submitComment()">
             <div class="mb-3">

@@ -4,24 +4,24 @@ import { inject } from '@angular/core';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const token = authService.getToken();  // Obtener el token desde el AuthService
+  const token = authService.getToken();  // OBTAIN TOKEN FROM AUTH SERVICE
 
-  // Verificar si se obtuvo un token
+  // VERIFY IF TOKEN IS PRESENT
   if (token) {
-    console.log('Token obtenido:', token);  // Para debug: Imprimir el token en consola
+    console.log('Token obtenido:', token);
 
-    // Clonar la solicitud y añadir el encabezado Authorization
+    // ClLONE THE REQUEST AND ADD THE TOKEN TO THE HEADER
     const clonedReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`  // Agregar el token al header de la solicitud
+        Authorization: `Bearer ${token}`  // ADD TOKEN TO THE HEADER
       }
     });
 
-    // Pasar la solicitud clonada al siguiente interceptor (o al backend)
+    // PASS THE CLONED REQUEST TO THE NEXT INTERCEPTOR (OR BACKEND)
     return next(clonedReq);
   }
 
-  // Si no hay token, proceder con la solicitud original sin modificar
+  // IF NO TOKEN IS FOUND, CONTINUE WITHOUT THE AUTHORIZATION HEADER
   console.log('No se encontró token, continuando sin Authorization header');
   return next(req);
 };

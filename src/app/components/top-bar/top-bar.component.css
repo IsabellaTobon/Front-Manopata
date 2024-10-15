@@ -14,7 +14,7 @@
 .nav-link {
   color: rgb(0, 0, 0) !important;
   font-size: large;
-  margin-right: 20px;  /* Ajustar el espacio entre los enlaces */
+  margin-right: 20px;
 }
 
 .nav-link:hover {
@@ -24,9 +24,9 @@
   transition: all 0.1s ease-in-out;
 }
 
-/* Ajuste para la campanita */
+/* NOTIFICATION */
 .notification-icon {
-  font-size: 1.5rem;  /* Aumentar el tamaño de la campanita */
+  font-size: 1.5rem;
   margin-right: 20px;
 }
 
@@ -50,9 +50,9 @@
   opacity: 0;
   transform: translateY(-20px);
   transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
-  white-space: normal; /* Permite que el texto se divida en varias líneas */
-  word-wrap: break-word; /* Si el texto es largo, permite que se ajuste */
-  max-width: 200px; /* Limitar el ancho máximo del botón */
+  white-space: normal; /* ALLOWS TEXT TO BE SPLIT ACROSS MULTIPLE LINES */
+  word-wrap: break-word; /* IF THE TEXT IS LONG, ALLOW IT TO WRAP */
+  max-width: 200px;
 }
 
 .fade-in {

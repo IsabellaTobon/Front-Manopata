@@ -1,6 +1,6 @@
-/* Estilos básicos para toda la aplicación */
+/* STYLES COMMON */
 body {
-  font-family: Arial, Helvetica, sans-serif !important; /* Base font */
+  font-family: Arial, Helvetica, sans-serif !important; /* BASE FONT */
   line-height: 1.6;
   margin: 0;
   padding: 0;
@@ -10,16 +10,16 @@ body {
 
 /* CUSTUM STYLES */
 
-/* Cards */
+/* CARDS */
 .card {
   border-width: 1px;
   border-color: black;
   border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  margin-bottom: 1rem; /* Low space */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
 }
 
-/* Bottons */
+/* BOTTONS */
 
 .btn-primary {
   background-color: rgb(189, 126, 67) !important;
@@ -31,7 +31,7 @@ body {
   background-color: rgb(218, 159, 103) !important;
 }
 
-/* Carrusel */
+/* CAROUSEL */
 .carousel-item img {
   width: 100%;
   height: auto;
@@ -49,7 +49,7 @@ body {
   width: 5%;
 }
 
-/* Forms */
+/* FORMS */
 .form-control {
   border-width: 1px;
   border-color: rgba(0, 0, 0, 0.408);
@@ -61,20 +61,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 @media (max-width: 768px) {
   .navbar-nav {
-    gap: 20px; /* Reduce el espaciado en pantallas pequeñas */
+    gap: 20px;
   }
 
   .navbar-brand {
-    font-size: medium; /* Reduce el tamaño de la fuente del logotipo */
+    font-size: medium;
   }
 
   .nav-link {
-    font-size: medium; /* Ajusta el tamaño de los enlaces */
-    margin-right: 5px; /* Reduce el espacio entre los enlaces */
+    font-size: medium;
+    margin-right: 5px;
   }
 
   .d-flex {
-    padding-left: 10px; /* Reduce el padding en pantallas pequeñas */
+    padding-left: 10px;
     padding-right: 10px;
   }
 }

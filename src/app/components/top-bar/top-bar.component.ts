@@ -24,7 +24,7 @@ export class TopBarComponent implements OnInit {
   notifications: any[] = [];
   unreadCount: number = 0;
 
-  // Variables para la funcionalidad de respuesta
+  // VARIABLES FOR THE RESPONSE FUNCTIONALITY
   replyMessage: string = '';
   currentRecipientId: number | null = null;
   currentRecipientNickname: string | null = '';
@@ -34,16 +34,16 @@ export class TopBarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private messageService: MessagesService,
-    private notificationsService: NotificationsService // Asegúrate de tener este servicio
+    private notificationsService: NotificationsService
   ) {}
 
   ngOnInit(): void {
-    // Subscribirse al estado de autenticación
+    // SUBSCRIBE TO AUTHENTICATION STATUS
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
 
       if (this.isLoggedIn) {
-        // Obtener el nickname del localStorage
+        // OBTAIN THE NICKNAME AND PROFILE IMAGE URL
         this.nickname = localStorage.getItem('nickname');
         this.authService.getUserData().subscribe({
           next: (data) => {
@@ -64,12 +64,12 @@ export class TopBarComponent implements OnInit {
     });
   }
 
-  // Cargar las notificaciones desde el servicio de mensajes
+  // LOAD NOTIFICATIONS FROM THE MESSAGING SERVICE
   loadNotifications(userId: number): void {
     this.messageService.getInboxMessages(userId).subscribe({
       next: (messages) => {
         this.notifications = messages;
-        this.unreadCount = messages.length; // Suponiendo que todas las notificaciones son no leídas
+        this.unreadCount = messages.length;
       },
       error: (error) => {
         console.error('Error al obtener los mensajes:', error);
@@ -77,26 +77,26 @@ export class TopBarComponent implements OnInit {
     });
   }
 
-  // Método para abrir el modal de respuesta
+  // METHOD TO OPEN THE RESPONSE MODAL
   openReplyModal(senderId: number, postId: number, messageBody: string, notification: any): void {
     this.currentRecipientId = senderId;
     this.currentPostId = postId;
-    this.currentMessageBody = messageBody; // Mostrar el cuerpo del mensaje
+    this.currentMessageBody = messageBody;
 
     const sender = this.notifications.find((n) => n.sender.id === senderId);
     if (sender) {
       this.currentRecipientNickname = sender.sender.nickname;
     }
 
-    this.replyMessage = ''; // Limpiar el mensaje anterior
+    this.replyMessage = '';
 
-    // Actualizar el contador de notificaciones (restar solo si no ha sido leída antes)
+    // UPDATE NOTIFICATION COUNTER (SUBTRACT ONLY IF NOT READ BEFORE)
     if (!notification.isRead) {
-      notification.isRead = true; // Marcar la notificación como leída
-      this.unreadCount = Math.max(this.unreadCount - 1, 0); // Restar el contador
+      notification.isRead = true;
+      this.unreadCount = Math.max(this.unreadCount - 1, 0); // SUBTRACT THE COUNTER
     }
 
-    // Abrir el modal
+    // OPEN MODAL
     const modalElement = document.getElementById('replyModal');
     if (modalElement) {
       const replyModal = new (window as any).bootstrap.Modal(modalElement);
@@ -104,7 +104,7 @@ export class TopBarComponent implements OnInit {
     }
   }
 
-  // Método para enviar la respuesta
+  // METHOD FOR SENDING THE RESPONSE
   sendReply(): void {
     if (this.currentRecipientId && this.replyMessage.trim()) {
       const senderId = this.authService.getUserId();

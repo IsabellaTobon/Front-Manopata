@@ -43,32 +43,32 @@ export class OpinionsComponent implements OnInit {
 
   loadComments(): void {
     this.commentsService.getComments().subscribe((comments) => {
-      // Ordenar los comentarios por fecha de más reciente a más antiguo
+      // SORT COMMENTS BY DATE FROM NEWEST TO OLDEST
       comments.sort(
         (a, b) =>
           new Date(b.commentDate!).getTime() -
           new Date(a.commentDate!).getTime()
       );
 
-      // Mostrar solo los primeros 3 comentarios, el resto va a extraComments
+      // SHOW ONLY THE FIRST 3 COMMENTS, THE REST GO TO EXTRACOMMENTS
       this.comments = comments.slice(0, 3);
       this.extraComments = comments.slice(3);
     });
   }
 
-  // Función para verificar si una URL es externa
+  // FUNCTION TO CHECK IF A URL IS EXTERNAL
   isExternalUrl(url: string): boolean {
     return /^https?:\/\//.test(url);
   }
 
   get averageRating(): number {
-    const allComments = [...this.comments, ...this.extraComments]; // Combinar ambos arrays
-    if (allComments.length === 0) return 5; // Si no hay comentarios, retornar 5 como valor predeterminado
+    const allComments = [...this.comments, ...this.extraComments]; // COMBINE BOTH ARRAYS
+    if (allComments.length === 0) return 5; // IF THERE ARE NO COMMENTS, RETURN 5 AS DEFAULT VALUE
     const totalRating = allComments.reduce(
       (sum, comment) => sum + comment.rating,
       0
     );
-    return totalRating / allComments.length; // Calcular la media de todos los comentarios
+    return totalRating / allComments.length; // CALCULATE THE AVERAGE OF ALL COMMENTS
   }
 
   submitComment(): void {
@@ -77,7 +77,7 @@ export class OpinionsComponent implements OnInit {
       return;
     }
 
-    // Verificar si el rating es mayor que 0
+    // CHECK IF THE RATING IS GREATER THAN 0
     if (this.newComment.rating === 0 || !this.newComment.text) {
       this.notificationsService.showNotification(
         'Por favor completa el comentario y selecciona una calificación antes de enviar.',
@@ -86,55 +86,55 @@ export class OpinionsComponent implements OnInit {
       return;
     }
 
-    this.isSubmitting = true; // Iniciar el estado de envío
+    this.isSubmitting = true; // START SHIPPING STATUS
 
-    // Crear el objeto de comentario para enviar
+    // CREATE THE COMMENT OBJECT TO SEND TO THE BACKEND
     const commentToSubmit: UserComment = {
       text: this.newComment.text,
       rating: this.newComment.rating,
-      commentDate: new Date(), // Esto podría ser opcional, ya que el backend puede manejar la fecha
-      user: this.newComment.user, // Los datos del usuario serán ignorados o controlados por el backend
+      commentDate: new Date(),
+      user: this.newComment.user, // USER DATA IS ALREADY FILLED IN
     };
 
     this.commentsService.postComment(commentToSubmit).subscribe({
       next: (response: any) => {
-        // Mostrar notificación de éxito
+
         this.notificationsService.showNotification(response.message, 'success');
 
-        // Añadir el comentario recién creado al array de comentarios
+        // ADD THE NEWLY CREATED COMMENT TO THE COMMENTS ARRAY
         this.comments.push(response.comment);
 
-        // Limpiar el formulario
+        // CLEAR FORM
         this.newComment = {
           text: '',
           rating: 0,
           user: { name: '', nickname: '' },
         };
 
-        // Cerrar la notificación automáticamente después de 2 segundos
+        // CLOSE THE FORM AFTER 2 SECONDS
         setTimeout(() => {
           this.notificationsService.clearNotification();
         }, 2000);
 
-        this.isSubmitting = false; // Restablecer el estado de envío
+        this.isSubmitting = false; // RESET SHIPPING STATUS
       },
       error: (error) => {
         this.notificationsService.showNotification(
           'Error al enviar el comentario.',
           'error'
         );
-        this.isSubmitting = false; // Restablecer el estado de envío
+        this.isSubmitting = false; // RESET SHIPPING STATUS
       },
     });
   }
-  // Mostrar todos los comentarios adicionales
+  // SHOW ALL COMMENTS ADDITIONALS
   viewAllComments(): void {
-    this.showExtraComments = true; // Mostrar los comentarios adicionales
+    this.showExtraComments = true;
   }
 
-  // Ocultar los comentarios adicionales
+  // HIDE ADDITIONAL COMMENTS
   hideExtraComments(): void {
-    this.showExtraComments = false; // Ocultar los comentarios adicionales
+    this.showExtraComments = false;
   }
 
   onRatingChange(newRating: number): void {

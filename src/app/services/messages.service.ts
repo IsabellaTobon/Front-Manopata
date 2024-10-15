@@ -14,16 +14,16 @@ export class MessagesService {
     private notificationsService: NotificationsService
   ) {}
 
-  // Método para enviar un mensaje
+  // METHOD TO SEND A MESSAGE
   sendMessage(message: {
     senderId: number;
     recipientId: number;
     bodyText: string;
-    postId: number;  // Agregamos postId
+    postId: number;
   }): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`, // Usamos el JWT almacenado
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     });
 
     return this.http.post(`${this.apiUrl}/send`, message, { headers }).pipe(
@@ -43,10 +43,10 @@ export class MessagesService {
     );
   }
 
-  // Obtener mensajes recibidos (bandeja de entrada)
+  // OBTAIN INBOX MESSAGES
   getInboxMessages(userId: number): Observable<any[]> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`, // Autorización
+      Authorization: `Bearer ${localStorage.getItem('token')}`, // AUTHORIZATION
     });
 
     return this.http
@@ -71,10 +71,10 @@ export class MessagesService {
       );
   }
 
-  // Obtener mensajes enviados
+  // OBTAIN SENT MESSAGES
   getSentMessages(userId: number): Observable<any[]> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`, // Autorización
+      Authorization: `Bearer ${localStorage.getItem('token')}`, // AUTHORIZATION
     });
 
     return this.http
@@ -96,10 +96,10 @@ export class MessagesService {
       );
   }
 
-  // Obtener el historial de mensajes entre dos usuarios (simulación de chat)
+  // OBTAIN CHAT HISTORY
   getChatHistory(userId1: number, userId2: number): Observable<any[]> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`, // Autorización
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     });
 
     const params = {

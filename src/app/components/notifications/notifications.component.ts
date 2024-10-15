@@ -16,14 +16,14 @@ export class NotificationsComponent implements OnInit{
   constructor(private notificationsService: NotificationsService) { }
 
   ngOnInit(): void {
-    // Suscribirse al observable del servicio de notificaciones
+    // SUBSCRIBE TO THE NOTIFICATION SERVICE OBSERVABLE
     this.notificationsService.notification$.subscribe(notification => {
       this.message = notification.message;
       this.type = notification.type;
     });
   }
 
-  // Método opcional para ocultar manualmente el mensaje
+  // OPTIONAL METHOD TO MANUALLY HIDE THE MESSAGE
   closeNotification(): void {
     this.message = '';
   }

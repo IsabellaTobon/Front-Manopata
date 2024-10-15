@@ -27,7 +27,7 @@ export class DataService {
     'Melilla': ['Melilla']
   };
 
-  // Definir los tipos de animales y sus razas correspondientes
+  // DEFINE TYPES OF ANIMALS AND THEIR CORRESPONDING BREEDS
   animalTypesAndBreeds: { [key: string]: string[] } = {
     'Perro': [
       'Mestizo',

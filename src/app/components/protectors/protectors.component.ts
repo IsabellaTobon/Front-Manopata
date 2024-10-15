@@ -20,24 +20,24 @@ export class ProtectorsComponent implements OnInit {
   constructor(private protectorsService: ProtectorsService ) {}
 
   ngOnInit(): void {
-    // Obtener protectoras
+    // GET PROTECTORS FROM BACKEND
     this.protectorsService.getProtectors().subscribe((data) => {
       this.protectors = data.map(protector => ({
         ...protector,
         photo: `${protector.photo}`
       }));
 
-      this.filteredProtectors = [...this.protectors]; // Crea una copia para filtrar
+      this.filteredProtectors = [...this.protectors]; // CREATE A COPY TO FILTER
     });
 
-    // Cargar las provincias desde el backend
+    // LOADING PROVINCES FROM THE BACKEND
     this.loadProvinces();
   }
 
   loadProvinces(): void {
     this.protectorsService.getAllProvinces().subscribe({
       next: (provinces: string[]) => {
-        this.provinces = provinces; // Asigna las provincias obtenidas
+        this.provinces = provinces; // ASSIGN THE OBTAINED PROVINCES
       },
       error: (error: any) => {
         console.error('Error al cargar provincias', error);
@@ -46,14 +46,14 @@ export class ProtectorsComponent implements OnInit {
   }
 
   onProvinceChange(selectedProvince: string): void {
-    // Al cambiar de provincia, cargar las ciudades correspondientes
+    // WHEN CHANGING PROVINCES, LOAD THE CORRESPONDING CITIES
     this.protectorsService.getCitiesByProvince(selectedProvince).subscribe({
       next: (cities: string[]) => {
-        this.cities = cities; // Asigna las ciudades obtenidas
+        this.cities = cities; // ASSIGN THE OBTAINED CITIES
       },
       error: (error: any) => {
         console.error('Error al cargar ciudades', error);
-        this.cities = []; // Resetear ciudades en caso de error
+        this.cities = []; // RESET CITIES ON ERROR
       }
     });
   }
@@ -61,7 +61,7 @@ export class ProtectorsComponent implements OnInit {
   selectProtector(protector: any) {
     this.selectedProtector = protector;
 
-    // Obtener el modal y mostrarlo utilizando Bootstrap nativo
+    // GET THE MODAL AND DISPLAY IT USING NATIVE BOOTSTRAP
     const modalElement = document.getElementById('protectorModal');
     if (modalElement) {
 
@@ -75,11 +75,11 @@ export class ProtectorsComponent implements OnInit {
   filterByLocation(event: any) {
     const location = event.target.value;
     if (location) {
-      // Filtrar sobre el array original de protectoras
+      // FILTER ON THE ORIGINAL ARRAY OF PROTECTORS
       this.filteredProtectors = this.protectors.filter(protector => protector.province === location);
     } else {
-      // Restaura la lista completa de protectoras
-      this.filteredProtectors = [...this.protectors];  // Crea una copia del array original
+      // RESTORE THE FULL LIST OF SHELTERS
+      this.filteredProtectors = [...this.protectors];  // CREATE A COPY OF THE ORIGINAL ARRAY
     }
   }
 

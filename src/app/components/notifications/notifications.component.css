@@ -1,6 +1,6 @@
 .notifications {
   position: absolute;
-  top: -50px; /* Para que aparezca justo encima del formulario */
+  top: -50px; /* IT APPEARS JUST ABOVE THE FORM */
   left: 50%;
   transform: translateX(-50%);
   color: white;
@@ -11,19 +11,18 @@
   z-index: 1000;
 }
 
-/* Colores según el tipo de notificación */
 .alert-success {
-  background-color: #5cb85c; /* Verde atractivo para éxito */
+  background-color: #5cb85c;
 }
 
 .alert-error {
-  background-color: #d9534f; /* Rojo para errores */
+  background-color: #d9534f;
 }
 
 .alert-info {
-  background-color: #5bc0de; /* Azul suave para información */
+  background-color: #5bc0de;
 }
 
 .alert-warning {
-  background-color: #f0ad4e; /* Naranja para advertencias (el color que ya utilizas) */
+  background-color: #f0ad4e;
 }

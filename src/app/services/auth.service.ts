@@ -21,7 +21,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // Inicio de sesión
+  // SIGN IN
   login(nickname: string, password: string): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/login`, { nickname, password })
@@ -42,7 +42,7 @@ export class AuthService {
       );
   }
 
-  // Método para solicitar el restablecimiento de contraseña
+  // METHOD TO SEND A PASSWORD RESET LINK
   forgotPassword(email: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/forgot-password`, { email }).pipe(
       tap(() => console.log('Enlace de restablecimiento de contraseña enviado')),
@@ -50,7 +50,7 @@ export class AuthService {
     );
   }
 
-  // Cambiar contraseña
+  // CHANGE PASSWORD
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
     const nickname = localStorage.getItem('nickname');
     return this.http
@@ -61,7 +61,7 @@ export class AuthService {
       );
   }
 
-  // Restablecer contraseña con token
+  // RESET PASSWORD WITH LINK
   resetPassword(token: string, newPassword: string): Observable<any> {
     return this.http
       .post(`${this.apiUrl}/reset-password`, { token, newPassword })
@@ -71,7 +71,7 @@ export class AuthService {
       );
   }
 
-  // Actualizar perfil del usuario
+  // UPDATE USER PROFILE
   updateUserProfile(userData: any): Observable<any> {
     const userId = this.getUserId();
     return this.http.put(`${this.userApiUrl}/${userId}`, userData).pipe(
@@ -80,7 +80,7 @@ export class AuthService {
     );
   }
 
-  // Actualizar imagen de perfil
+  // UPDATE PROFILE IMAGE
   updateProfileImage(imageFile: File): Observable<any> {
     const userId = this.getUserId();
     const formData = new FormData();
@@ -89,7 +89,7 @@ export class AuthService {
     return this.http.put(`${this.userApiUrl}/${userId}/profile-image`, formData).pipe(
       tap((response: any) => {
         const newImageUrl = `http://localhost:8080/uploads/${response.fileName}`;
-        this.profileImageChanged$.next(newImageUrl);  // Actualiza la nueva URL de la imagen de perfil
+        this.profileImageChanged$.next(newImageUrl);  // UPDATE PROFILE IMAGE URL
       }),
       catchError((error) => {
         return throwError(() => new Error('Error al actualizar la imagen de perfil.'));
@@ -97,7 +97,7 @@ export class AuthService {
     );
   }
 
-  // Desactivar cuenta del usuario
+  // DEACTIVATE ACCOUNT
   deactivateAccount(password: string): Observable<any> {
     return this.http.post(`${this.userApiUrl}/deactivate-account`, { password }).pipe(
       tap(() => console.log('Cuenta desactivada')),
@@ -105,7 +105,7 @@ export class AuthService {
     );
 }
 
-  // Actualizar token JWT
+  // UPDATE TOKEN JWT
   refreshToken(): Observable<any> {
     return this.http.post<{ token: string }>(`${this.apiUrl}/refresh-token`, {}).pipe(
       tap((response) => {
@@ -117,7 +117,7 @@ export class AuthService {
     );
   }
 
-  // Obtener datos del usuario actual
+  // OBTAIN USER DATA
   getUserData(): Observable<any> {
     const userId = this.getUserId();
     if (!userId) {
@@ -126,7 +126,7 @@ export class AuthService {
     return this.http.get<any>(`${this.userApiUrl}/profile/${userId}`);
   }
 
-  // Registrar usuario nuevo
+  // REGISTER NEW USER
   register(nickname: string, name: string, lastname: string, email: string, password: string): Observable<any> {
     return this.http
       .post<any>(`${this.apiUrl}/register`, { nickname, name, lastname, email, password })
@@ -145,17 +145,17 @@ export class AuthService {
       );
   }
 
-  // Verificar disponibilidad de nickname
+  // VERIFY NICKNAME AVAILABILITY
   checkNicknameAvailability(nickname: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.userApiUrl}/check-nickname`, { params: { nickname } });
   }
 
-  // Verificar disponibilidad de email
+  // VERIFY EMAIL AVAILABILITY
   checkEmailAvailability(email: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.userApiUrl}/check-email`, { params: { email } });
   }
 
-  // Cerrar sesión
+  // CLOSE SESSION
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
@@ -165,22 +165,22 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
-  // Verificar si el usuario está autenticado
+  // VERIFY IF THE USER IS LOGGED IN
   isLoggedIn(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
 
-  // Comprobar si existe un token en el localStorage
+  // CHECK IF A TOKEN EXISTS IN LOCALSTORAGE
   private hasToken(): boolean {
     return !!localStorage.getItem('token');
   }
 
-  // Obtener el token JWT
+  // GETTING THE JWT TOKEN
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  // Obtener el ID de usuario
+  // OBTAING THE USER ID
   getUserId(): string | null {
     return localStorage.getItem('userId');
   }

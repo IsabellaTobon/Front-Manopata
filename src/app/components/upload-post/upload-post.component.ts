@@ -55,26 +55,26 @@ export class UploadPostComponent {
     this.animalTypesAndBreeds = this.dataService.animalTypesAndBreeds;
   }
 
-  // Manejo del archivo seleccionado
+  // MANAGE FILE UPLOAD
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
 
     if (file) {
-      this.selectedFile = file; // Guardar el archivo seleccionado
+      this.selectedFile = file;
     }
   }
 
-  // Change city based on province
+  // CHANGE CITY BASED ON PROVINCE
   onProvinceChange(province: string): void {
     this.cities = this.regionsAndCities[province] || [];
   }
 
-  // Change breed based on animal type
+  // CHANGE BREED BASED ON ANIMAL TYPE
   onAnimalTypeChange(animalType: string): void {
     this.breeds = this.animalTypesAndBreeds[animalType] || [];
   }
 
-  // Send post form to the backend
+  // SEND POST FORM TO THE BACKEND
   submitPost(): void {
     if (this.selectedFile) {
       const formData = new FormData();
@@ -83,23 +83,22 @@ export class UploadPostComponent {
 
       this.http.post<{ fileName: string }>('http://localhost:8080/api/post/create', formData).subscribe({
         next: () => {
-          // Mostrar notificación de éxito
+
           this.notificationMessage = 'Post subido correctamente';
           this.notificationType = 'success';
 
-          // Limpiar formulario y redireccionar
           this.clearForm();
           setTimeout(() => this.router.navigate(['/adoptions']), 3000);
         },
         error: (error) => {
-          // Mostrar notificación de error
+
           this.notificationMessage = 'Error al guardar el post';
           this.notificationType = 'error';
           console.error('Error al guardar el post', error);
         }
       });
     } else {
-      this.savePost(); // Guardar el post sin archivo
+      this.savePost();
     }
   }
 
@@ -124,12 +123,12 @@ export class UploadPostComponent {
     this.postsService.createPost(postData).subscribe({
       next: () => {
         this.notificationsService.showNotification('Post subido correctamente', 'success');
-        this.clearForm();  // Limpiar el formulario después de la subida
+        this.clearForm();
 
-        // Retrasar el redireccionamiento
+        // DELAY REDIRECTION
         setTimeout(() => {
           this.router.navigate(['/adoptions']);
-        }, 3000);  // Redirigir después de 3 segundos
+        }, 3000);  // REDIRECT AFTER 3 SECONDS
       },
       error: (error) => {
         this.notificationsService.showNotification('Error al guardar el post', 'error');
@@ -152,7 +151,7 @@ export class UploadPostComponent {
       animalType: '',
       photo: ''
     };
-    this.selectedFile = null;  // Limpiar el archivo seleccionado
+    this.selectedFile = null;
   }
 
   cancel(): void {

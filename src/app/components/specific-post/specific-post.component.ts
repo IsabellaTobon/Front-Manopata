@@ -40,15 +40,13 @@ export class SpecificPostComponent implements OnInit {
 
   }
 
-
-  // Cargar la publicación
   loadPost(postId: number): void {
     this.postService.getPostById(postId).subscribe({
       next: (data) => {
         console.log('Datos del post cargados:', data);
         this.post = data;
 
-        // Verificar si la foto es una URL externa o una ruta interna
+        // VERIFY IF THE PHOTO IS AN EXTERNAL URL
         if (this.post.photo) {
           if (!this.isExternalUrl(this.post.photo)) {
             this.post.photo = 'http://localhost:8080' + this.post.photo; // Ruta de la carpeta uploads
@@ -65,13 +63,11 @@ export class SpecificPostComponent implements OnInit {
     });
   }
 
-  // Verificar si la URL es externa
   isExternalUrl(url: string): boolean {
     return url.startsWith('http://') || url.startsWith('https://');
   }
 
-
-  // Cargar datos del usuario autenticado
+  // LOAD USER DATA
   loadUserData(): void {
     this.authService.getUserData().subscribe({
       next: (data) => {
@@ -84,24 +80,23 @@ export class SpecificPostComponent implements OnInit {
     });
   }
 
-  // Enviar el mensaje
   sendMessage(): void {
-    // Validación de campos
+    // VALIDATE FIELDS
     if (!this.senderId || !this.post || !this.post.user || !this.post.user.id || !this.message.text.trim()) {
       this.notificationsService.showNotification('Todos los campos son obligatorios.', 'error');
       return;
     }
 
-    // Enviar el mensaje usando el servicio
+    // SEND MESSAGE USING THE MESSAGES SERVICE
     this.messagesService.sendMessage({
       senderId: this.senderId!,
       recipientId: this.post.user.id!,
       bodyText: this.message.text.trim(),
-      postId: this.post.id!  // Se asegura que postId está presente
+      postId: this.post.id!
     }).subscribe({
       next: (response) => {
         this.notificationsService.showNotification('Mensaje enviado correctamente', 'success');
-        this.message.text = ''; // Limpiar el mensaje después de enviarlo
+        this.message.text = '';
       },
       error: (error) => {
         const errorMsg = error?.message || 'Error al enviar el mensaje';

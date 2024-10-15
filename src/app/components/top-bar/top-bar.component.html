@@ -28,11 +28,11 @@
     </ul>
 
     <div class="d-flex flex-wrap align-items-center">
-      <!-- Mostrar imagen de perfil solo si el usuario está logueado -->
+      <!-- SHOW IMAGE PROFILE IF IS LOGGED -->
       <img *ngIf="isLoggedIn && profileImageUrl" [src]="profileImageUrl" alt="Imagen de perfil"
         class="profile-image me-4">
 
-      <!-- Botón de notificaciones (campanita) solo si está logueado -->
+      <!-- NOTIFICATIONS BUTTON (BELL) ONLY IF LOGGED IN -->
       <div *ngIf="isLoggedIn" class="nav-item dropdown me-4">
         <a class="nav-link notification-icon me-2" href="#" id="notificationsDropdown" role="button"
           data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,7 +45,7 @@
               <strong>{{ notification.sender.nickname }}:</strong> {{ notification.bodyText }}
               <small class="d-block text-muted">{{ notification.sentDate | date: 'short' }}</small>
             </a>
-            <!-- Botón para ver y responder -->
+            <!-- VIEW AND REPLY BUTTON -->
             <button class="btn btn-link text-decoration-none p-0"
               (click)="openReplyModal(notification.sender.id, notification.postId, notification.bodyText, notification)">
               Ver y Responder
@@ -65,14 +65,14 @@
         </ul>
       </div>
 
-      <!-- Botón de iniciar sesión -->
+      <!-- LOGIN BUTTON -->
       <button *ngIf="!isLoggedIn" class="btn btn-primary me-5 mb-2" (click)="openLoginForm()"
         aria-label="Iniciar sesión">Iniciar sesión</button>
     </div>
   </div>
 </nav>
 
-<!-- Modal para ver y responder mensajes -->
+<!-- MODAL TO VIEW AND REPLY TO MESSAGES -->
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -81,7 +81,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-        <!-- Mostrar el mensaje recibido -->
+        <!-- SHOW THE RECEIVED MESSAGE -->
         <p>{{ currentMessageBody }}</p>
         <hr>
         <textarea class="form-control" [(ngModel)]="replyMessage" placeholder="Escribe tu respuesta aquí"></textarea>

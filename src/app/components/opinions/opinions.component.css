@@ -7,7 +7,7 @@
 background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,211,154,0.8155637254901961) 57%);
 }
 
-/* Ajustes generales de la tarjeta de comentarios */
+/* GENERAL SETTINGS FOR THE COMMENT CARD */
 .comment-card {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
@@ -20,7 +20,7 @@ background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,211,154,0.8
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Contenedor de la imagen de perfil */
+/* PROFILE IMAGEN CONTAINER */
 .comment-img-container {
   width: 80px;
   height: 80px;
@@ -36,7 +36,7 @@ background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,211,154,0.8
   object-position: center !important;
 }
 
-/* Ajustar el tamaño del texto */
+/* ADJUST TEXT SIZE */
 .comment-card h5 {
   font-size: 1.1rem;
   font-weight: bold;
@@ -49,18 +49,18 @@ background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,211,154,0.8
   color: #6c757d;
 }
 
-/* Ajustes para la fecha y otros detalles */
+/* SETTINGS FOR DATE AND OTHER DETAILS */
 .comment-card .text-muted {
   font-size: 0.85rem;
   color: #adb5bd;
 }
 
-/* Espaciado entre comentarios */
+/* SPACING BETWEEN COMMENTS */
 .mb-3 {
   margin-bottom: 1.5rem !important;
 }
 
-/* Cambiar el color del botón y ajustarlo al tema */
+/* BOTTON */
 .btn-primary {
   background-color: #c26c1b;
   border-color: #c26c1b;
@@ -72,65 +72,62 @@ background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,211,154,0.8
   border-color: #b65f15;
 }
 
-/* Sombra sutil en las tarjetas */
 .card {
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Animaciones suaves para las tarjetas */
 .animate__animated {
   animation-duration: 0.8s;
   animation-fill-mode: both;
 }
 
-/* Media queries para pantallas medianas (tabletas) */
+
 @media (max-width: 768px) {
   .comment-card {
-    flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
+    flex-direction: column;
     align-items: center;
-    text-align: center; /* Centrar el texto */
+    text-align: center;
   }
 
   .comment-img-container {
-    margin-right: 0; /* Eliminar margen cuando esté centrado */
-    margin-bottom: 1rem; /* Añadir margen debajo de la imagen */
+    margin-right: 0;
+    margin-bottom: 1rem;
   }
 
   .comment-img {
     width: 80px;
-    height: 80px; /* Aumentar tamaño de imagen en pantallas pequeñas */
+    height: 80px;
   }
 
   .comment-card h5 {
-    font-size: 1rem; /* Reducir tamaño de la fuente para nombres */
+    font-size: 1rem;
   }
 
   .comment-card p {
-    font-size: 0.85rem; /* Ajustar tamaño de texto */
+    font-size: 0.85rem;
   }
 }
 
-/* Media queries para pantallas pequeñas (móviles) */
+
 @media (max-width: 576px) {
   .comment-img {
     width: 60px;
-    height: 60px; /* Reducir tamaño de imagen en móviles */
+    height: 60px;
   }
 
   .comment-card h5 {
-    font-size: 0.95rem; /* Ajustar el tamaño de la fuente */
+    font-size: 0.95rem;
   }
 
   .comment-card p {
-    font-size: 0.8rem; /* Reducir tamaño del texto */
+    font-size: 0.8rem;
   }
 
   .btn-primary {
-    font-size: 0.9rem; /* Ajustar tamaño de los botones */
+    font-size: 0.9rem;
   }
 
-  /* Alinear los botones en el centro */
   .btn-primary {
     display: block;
     width: 100%;

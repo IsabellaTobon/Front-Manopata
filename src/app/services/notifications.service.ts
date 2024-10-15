@@ -5,23 +5,23 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class NotificationsService {
-  // Un BehaviorSubject para mantener el estado del mensaje actual
+  // BEHAVIORSUBJECT TO MAINTAIN THE STATE OF THE CURRENT MESSAGE
   private notificationSubject = new BehaviorSubject<{ message: string, type: 'success' | 'error' | 'info' | 'warning' }>({ message: '', type: 'info' });
 
-  // Observable para que otros componentes puedan suscribirse
+  // OBSERVABLE SO OTHER COMPONENTS CAN SUBSCRIBE
   notification$ = this.notificationSubject.asObservable();
 
-  // Método para mostrar una notificación
+  // METHOD TO SHOW A NOTIFICATION
   showNotification(message: string, type: 'success' | 'error' | 'info' | 'warning', duration: number = 3000) {
     this.notificationSubject.next({ message, type });
 
-    // Limpiar el mensaje después del tiempo especificado
+    // CLEAR THE NOTIFICATION AFTER A SPECIFIED DURATION
     setTimeout(() => {
       this.clearNotification();
     }, duration);
   }
 
-  // Método para limpiar el mensaje de notificación
+  // METHOD TO CLEAR THE NOTIFICATION
   clearNotification() {
     this.notificationSubject.next({ message: '', type: 'info' });
   }

@@ -10,23 +10,23 @@ export class CommentsService {
 
   constructor(private http: HttpClient) {}
 
-  // Método pra obtener los comentarios desde backend
+  // METHOD TO GET COMMENTS
   getComments(): Observable<UserComment[]> {
     return this.http.get<UserComment[]>(this.apiUrl);
   }
-
+  // METHOD TO POST A COMMENT
   postComment(comment: UserComment): Observable<UserComment> {
     return this.http.post<UserComment>(`${this.apiUrl}/create`, comment);
   }
 }
 
-// Modificación en la interfaz UserComment para incluir al usuario
+// MODIFICATION IN THE USERCOMMENT INTERFACE TO INCLUDE THE USER
 export interface UserComment {
   text: string;
   rating: number;
   commentDate?: Date;
   user: {
-    // Añadimos una propiedad user para los detalles del usuario
+    // ADD USER PROPERTY FOR USER DETAILS
     name: string;
     photo?: string;
     nickname: string;

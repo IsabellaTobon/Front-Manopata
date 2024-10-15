@@ -16,15 +16,15 @@ export class PostService {
   }
 
   getPostsByIds(ids: number[]): Observable<any[]> {
-    const idsParam = ids.join(','); // Convertir el array de IDs en una cadena separada por comas
+    const idsParam = ids.join(','); // CONVERT ARRAY OF IDS TO A COMMA-SEPARATED STRING
     return this.http.get<any[]>(`${this.apiUrl}/by-ids`, { params: { ids: idsParam } });
   }
 
-  // Método para obtener todos los posts con filtros opcionales
+  // METHOD TO GET ALL POSTS WITH OPTIONAL FILTERS
   getPosts(filters: any = {}): Observable<any[]> {
     let params = new HttpParams();
 
-    // Añadir filtros solo si están definidos y no son vacíos
+    // ADD FILTERS ONLY IF THEY ARE DEFINED AND NOT EMPTY
     if (filters.province) {
       params = params.set('province', filters.province);
     }
@@ -40,7 +40,7 @@ export class PostService {
     if (filters.orderBy) {
       params = params.set('orderBy', filters.orderBy);
     }
-    // Solo añadir parámetros si no son nulos ni vacíos
+    // ONLY ADD PARAMETERS IF THEY ARE NOT NULL OR EMPTY
     if (filters.available !== undefined && filters.available !== null && filters.available !== '') {
       params = params.set('available', filters.available.toString());
     }
@@ -51,35 +51,35 @@ export class PostService {
       params = params.set('vaccinated', filters.vaccinated.toString());
     }
 
-    console.log('Parámetros enviados:', params.toString()); // Verificar los filtros que se están enviando
+    console.log('Parámetros enviados:', params.toString()); // CHECK THE FILTERS THAT ARE BEING SENT
 
     return this.http.get<any>(this.apiUrl, { params }).pipe(
       map(data => {
-        console.log('Datos recibidos del backend:', data);  // Verifica la estructura de los datos
+        console.log('Datos recibidos del backend:', data);  // CHECK THE STRUCTURE OF THE DATA
         if (Array.isArray(data)) {
           return data;
         } else if (data._embedded && Array.isArray(data._embedded.postList)) {
           return data._embedded.postList;
         } else {
-          return []; // Devuelve un array vacío si no hay datos
+          return []; // RETURNS AN EMPTY ARRAY IF THERE IS NO DATA
         }
       })
     );
   }
 
-  // Método para dar like a un post
+  // METHOD TO LIKE A POST
   likePost(postId: number): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/${postId}/like`, {}, { headers });
   }
 
-  // Método para crear un post
+  // METHOD TO CREATE A POST
   createPost(postData: any): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.post(`${this.apiUrl}/create`, postData, { headers });
   }
 
-  // Obtener URL de imagen de un post
+  // OBTAIN POST IMAGES
   getPostImage(imageName: string): string {
     if (this.isExternalUrl(imageName)) {
       return imageName;
@@ -87,32 +87,32 @@ export class PostService {
     return `${this.apiUrl.replace('/post', '')}/files/${imageName}`;
   }
 
-  // Función para verificar si la URL es externa
+  // FUNCTION TO CHECK IF THE URL IS EXTERNAL
   private isExternalUrl(url: string): boolean {
     return url.startsWith('http://') || url.startsWith('https://');
   }
 
-  // Obtener provincias desde el backend
+  // OBTAING PROVINCES FROM THE BACKEND
   getProvinces(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/provinces`);
   }
 
-  // Obtener ciudades según la provincia desde el backend
+  // OBTAIN CITIES ACCORDING TO THE PROVINCE FROM THE BACKEND
   getCities(province: string): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/cities`, { params: { province } });
   }
 
-  // Obtener razas según el tipo de animal desde el backend
+  // OBTAIN ANIMAL BREEDS ACCORDING TO THE TYPE OF ANIMAL
   getBreeds(animalType: string): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/breeds`, { params: { animalType } });
   }
 
-  // Método centralizado para obtener los headers de autorización
+  // CENTRALIZED METHOD FOR OBTAINING AUTHORIZATION HEADERS
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     if (!token) {
       console.log('No se encontró token, continuando sin Authorization header');
-      return new HttpHeaders(); // Sin autorización
+      return new HttpHeaders(); // WITHOUT AUTHORIZATION HEADER
     }
     return new HttpHeaders({
       Authorization: `Bearer ${token}`

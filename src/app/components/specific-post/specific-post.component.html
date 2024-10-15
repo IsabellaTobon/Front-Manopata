@@ -1,12 +1,12 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <!-- Imagen destacada -->
+    <!-- FEATURED IMAGE -->
     <div class="col-lg-8 mb-4">
       <div class="card h-100 shadow-sm">
         <img *ngIf="post.photo" [src]="isExternalUrl(post.photo) ? post.photo : 'http://localhost:8080' + post.photo" class="card-img-top" [alt]="post.name">
       </div>
     </div>
-    <!-- Detalles del post -->
+    <!-- POST DETAILS -->
     <div class="col-lg-4 mb-4">
       <div class="card h-100 shadow-sm">
         <div class="card-body">
@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<!-- Modal de contacto -->
+<!-- CONTACT MODAL -->
 <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <app-notifications></app-notifications>

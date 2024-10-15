@@ -1,4 +1,4 @@
-/* Grid de Tarjetas */
+/* CARD GRID */
 .card-img-top {
   width: 100%;
   height: 200px;
@@ -17,38 +17,38 @@
 .modal-content {
   background: linear-gradient(135deg, #fefaf4 0%, #f9f1e7 100%); /* Suave y cálido */
   border-radius: 15px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15); /* Sombras ligeras */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
   overflow: hidden;
-  border: 1px solid #5a4633; /* Borde marrón oscuro */
+  border: 1px solid #5a4633;
 }
 
 .modal-header {
-  background-color: #d9a97b; /* Tono pastel más claro */
-  color: #5a4633; /* Marrón oscuro */
-  border-bottom: 2px solid #5a4633; /* Borde marrón oscuro */
+  background-color: #d9a97b;
+  color: #5a4633;
+  border-bottom: 2px solid #5a4633;
   padding: 1.5rem;
 }
 
 .modal-title {
-  font-weight: 600; /* Letra más audaz */
-  font-size: 1.75rem; /* Tamaño de fuente más grande */
-  letter-spacing: 1px; /* Espaciado entre letras */
-  text-transform: uppercase; /* Transformar a mayúsculas para un look limpio */
+  font-weight: 600;
+  font-size: 1.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .modal-body {
   padding: 2rem;
-  background: #fefaf4; /* Fondo cálido y suave */
-  color: #5a4633; /* Texto en marrón oscuro */
+  background: #fefaf4;
+  color: #5a4633;
 }
 
 .modal-footer {
-  border-top: 2px solid #5a4633; /* Borde superior marrón oscuro */
+  border-top: 2px solid #5a4633;
   padding: 1rem 2rem;
-  background: #f9f1e7; /* Fondo ligeramente más cálido */
+  background: #f9f1e7;
 }
 
-/* Botones del modal */
+/* MODAL BUTTONS */
 .btn-custom {
   border: 2px solid #5a4633 !important;
   font-weight: bold;

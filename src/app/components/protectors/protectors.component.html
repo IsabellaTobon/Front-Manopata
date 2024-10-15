@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <!-- Filtros -->
+  <!-- FILTERS -->
   <div class="row mb-3">
     <div class="col-md-4">
       <label for="locationFilter" class="form-label">Filtrar por Ubicación:</label>
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <!-- Grid de Tarjetas de Protectoras -->
+  <!-- GRID OF PROTECTOR CARDS -->
   <div class="row mt-5">
     <div class="col-lg-4 col-md-6 mb-4" *ngFor="let protectora of filteredProtectors">
       <div class="card h-100 shadow-sm">
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <!-- Modal de Detalles -->
+  <!-- DETAILS MODAL -->
   <div class="modal fade" id="protectorModal" tabindex="-1" aria-labelledby="protectorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">

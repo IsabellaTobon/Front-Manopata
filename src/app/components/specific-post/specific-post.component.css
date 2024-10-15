@@ -1,57 +1,49 @@
 .container {
-  margin-top: 5% !important; /* Ajuste del margen superior */
+  margin-top: 5% !important;
 }
 
-/* Imagen destacada */
 .card-img-top {
   max-height: 600px;
   object-fit: cover;
   width: 100%;
 }
 
-/* Para el cuerpo de las tarjetas */
 .card-body {
   padding: 20px;
-  text-align: center; /* Centra el contenido del cuerpo de la tarjeta */
+  text-align: center;
 }
 
-/* Ajustar el tamaño del modal */
 .modal-body {
   padding: 20px;
 }
 
-/* Centrar la tarjeta horizontalmente */
 .row {
-  justify-content: center; /* Centrar el contenido de la fila */
+  justify-content: center;
 }
 
-/* Responsividad: Ajustar el comportamiento de las columnas en pantallas pequeñas */
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .row {
     flex-direction: column;
   }
 
-  /* Imagen en pantalla pequeña debe ocupar el 100% */
   .col-lg-8,
   .col-lg-4 {
     max-width: 100%;
-    margin-bottom: 20px; /* Añadir un poco de espacio entre los elementos en pantallas pequeñas */
+    margin-bottom: 20px;
   }
 
-  /* Ajustes para que la imagen no sea demasiado alta en pantallas pequeñas */
   .card-img-top {
     max-height: 350px;
   }
 
-  /* El botón "Contactar" debe estar centrado en pantallas pequeñas */
   .card-body button {
     width: 100%;
     margin-top: 10px;
   }
 }
 
-/* Centrando el modal en la pantalla */
 .modal-dialog {
-  max-width: 500px; /* Ajustar el tamaño máximo del modal */
-  margin: 1.75rem auto; /* Centra el modal verticalmente */
+  max-width: 500px;
+  margin: 1.75rem auto;
 }

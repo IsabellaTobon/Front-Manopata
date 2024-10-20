@@ -2,9 +2,9 @@
   height: fit-content;
 }
 
-.fondo-blur{
+#fondo-blur{
   background: rgb(255,255,255);
-background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,211,154,0.8155637254901961) 57%);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,211,154,0.8155637254901961) 57%);
 }
 
 /* GENERAL SETTINGS FOR THE COMMENT CARD */
